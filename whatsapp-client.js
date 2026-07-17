@@ -10,6 +10,11 @@ let connectionStatus = 'Disconnected'; // Disconnected, Connecting, QR_Ready, Co
 let broadcastFn = null;
 
 function getChromeExecutablePath() {
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    console.log('Using Puppeteer executable path from env:', process.env.PUPPETEER_EXECUTABLE_PATH);
+    return process.env.PUPPETEER_EXECUTABLE_PATH;
+  }
+
   const commonPaths = [
     'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
