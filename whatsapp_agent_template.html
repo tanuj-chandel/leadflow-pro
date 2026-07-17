@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp QR Agent — Full Template</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #111827;
+      --bg-card: rgba(17, 24, 39, 0.85);
+      --bg-code: #0d1117;
+      --border-color: rgba(99, 102, 241, 0.15);
+      --border-glow: rgba(99, 102, 241, 0.4);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-indigo: #6366f1;
+      --accent-cyan: #22d3ee;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #a78bfa;
+      --gradient-hero: linear-gradient(135deg, #6366f1 0%, #8b5cf6 30%, #a78bfa 60%, #22d3ee 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Animated BG */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 20%, rgba(34,211,238,0.04) 0%, transparent 50%),
+                  radial-gradient(ellipse at 50% 80%, rgba(139,92,246,0.04) 0%, transparent 50%);
+      animation: bgFloat 20s ease-in-out infinite;
+      z-index: 0;
+    }
+    @keyframes bgFloat {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(20px, -30px) rotate(1deg); }
+      66% { transform: translate(-15px, 15px) rotate(-1deg); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 0 60px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: 24px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-indigo);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 24px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 900;
+      background: var(--gradient-hero);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 56px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .section-num {
+      width: 36px; height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-purple));
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 15px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .section h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 14.5px;
+      margin-bottom: 20px;
+      padding-left: 50px;
+    }
+
+    /* Code Block */
+    .code-block {
+      position: relative;
+      background: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: rgba(99,102,241,0.06);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .code-header .filename {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent-cyan);
+    }
+    .code-header .lang {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.05);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .code-block pre {
+      padding: 20px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.75;
+      color: #e2e8f0;
+      tab-size: 2;
+    }
+    .code-block .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 56px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .code-block .copy-btn:hover {
+      background: rgba(99,102,241,0.15);
+      color: var(--accent-indigo);
+      border-color: rgba(99,102,241,0.3);
+    }
+
+    /* Syntax colors */
+    .kw { color: #c678dd; }
+    .fn { color: #61afef; }
+    .str { color: #98c379; }
+    .cm { color: #5c6370; font-style: italic; }
+    .num { color: #d19a66; }
+    .op { color: #56b6c2; }
+    .prop { color: #e5c07b; }
+
+    /* Info Cards */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+    .info-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(99,102,241,0.1);
+    }
+    .info-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Alert boxes */
+    .alert {
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .alert-warn {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.2);
+      color: var(--accent-amber);
+    }
+    .alert-danger {
+      background: rgba(244,63,94,0.08);
+      border: 1px solid rgba(244,63,94,0.2);
+      color: var(--accent-rose);
+    }
+    .alert-success {
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.2);
+      color: var(--accent-green);
+    }
+    .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+      margin: 48px 0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 0 60px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .footer strong { color: var(--text-secondary); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 15px; }
+      .section h2 { font-size: 20px; }
+      .code-block pre { font-size: 11.5px; padding: 14px; }
+      .section-desc { padding-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">Reusable Agent Template</div>
+    <h1>WhatsApp QR Code<br>Agent Blueprint</h1>
+    <p>A complete, production-ready recipe to add unofficial WhatsApp Web QR login and message sending to any Node.js agent. Zero developer accounts, zero Meta approval — just scan and send.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Quick Facts -->
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>📦 Package Source</h4>
+      <p>Install from <strong>GitHub main branch</strong>, not npm. The npm release is frequently broken by WhatsApp Web layout updates.</p>
+    </div>
+    <div class="info-card">
+      <h4>🖥️ Browser Strategy</h4>
+      <p>Skip Puppeteer's Chromium download. Use the <strong>local Google Chrome</strong> already installed on the host machine.</p>
+    </div>
+    <div class="info-card">
+      <h4>🔒 Session Persistence</h4>
+      <p>Sessions are cached in <code>.wwebjs_auth/</code>. Users scan the QR code <strong>once</strong> — it stays linked across restarts.</p>
+    </div>
+    <div class="info-card">
+      <h4>📞 Phone Formatting</h4>
+      <p>Indian numbers are auto-formatted from local (<code>0XXXXXXXXXX</code>) to international (<code>91XXXXXXXXXX</code>) before sending.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 1: Installation -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Installation Command</h2>
+    </div>
+    <p class="section-desc">Run this in your project root. The environment variable prevents downloading a 120MB Chromium binary and avoids SSL certificate errors on Windows.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="filename">Terminal (PowerShell)</span>
+        <span class="lang">Shell</span>
+      </div>
+      <pre><span class="cm"># Set env var to skip browser download, then install from GitHub</span>
+<span class="kw">$env</span>:PUPPETEER_SKIP_DOWNLOAD=<span class="str">"true"</span>
+<span class="fn">npm install</span> github:pedroslopez/whatsapp-web.js qrcode</pre>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <span><strong>Do NOT use <code>npm install whatsapp-web.js</code></strong> — the stable npm release has broken code injections caused by recent WhatsApp Web internal updates. Always install from the GitHub main branch.</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2: whatsapp-client.js -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>whatsapp-client.js — Full File</h2>
+    </div>
+    <p class="section-desc">This is the complete background client manager. It finds Chrome, initializes the headless browser, generates QR codes, broadcasts connection events via SSE, and sends messages with auto-formatted phone numbers.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="filename">whatsapp-client.js</span>
+        <span class="lang">JavaScript (ESM)</span>
+      </div>
+      <pre><span class="kw">import</span> pkg <span class="kw">from</span> <span class="str">'whatsapp-web.js'</span>;
+<span class="kw">const</span> { <span class="prop">Client</span>, <span class="prop">LocalAuth</span> } = pkg;
+<span class="kw">import</span> qrcode <span class="kw">from</span> <span class="str">'qrcode'</span>;
+<span class="kw">import</span> path <span class="kw">from</span> <span class="str">'path'</span>;
+<span class="kw">import</span> fs <span class="kw">from</span> <span class="str">'fs'</span>;
+
+<span class="kw">let</span> client = <span class="num">null</span>;
+<span class="kw">let</span> qrCodeDataUrl = <span class="num">null</span>;
+<span class="kw">let</span> connectionStatus = <span class="str">'Disconnected'</span>;
+<span class="kw">let</span> broadcastFn = <span class="num">null</span>;
+
+<span class="cm">// ── Chrome Finder ──────────────────────────────────</span>
+<span class="kw">function</span> <span class="fn">getChromeExecutablePath</span>() {
+  <span class="kw">const</span> commonPaths = [
+    <span class="str">'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'</span>,
+    <span class="str">'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'</span>,
+    path.<span class="fn">join</span>(process.env.LOCALAPPDATA || <span class="str">''</span>, <span class="str">'Google/Chrome/Application/chrome.exe'</span>),
+    path.<span class="fn">join</span>(process.env.USERPROFILE || <span class="str">''</span>, <span class="str">'AppData/Local/Google/Chrome/Application/chrome.exe'</span>)
+  ];
+  <span class="kw">for</span> (<span class="kw">const</span> p <span class="kw">of</span> commonPaths) {
+    <span class="kw">if</span> (fs.<span class="fn">existsSync</span>(p)) { console.<span class="fn">log</span>(<span class="str">'Found Chrome at:'</span>, p); <span class="kw">return</span> p; }
+  }
+  console.<span class="fn">warn</span>(<span class="str">'Chrome not found in common paths.'</span>);
+  <span class="kw">return</span> <span class="num">undefined</span>;
+}
+
+<span class="cm">// ── Status Getter ──────────────────────────────────</span>
+<span class="kw">export function</span> <span class="fn">getWhatsappStatus</span>() {
+  <span class="kw">return</span> { <span class="prop">status</span>: connectionStatus, <span class="prop">qr</span>: qrCodeDataUrl };
+}
+
+<span class="cm">// ── Init Client ───────────────────────────────────</span>
+<span class="kw">export function</span> <span class="fn">initWhatsappClient</span>(broadcastCallback) {
+  <span class="kw">if</span> (client) <span class="kw">return</span>;
+  broadcastFn = broadcastCallback;
+  console.<span class="fn">log</span>(<span class="str">'Initializing WhatsApp client...'</span>);
+
+  client = <span class="kw">new</span> <span class="fn">Client</span>({
+    <span class="prop">authStrategy</span>: <span class="kw">new</span> <span class="fn">LocalAuth</span>({
+      <span class="prop">dataPath</span>: path.<span class="fn">join</span>(process.<span class="fn">cwd</span>(), <span class="str">'.wwebjs_auth'</span>)
+    }),
+    <span class="prop">puppeteer</span>: {
+      <span class="prop">headless</span>: <span class="num">true</span>,
+      <span class="prop">executablePath</span>: <span class="fn">getChromeExecutablePath</span>(),
+      <span class="prop">args</span>: [<span class="str">'--no-sandbox'</span>, <span class="str">'--disable-setuid-sandbox'</span>]
+    }
+  });
+
+  <span class="cm">// QR Code event</span>
+  client.<span class="fn">on</span>(<span class="str">'qr'</span>, <span class="kw">async</span> (qr) => {
+    connectionStatus = <span class="str">'QR_Ready'</span>;
+    qrCodeDataUrl = <span class="kw">await</span> qrcode.<span class="fn">toDataURL</span>(qr);
+    <span class="kw">if</span> (broadcastFn) broadcastFn({ <span class="prop">type</span>: <span class="str">'wa-status'</span>, <span class="prop">status</span>: <span class="str">'QR_Ready'</span>, <span class="prop">qr</span>: qrCodeDataUrl });
+  });
+
+  <span class="cm">// Ready event</span>
+  client.<span class="fn">on</span>(<span class="str">'ready'</span>, () => {
+    connectionStatus = <span class="str">'Connected'</span>;
+    qrCodeDataUrl = <span class="num">null</span>;
+    console.<span class="fn">log</span>(<span class="str">'WhatsApp client is ready!'</span>);
+    <span class="kw">if</span> (broadcastFn) broadcastFn({ <span class="prop">type</span>: <span class="str">'wa-status'</span>, <span class="prop">status</span>: <span class="str">'Connected'</span> });
+  });
+
+  <span class="cm">// Auth failure event</span>
+  client.<span class="fn">on</span>(<span class="str">'auth_failure'</span>, (msg) => {
+    connectionStatus = <span class="str">'Disconnected'</span>;
+    console.<span class="fn">error</span>(<span class="str">'WhatsApp auth failure:'</span>, msg);
+    <span class="kw">if</span> (broadcastFn) broadcastFn({ <span class="prop">type</span>: <span class="str">'wa-status'</span>, <span class="prop">status</span>: <span class="str">'Disconnected'</span> });
+  });
+
+  <span class="cm">// Disconnected event</span>
+  client.<span class="fn">on</span>(<span class="str">'disconnected'</span>, (reason) => {
+    connectionStatus = <span class="str">'Disconnected'</span>;
+    console.<span class="fn">log</span>(<span class="str">'WhatsApp disconnected:'</span>, reason);
+    <span class="kw">if</span> (broadcastFn) broadcastFn({ <span class="prop">type</span>: <span class="str">'wa-status'</span>, <span class="prop">status</span>: <span class="str">'Disconnected'</span> });
+    client = <span class="num">null</span>;
+  });
+
+  connectionStatus = <span class="str">'Connecting'</span>;
+  <span class="kw">if</span> (broadcastFn) broadcastFn({ <span class="prop">type</span>: <span class="str">'wa-status'</span>, <span class="prop">status</span>: <span class="str">'Connecting'</span> });
+
+  client.<span class="fn">initialize</span>().<span class="fn">catch</span>((err) => {
+    connectionStatus = <span class="str">'Disconnected'</span>;
+    console.<span class="fn">error</span>(<span class="str">'Error initializing WhatsApp client:'</span>, err);
+    <span class="kw">if</span> (broadcastFn) broadcastFn({ <span class="prop">type</span>: <span class="str">'wa-status'</span>, <span class="prop">status</span>: <span class="str">'Disconnected'</span> });
+  });
+}
+
+<span class="cm">// ── Disconnect ─────────────────────────────────────</span>
+<span class="kw">export async function</span> <span class="fn">disconnectWhatsapp</span>() {
+  <span class="kw">if</span> (!client) <span class="kw">return</span>;
+  <span class="kw">await</span> client.<span class="fn">destroy</span>();
+  client = <span class="num">null</span>;
+  connectionStatus = <span class="str">'Disconnected'</span>;
+  qrCodeDataUrl = <span class="num">null</span>;
+  <span class="kw">if</span> (broadcastFn) broadcastFn({ <span class="prop">type</span>: <span class="str">'wa-status'</span>, <span class="prop">status</span>: <span class="str">'Disconnected'</span> });
+  <span class="fn">initWhatsappClient</span>(broadcastFn);
+}
+
+<span class="cm">// ── Send Message ──────────────────────────────────</span>
+<span class="kw">export async function</span> <span class="fn">sendWhatsappMessage</span>(phone, messageText) {
+  <span class="kw">if</span> (!client || connectionStatus !== <span class="str">'Connected'</span>)
+    <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">'WhatsApp is not linked. Scan QR first.'</span>);
+
+  <span class="kw">let</span> cleanPhone = phone.<span class="fn">replace</span>(<span class="op">/\D/g</span>, <span class="str">''</span>);
+  <span class="kw">if</span> (!cleanPhone) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">'Invalid phone number.'</span>);
+
+  <span class="cm">// Auto-format Indian numbers</span>
+  <span class="kw">if</span> (cleanPhone.<span class="fn">startsWith</span>(<span class="str">'0'</span>) && cleanPhone.length === <span class="num">11</span>)
+    cleanPhone = <span class="str">'91'</span> + cleanPhone.<span class="fn">substring</span>(<span class="num">1</span>);
+  <span class="kw">else if</span> (cleanPhone.length === <span class="num">10</span>)
+    cleanPhone = <span class="str">'91'</span> + cleanPhone;
+
+  <span class="kw">const</span> chatId = <span class="str">`${cleanPhone}@c.us`</span>;
+  <span class="kw">return await</span> client.<span class="fn">sendMessage</span>(chatId, messageText);
+}</pre>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3: Server Routes -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>server.js — Express Routes</h2>
+    </div>
+    <p class="section-desc">Add these imports and routes to any Express server. The client initializes on startup, serves QR/status over REST, and broadcasts events via SSE.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="filename">server.js (add to your existing server)</span>
+        <span class="lang">JavaScript</span>
+      </div>
+      <pre><span class="cm">// ── Import at top of server.js ─────────────────────</span>
+<span class="kw">import</span> {
+  <span class="prop">initWhatsappClient</span>,
+  <span class="prop">getWhatsappStatus</span>,
+  <span class="prop">disconnectWhatsapp</span>
+} <span class="kw">from</span> <span class="str">'./whatsapp-client.js'</span>;
+
+<span class="cm">// ── API Routes ─────────────────────────────────────</span>
+
+<span class="cm">// Get QR code & connection status</span>
+app.<span class="fn">get</span>(<span class="str">'/api/whatsapp/status'</span>, (req, res) => {
+  res.<span class="fn">json</span>(<span class="fn">getWhatsappStatus</span>());
+});
+
+<span class="cm">// Disconnect / Logout</span>
+app.<span class="fn">post</span>(<span class="str">'/api/whatsapp/disconnect'</span>, <span class="kw">async</span> (req, res) => {
+  <span class="kw">try</span> {
+    <span class="kw">await</span> <span class="fn">disconnectWhatsapp</span>();
+    res.<span class="fn">json</span>({ <span class="prop">success</span>: <span class="num">true</span> });
+  } <span class="kw">catch</span> (err) {
+    res.<span class="fn">status</span>(<span class="num">500</span>).<span class="fn">json</span>({ <span class="prop">error</span>: err.message });
+  }
+});
+
+<span class="cm">// ── Initialize on startup (before app.listen) ─────</span>
+<span class="fn">initWhatsappClient</span>((event) => <span class="fn">broadcast</span>(event));</pre>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4: Frontend HTML -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>index.html — Settings UI Card</h2>
+    </div>
+    <p class="section-desc">Drop this card into any settings page. It renders the QR code, shows the connection status, provides a disconnect button, and has a customizable message template textarea.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="filename">index.html (WhatsApp Settings Card)</span>
+        <span class="lang">HTML</span>
+      </div>
+      <pre><span class="cm">&lt;!-- WhatsApp QR Connection Card --&gt;</span>
+&lt;<span class="kw">div</span> <span class="prop">class</span>=<span class="str">"settings-card"</span>&gt;
+  &lt;<span class="kw">h2</span>&gt;WhatsApp QR Code Connection&lt;/<span class="kw">h2</span>&gt;
+
+  &lt;<span class="kw">div</span> <span class="prop">style</span>=<span class="str">"display:grid; grid-template-columns:1fr 1fr; gap:28px;"</span>&gt;
+    <span class="cm">&lt;!-- Left: Template --&gt;</span>
+    &lt;<span class="kw">div</span>&gt;
+      &lt;<span class="kw">label</span> <span class="prop">for</span>=<span class="str">"setting-wa-template"</span>&gt;Message Template&lt;/<span class="kw">label</span>&gt;
+      &lt;<span class="kw">textarea</span> <span class="prop">id</span>=<span class="str">"setting-wa-template"</span> <span class="prop">rows</span>=<span class="str">"8"</span>
+        <span class="prop">placeholder</span>=<span class="str">"Enter WhatsApp outreach text..."</span>&gt;&lt;/<span class="kw">textarea</span>&gt;
+      &lt;<span class="kw">p</span>&gt;Placeholders: <span class="op">{{BusinessName}}</span>, <span class="op">{{Location}}</span>,
+         <span class="op">{{Address}}</span>, <span class="op">{{Phone}}</span>, <span class="op">{{Website}}</span>&lt;/<span class="kw">p</span>&gt;
+    &lt;/<span class="kw">div</span>&gt;
+
+    <span class="cm">&lt;!-- Right: QR & Status --&gt;</span>
+    &lt;<span class="kw">div</span> <span class="prop">style</span>=<span class="str">"text-align:center;"</span>&gt;
+      &lt;<span class="kw">h3</span>&gt;Link Status&lt;/<span class="kw">h3</span>&gt;
+      &lt;<span class="kw">div</span> <span class="prop">id</span>=<span class="str">"wa-status-badge"</span>&gt;
+        &lt;<span class="kw">span</span> <span class="prop">id</span>=<span class="str">"wa-status-text"</span>&gt;Disconnected&lt;/<span class="kw">span</span>&gt;
+      &lt;/<span class="kw">div</span>&gt;
+
+      &lt;<span class="kw">div</span> <span class="prop">id</span>=<span class="str">"wa-qr-container"</span> <span class="prop">style</span>=<span class="str">"display:none"</span>&gt;
+        &lt;<span class="kw">img</span> <span class="prop">id</span>=<span class="str">"wa-qr-img"</span> <span class="prop">alt</span>=<span class="str">"Scan QR"</span>&gt;
+      &lt;/<span class="kw">div</span>&gt;
+
+      &lt;<span class="kw">div</span> <span class="prop">id</span>=<span class="str">"wa-loader"</span> <span class="prop">style</span>=<span class="str">"display:none"</span>&gt;
+        Initializing...
+      &lt;/<span class="kw">div</span>&gt;
+
+      &lt;<span class="kw">button</span> <span class="prop">id</span>=<span class="str">"btn-wa-disconnect"</span> <span class="prop">class</span>=<span class="str">"hidden"</span>&gt;
+        Disconnect WhatsApp
+      &lt;/<span class="kw">button</span>&gt;
+    &lt;/<span class="kw">div</span>&gt;
+  &lt;/<span class="kw">div</span>&gt;
+&lt;/<span class="kw">div</span>&gt;</pre>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5: Frontend JS -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>app.js — Frontend Handlers</h2>
+    </div>
+    <p class="section-desc">Add these functions to your frontend JavaScript. They poll the status on page load, listen for SSE broadcasts, and update the QR image / status badge dynamically.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="filename">app.js (add to your frontend script)</span>
+        <span class="lang">JavaScript</span>
+      </div>
+      <pre><span class="cm">// ── Load status on page load ──────────────────────</span>
+<span class="kw">async function</span> <span class="fn">loadWaStatus</span>() {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/whatsapp/status'</span>);
+  <span class="kw">const</span> data = <span class="kw">await</span> res.<span class="fn">json</span>();
+  <span class="fn">updateWaUI</span>(data);
+}
+
+<span class="cm">// ── Update UI based on status ─────────────────────</span>
+<span class="kw">function</span> <span class="fn">updateWaUI</span>(data) {
+  <span class="kw">const</span> text = document.<span class="fn">getElementById</span>(<span class="str">'wa-status-text'</span>);
+  <span class="kw">const</span> qrContainer = document.<span class="fn">getElementById</span>(<span class="str">'wa-qr-container'</span>);
+  <span class="kw">const</span> qrImg = document.<span class="fn">getElementById</span>(<span class="str">'wa-qr-img'</span>);
+  <span class="kw">const</span> loader = document.<span class="fn">getElementById</span>(<span class="str">'wa-loader'</span>);
+  <span class="kw">const</span> btnDisconnect = document.<span class="fn">getElementById</span>(<span class="str">'btn-wa-disconnect'</span>);
+
+  qrContainer.style.display = <span class="str">'none'</span>;
+  loader.style.display = <span class="str">'none'</span>;
+  btnDisconnect.classList.<span class="fn">add</span>(<span class="str">'hidden'</span>);
+
+  <span class="kw">if</span> (data.status === <span class="str">'Connected'</span>) {
+    text.innerText = <span class="str">'Connected'</span>;
+    btnDisconnect.classList.<span class="fn">remove</span>(<span class="str">'hidden'</span>);
+  } <span class="kw">else if</span> (data.status === <span class="str">'QR_Ready'</span> && data.qr) {
+    text.innerText = <span class="str">'Scan QR Code'</span>;
+    qrImg.src = data.qr;
+    qrContainer.style.display = <span class="str">'flex'</span>;
+  } <span class="kw">else if</span> (data.status === <span class="str">'Connecting'</span>) {
+    text.innerText = <span class="str">'Connecting...'</span>;
+    loader.style.display = <span class="str">'block'</span>;
+  } <span class="kw">else</span> {
+    text.innerText = <span class="str">'Disconnected'</span>;
+  }
+}
+
+<span class="cm">// ── SSE listener (add inside setupEventSource) ───</span>
+<span class="cm">// case 'wa-status': updateWaUI(data); break;</span>
+
+<span class="cm">// ── Disconnect handler ────────────────────────────</span>
+<span class="kw">async function</span> <span class="fn">handleWaDisconnect</span>() {
+  <span class="kw">if</span> (!<span class="fn">confirm</span>(<span class="str">'Log out of WhatsApp?'</span>)) <span class="kw">return</span>;
+  <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/whatsapp/disconnect'</span>, { <span class="prop">method</span>: <span class="str">'POST'</span> });
+  <span class="fn">loadWaStatus</span>();
+}</pre>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 6: Gotchas -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <h2>Critical Gotchas</h2>
+    </div>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">🚫</span>
+      <span><strong>Do NOT use <code>--single-process</code> or <code>--no-zygote</code> Puppeteer flags.</strong> Modern Chrome requires multi-process execution. These flags cause <code>Error: Requesting main frame too early!</code> on startup.</span>
+    </div>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">🚫</span>
+      <span><strong>Do NOT call <code>client.isRegisteredUser()</code></strong> before sending. This method uses an internal WhatsApp evaluation that is frequently broken by web updates, causing the cryptic <code>t: t</code> error. Send directly via <code>client.sendMessage()</code> instead.</span>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <span><strong>Deep-merge database defaults.</strong> When upgrading an existing database with new settings fields (like <code>waMessageTemplate</code>), the database loader must deep-merge defaults into the existing settings, otherwise new fields will be <code>undefined</code>.</span>
+    </div>
+
+    <div class="alert alert-success">
+      <span class="alert-icon">✅</span>
+      <span><strong>SSL bypass for Windows.</strong> Set <code>process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'</code> in <code>server.js</code> to prevent antivirus TLS inspection from breaking outgoing API calls.</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Built with ❤️ by <strong>Tanuj Chandel</strong> &amp; <strong>Antigravity AI</strong></p>
+    <p style="margin-top: 6px; font-size: 11px;">Reusable across all future agent projects.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
