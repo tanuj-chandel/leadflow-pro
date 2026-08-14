@@ -6,7 +6,7 @@ import path from 'path';
 // Bypass SSL verification issues on Windows (frequently caused by antivirus/proxy inspections)
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import { db } from './database.js';
-import { scrapeJob } from './scraper.js';
+import { scrapeJob, SEGMENTS_CONFIG, generateInstantSegmentLeads } from './scraper.js';
 import { 
   getAuthUrl, 
   handleOAuthCallback, 
@@ -128,10 +128,42 @@ app.post('/api/locations/:id/run', async (req, res) => {
   }
 });
 
+// --- Segments Endpoints ---
+app.get('/api/segments', (req, res) => {
+  const leads = db.getLeads();
+  const segmentStats = SEGMENTS_CONFIG.map(seg => {
+    const segLeads = leads.filter(l => l.segment === seg.name);
+    return {
+      ...seg,
+      totalLeads: segLeads.length,
+      hotLeads: segLeads.filter(l => l.qualityScore === 'Hot').length,
+      withPhone: segLeads.filter(l => l.phone && l.phone.trim().length >= 10).length,
+      withEmail: segLeads.filter(l => l.email && l.email.trim() !== '').length
+    };
+  });
+  res.json(segmentStats);
+});
+
+app.post('/api/leads/generate-instant', async (req, res) => {
+  const { segmentId, location, count } = req.body;
+  const numCount = parseInt(count, 10) || 10;
+  
+  try {
+    const added = await generateInstantSegmentLeads(segmentId, location, numCount, (event) => broadcast(event));
+    broadcast({ type: 'leads-updated' });
+    res.json({ success: true, added, message: `Generated ${added} leads.` });
+  } catch (err) {
+    console.error('Instant lead generation failed:', err);
+    broadcast({ type: 'log', message: `❌ Error: ${err.message}` });
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
 // --- Leads Endpoints ---
 app.get('/api/leads', (req, res) => {
   let leads = db.getLeads();
-  const { search, hasPhone, emailStatus, whatsappStatus } = req.query;
+  const { search, segment, qualityScore, leadStatus, hasPhone, hasAllThree, emailStatus, whatsappStatus } = req.query;
 
   if (search) {
     const q = String(search).toLowerCase();
@@ -139,13 +171,41 @@ app.get('/api/leads', (req, res) => {
       (l.businessName && l.businessName.toLowerCase().includes(q)) ||
       (l.email && l.email.toLowerCase().includes(q)) ||
       (l.searchTerm && l.searchTerm.toLowerCase().includes(q)) ||
-      (l.location && l.location.toLowerCase().includes(q))
+      (l.location && l.location.toLowerCase().includes(q)) ||
+      (l.segment && l.segment.toLowerCase().includes(q))
     );
+  }
+
+  if (segment && segment !== 'all') {
+    leads = leads.filter(l => l.segment && l.segment.toLowerCase() === segment.toLowerCase());
+  }
+
+  if (qualityScore && qualityScore !== 'all') {
+    leads = leads.filter(l => l.qualityScore === qualityScore);
+  }
+
+  if (leadStatus && leadStatus !== 'all') {
+    leads = leads.filter(l => l.leadStatus === leadStatus);
   }
 
   if (hasPhone === 'true') {
     // Only leads with formatted E.164 phone or general phone
-    leads = leads.filter(l => l.phone && l.phone.trim().length >= 10);
+    leads = leads.filter(l => l.phone && l.phone.trim().length >= 7);
+  }
+
+  // Calculate 3/3 Contact Completeness Score for sorting/filtering
+  // 3 Points = Has Phone + Has Website + Has at least 1 Social link
+  leads = leads.map(l => {
+    const hasP = !!(l.phone && l.phone.trim().length >= 7);
+    const hasW = !!(l.website && l.website.trim() !== '');
+    const hasS = !!(l.facebook || l.instagram || l.linkedin || l.twitter);
+    const contactScore = (hasP ? 1 : 0) + (hasW ? 1 : 0) + (hasS ? 1 : 0);
+    const hasAll3 = hasP && hasW && hasS;
+    return { ...l, contactScore, hasAll3 };
+  });
+
+  if (hasAllThree === 'true') {
+    leads = leads.filter(l => l.hasAll3);
   }
 
   if (emailStatus) {
@@ -156,7 +216,32 @@ app.get('/api/leads', (req, res) => {
     leads = leads.filter(l => l.whatsappStatus === whatsappStatus);
   }
 
+  // 🏆 SORTING RULE: Put leads with all 3 contact points FIRST across every category!
+  // Sort order: contactScore (3 first, then 2, 1, 0) -> qualityScore (Hot > Warm > Cold) -> createdAt
+  const qualityWeight = { 'Hot': 3, 'Warm': 2, 'Cold': 1 };
+  leads.sort((a, b) => {
+    if (b.contactScore !== a.contactScore) {
+      return b.contactScore - a.contactScore; // Highest contact completeness first (3/3 first)
+    }
+    const weightA = qualityWeight[a.qualityScore] || 0;
+    const weightB = qualityWeight[b.qualityScore] || 0;
+    if (weightB !== weightA) {
+      return weightB - weightA;
+    }
+    return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+  });
+
   res.json(leads);
+});
+
+
+app.put('/api/leads/:id', (req, res) => {
+  const updated = db.updateLead(req.params.id, req.body);
+  if (updated) {
+    res.json({ success: true, lead: updated });
+  } else {
+    res.status(404).json({ error: 'Lead not found' });
+  }
 });
 
 app.delete('/api/leads/:id', (req, res) => {
@@ -182,32 +267,25 @@ app.get('/api/leads/export-csv', (req, res) => {
   const leads = db.getLeads();
   
   const headers = [
-    'Business Name', 'Search Term', 'Location', 'Phone', 'Email', 
+    'Business Name', 'Segment', 'Quality Score', 'Lead Status',
+    'Search Term', 'Location', 'Phone', 'Email', 
     'Website', 'Facebook', 'Instagram', 'LinkedIn', 'Twitter', 
     'Address', 'Rating', 'Email Draft Status', 'WhatsApp Status'
   ];
 
+  const esc = (v) => `"${(v || '').toString().replace(/"/g, '""')}"`;
+
   const rows = leads.map(l => [
-    `"${(l.businessName || '').replace(/"/g, '""')}"`,
-    `"${(l.searchTerm || '').replace(/"/g, '""')}"`,
-    `"${(l.location || '').replace(/"/g, '""')}"`,
-    `"${(l.phone || '').replace(/"/g, '""')}"`,
-    `"${(l.email || '').replace(/"/g, '""')}"`,
-    `"${(l.website || '').replace(/"/g, '""')}"`,
-    `"${(l.facebook || '').replace(/"/g, '""')}"`,
-    `"${(l.instagram || '').replace(/"/g, '""')}"`,
-    `"${(l.linkedin || '').replace(/"/g, '""')}"`,
-    `"${(l.twitter || '').replace(/"/g, '""')}"`,
-    `"${(l.address || '').replace(/"/g, '""')}"`,
-    `"${(l.rating || '')}"`,
-    `"${(l.emailStatus || 'Pending')}"`,
-    `"${(l.whatsappStatus || 'Pending')}"`
+    esc(l.businessName), esc(l.segment), esc(l.qualityScore), esc(l.leadStatus),
+    esc(l.searchTerm), esc(l.location), esc(l.phone), esc(l.email),
+    esc(l.website), esc(l.facebook), esc(l.instagram), esc(l.linkedin), esc(l.twitter),
+    esc(l.address), esc(l.rating), esc(l.emailStatus || 'Pending'), esc(l.whatsappStatus || 'Pending')
   ]);
 
-  const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const csvContent = [headers.map(h => `"${h}"`).join(','), ...rows.map(r => r.join(','))].join('\n');
   
   res.setHeader('Content-Type', 'text/csv');
-  res.setHeader('Content-Disposition', 'attachment; filename="leads_export.csv"');
+  res.setHeader('Content-Disposition', `attachment; filename="leadflow_export_${new Date().toISOString().slice(0,10)}.csv"`);
   res.send(csvContent);
 });
 

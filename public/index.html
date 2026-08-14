@@ -2,242 +2,308 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LeadFlow Pro — Lead Scraper & Outreach Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LeadFlow Pro — AI Lead Generator</title>
+  <meta name="description" content="Generate, qualify & outreach business leads across 12+ segments. WhatsApp, Gmail, CRM pipeline built-in.">
+  <meta name="theme-color" content="#6366f1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="dark-mode">
-  <div class="app-container">
-    
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
-      <div class="sidebar-brand">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="brand-icon"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
-        <span>LeadFlow Pro</span>
+<body>
+<div class="app-container">
+
+  <!-- ═══ TOP MOBILE HEADER ════════════════════════════════════════════ -->
+  <header class="mobile-header">
+    <div class="header-brand">
+      <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span class="brand-title">LeadFlow <small class="version-badge">PRO</small></span>
+    </div>
+    <div class="header-status-pills">
+      <a href="/api/leads/export-csv" class="pill-badge pill-demo" style="text-decoration:none;">
+        <span>📤</span><span class="pill-text">Export</span>
+      </a>
+      <a href="/sell.html" target="_blank" class="pill-badge" style="background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.25);text-decoration:none;color:#818cf8;">
+        <span>💼</span><span class="pill-text">Sell</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ═══ SIDEBAR (Desktop) ════════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span>LeadFlow Pro</span>
+    </div>
+    <nav class="sidebar-menu">
+      <button class="menu-item active" data-target="dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Generator
+      </button>
+      <button class="menu-item" data-target="segments">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+        Segments Hub
+      </button>
+      <button class="menu-item" data-target="leads">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Leads Feed
+      </button>
+      <button class="menu-item" data-target="media">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        Media & Social Hub
+      </button>
+      <button class="menu-item" data-target="outreach">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v13H3z"/><path d="M3 7l9 6 9-6"/></svg>
+        CRM Pipeline
+      </button>
+      <button class="menu-item" data-target="settings">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="google-status" class="status-indicator disconnected">
+        <span class="indicator-dot"></span>
+        <span class="indicator-text">Google Disconnected</span>
       </div>
-      <nav class="sidebar-menu">
-        <button class="menu-item active" data-target="dashboard">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-          Dashboard
-        </button>
-        <button class="menu-item" data-target="leads">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Leads Database
-        </button>
-        <button class="menu-item" data-target="logs">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-          WhatsApp Logs
-        </button>
-        <button class="menu-item" data-target="settings">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Settings
-        </button>
-      </nav>
-      
-      <div class="sidebar-footer">
-        <div id="google-status" class="status-indicator disconnected">
-          <span class="indicator-dot"></span>
-          <span class="indicator-text">Google Disconnected</span>
+      <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="/api/leads/export-csv" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;font-size:11px;">📤 CSV</a>
+        <a href="/sell.html" target="_blank" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;font-size:11px;">💼 Sell</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN CONTENT ══════════════════════════════════════════════════ -->
+  <main class="content">
+
+    <!-- ── GENERATOR ─────────────────────────────────────────────────── -->
+    <section id="dashboard" class="content-section active">
+      <header class="section-header">
+        <div>
+          <h1>⚡ Lead Generator</h1>
+          <p class="subtitle">Scrape Google Maps or use the instant AI engine — no API key required.</p>
+        </div>
+      </header>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card indigo-glow">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-content">
+            <h3>Total Leads</h3>
+            <p class="stat-value" id="stat-total-leads">0</p>
+          </div>
+        </div>
+        <div class="stat-card fire-glow">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-content">
+            <h3>Hot Leads</h3>
+            <p class="stat-value" id="stat-hot-leads">0</p>
+          </div>
+        </div>
+        <div class="stat-card emerald-glow">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="stat-content">
+            <h3>With Phone</h3>
+            <p class="stat-value" id="stat-leads-phone">0</p>
+          </div>
+        </div>
+        <div class="stat-card cyan-glow">
+          <div class="stat-icon">✉️</div>
+          <div class="stat-content">
+            <h3>With Email</h3>
+            <p class="stat-value" id="stat-email-leads">0</p>
+          </div>
         </div>
       </div>
-    </aside>
 
-    <!-- Main Content Area -->
-    <main class="content">
-      
-      <!-- Dashboard Section -->
-      <section id="dashboard" class="content-section active">
-        <header class="section-header">
-          <div>
-            <h1>Dashboard Overview</h1>
-            <p class="subtitle">Scrape business leads and automate cold outreach campaigns.</p>
+      <!-- Dashboard layout -->
+      <div class="dashboard-layout">
+        <!-- Search Panel -->
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Scraper Controls</h2>
+              <p class="panel-subtitle">Add a custom query or pick a segment below.</p>
+            </div>
           </div>
-        </header>
 
-        <!-- Stat Counter Grid -->
-        <div class="stats-grid">
-          <div class="stat-card indigo-glow">
-            <div class="stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div class="stat-content">
-              <h3>Total Leads</h3>
-              <p class="stat-value" id="stat-total-leads">0</p>
-            </div>
-          </div>
-          <div class="stat-card emerald-glow">
-            <div class="stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </div>
-            <div class="stat-content">
-              <h3>With Mobile No.</h3>
-              <p class="stat-value" id="stat-leads-phone">0</p>
-            </div>
-          </div>
-          <div class="stat-card cyan-glow">
-            <div class="stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            </div>
-            <div class="stat-content">
-              <h3>Email Drafts</h3>
-              <p class="stat-value" id="stat-email-drafts">0</p>
-            </div>
-          </div>
-          <div class="stat-card green-glow">
-            <div class="stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div class="stat-content">
-              <h3>WhatsApp Sent</h3>
-              <p class="stat-value" id="stat-wa-sent">0</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="dashboard-layout">
-          <!-- Left: Search Locations Manager -->
-          <div class="panel main-panel">
-            <div class="panel-header">
-              <h2>Target Search Queries</h2>
-              <p class="panel-subtitle">Define search terms and locations for Google Places scraper.</p>
-            </div>
-            
-            <form id="add-location-form" class="search-form">
-              <div class="form-row">
-                <div class="form-group flex-2">
-                  <label for="search-term">Business Query</label>
-                  <input type="text" id="search-term" placeholder="e.g. cold storage warehouse, dentist, boutique hotel" required>
-                </div>
-                <div class="form-group flex-2">
-                  <label for="search-location">City / Location</label>
-                  <input type="text" id="search-location" placeholder="e.g. Kanpur, UP, London, Manhattan" required>
-                </div>
-                <div class="form-group flex-1">
-                  <label for="max-leads">Max Leads</label>
-                  <select id="max-leads">
-                    <option value="10">10 Leads</option>
-                    <option value="20" selected>20 Leads</option>
-                    <option value="50">50 Leads</option>
-                    <option value="100">100 Leads</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary add-search-btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                  Add
-                </button>
+          <form id="add-location-form" class="search-form">
+            <div class="form-row">
+              <div class="form-group flex-2">
+                <label for="search-term">Business / Industry</label>
+                <input type="text" id="search-term" placeholder="e.g. Dental Clinic, Real Estate Agency, IT Company" required>
               </div>
-            </form>
+              <div class="form-group flex-2">
+                <label for="search-location">City / Location</label>
+                <input type="text" id="search-location" placeholder="e.g. Mumbai, Delhi, Bangalore, Dubai" required>
+              </div>
+              <div class="form-group flex-1">
+                <label for="max-leads">Limit</label>
+                <select id="max-leads">
+                  <option value="10">10 Leads</option>
+                  <option value="20" selected>20 Leads</option>
+                  <option value="50">50 Leads</option>
+                  <option value="100">100 Leads</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary add-search-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                Add Query
+              </button>
+            </div>
+          </form>
 
-            <div class="table-container">
-              <table id="locations-table">
-                <thead>
-                  <tr>
-                    <th>Search Term</th>
-                    <th>Location</th>
-                    <th>Max Limit</th>
-                    <th>Status</th>
-                    <th class="actions-col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="locations-list">
-                  <!-- Dynamic rows go here -->
-                </tbody>
-              </table>
+          <!-- Quick Chips -->
+          <div class="segment-quick-chips">
+            <span class="chips-label">Quick:</span>
+            <div class="chips-scroll" id="quick-chips-container">
+              <button class="chip-btn" data-term="Real Estate Agency">🏢 Real Estate</button>
+              <button class="chip-btn" data-term="Dental Clinic">⚕️ Healthcare</button>
+              <button class="chip-btn" data-term="Software Development Company">💻 Tech</button>
+              <button class="chip-btn" data-term="Fine Dining Restaurant">🍽️ Food</button>
+              <button class="chip-btn" data-term="Tax Advisory Firm">🏦 Finance</button>
+              <button class="chip-btn" data-term="Gym & Fitness Club">💪 Fitness</button>
+              <button class="chip-btn" data-term="Digital Marketing Agency">📣 Marketing</button>
+              <button class="chip-btn" data-term="Wedding Planners">🎪 Events</button>
             </div>
           </div>
 
-          <!-- Right: Live Activity Logs -->
-          <div class="panel log-panel">
-            <div class="panel-header">
-              <h2>Live Scraper Activity</h2>
-              <span class="pulse-dot"></span>
-            </div>
-            <div class="log-console" id="log-console">
-              <div class="log-entry system-message">System ready. Add a target query and hit "Run Scraper" to begin.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Leads Database Section -->
-      <section id="leads" class="content-section">
-        <header class="section-header">
-          <div>
-            <h1>Leads Database</h1>
-            <p class="subtitle">Search, filter, export, and trigger outreach for scraped leads.</p>
-          </div>
-          <div class="action-row">
-            <button id="btn-sync-sheets" class="btn btn-secondary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
-              Sync to Google Sheet
-            </button>
-            <a href="/api/leads/export-csv" id="btn-export-csv" class="btn btn-secondary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-              Download CSV
-            </a>
-            <button id="btn-clear-leads" class="btn btn-danger-outline">
-              Clear All
-            </button>
-          </div>
-        </header>
-
-        <!-- Filter Panel -->
-        <div class="panel filter-panel">
-          <div class="filters-container">
-            <div class="search-box">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <input type="text" id="leads-search-input" placeholder="Search by business, email, location or term...">
-            </div>
-            
-            <div class="filter-controls">
-              <label class="custom-checkbox">
-                <input type="checkbox" id="filter-has-phone">
-                <span class="checkmark"></span>
-                Only with Mobile Number
-              </label>
-
-              <select id="filter-email-status">
-                <option value="">All Email Status</option>
-                <option value="Pending">Pending Draft</option>
-                <option value="Draft Created">Draft Created</option>
-                <option value="Error">Draft Error</option>
-              </select>
-
-              <select id="filter-wa-status">
-                <option value="">All WhatsApp Status</option>
-                <option value="Pending">Pending Send</option>
-                <option value="Sent">Sent Successfully</option>
-                <option value="Error">Send Error</option>
-              </select>
-            </div>
+          <!-- Queries Table -->
+          <div class="table-container" style="margin-top:10px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Search Term</th>
+                  <th>Location</th>
+                  <th>Limit</th>
+                  <th>Status</th>
+                  <th class="actions-col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="locations-list"></tbody>
+            </table>
           </div>
         </div>
 
-        <!-- Bulk Outreach Operations Bar -->
-        <div class="bulk-operations-bar" id="bulk-bar">
-          <span class="selected-count-badge" id="selected-count">0 leads selected</span>
-          <div class="bulk-actions">
-            <button class="btn btn-primary" id="btn-bulk-email">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              Create Gmail Drafts
-            </button>
-            <button class="btn btn-accent" id="btn-bulk-wa">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              Send WhatsApp Template
-            </button>
-            <button class="btn btn-danger-outline btn-sm" id="btn-bulk-delete">
-              Delete Selected
-            </button>
+        <!-- Log Console -->
+        <div class="panel log-panel">
+          <div class="panel-header">
+            <h2>Live Console</h2>
+            <span class="pulse-dot"></span>
+          </div>
+          <div class="log-console" id="log-console">
+            <div class="log-entry system-message">⚡ LeadFlow Engine ready. Pick a segment or add a query.</div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Leads Table -->
-        <div class="panel table-panel">
+    <!-- ── SEGMENTS HUB ───────────────────────────────────────────────── -->
+    <section id="segments" class="content-section">
+      <header class="section-header">
+        <div>
+          <h1>🎯 Segments Hub</h1>
+          <p class="subtitle">One click to generate leads for any industry. No API key needed.</p>
+        </div>
+      </header>
+      <div class="segments-grid" id="segments-grid-container">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ── LEADS FEED ─────────────────────────────────────────────────── -->
+    <section id="leads" class="content-section">
+      <header class="section-header">
+        <div>
+          <h1>📋 Leads Feed</h1>
+          <p class="subtitle">Search, filter, export, and outreach your leads.</p>
+        </div>
+        <div class="action-row">
+          <button id="btn-sync-sheets" class="btn btn-secondary btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+            Sync Sheets
+          </button>
+          <a href="/api/leads/export-csv" class="btn btn-secondary btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            Export CSV
+          </a>
+          <button id="btn-clear-leads" class="btn btn-danger-outline btn-sm">🗑️ Clear All</button>
+        </div>
+      </header>
+
+      <!-- Segment Filter Tab Pills (scrollable row) -->
+      <div class="seg-tabs-wrapper">
+        <div id="segment-filter-tabs" class="seg-pills-row">
+          <button class="seg-pill active" data-seg="all">🌐 All</button>
+          <!-- JS populates more pills here -->
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="panel filter-panel">
+        <div class="filters-container">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="leads-search-input" placeholder="Search by name, email, location, segment...">
+          </div>
+          <div class="filter-controls">
+            <select id="filter-segment"><option value="all">All Segments</option></select>
+            <select id="filter-quality">
+              <option value="all">All Quality</option>
+              <option value="Hot">🔥 Hot</option>
+              <option value="Warm">⚡ Warm</option>
+              <option value="Cold">❄️ Cold</option>
+            </select>
+            <select id="filter-lead-status">
+              <option value="all">All Stages</option>
+              <option value="New">🆕 New</option>
+              <option value="Contacted">📩 Contacted</option>
+              <option value="Interested">🔥 Interested</option>
+              <option value="Closed">🎉 Closed</option>
+              <option value="Unqualified">❌ Unqualified</option>
+            </select>
+            <label class="custom-checkbox">
+              <input type="checkbox" id="filter-has-phone">
+              <span class="checkmark"></span>
+              Phone only
+            </label>
+            <label class="custom-checkbox" style="background:rgba(99,102,241,0.1);padding:4px 10px;border-radius:99px;border:1px solid rgba(99,102,241,0.25);">
+              <input type="checkbox" id="filter-has-all-three">
+              <span class="checkmark"></span>
+              <span style="color:#818cf8;font-weight:700;">✨ 3/3 Complete (Phone+Web+Social)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bulk Bar -->
+      <div class="bulk-operations-bar">
+        <span class="selected-count-badge" id="selected-count">0 leads selected</span>
+        <div class="bulk-actions">
+          <button class="btn btn-primary btn-sm" id="btn-bulk-email">✉️ Gmail Drafts</button>
+          <button class="btn btn-accent btn-sm" id="btn-bulk-wa">💬 WhatsApp</button>
+          <button class="btn btn-danger-outline btn-sm" id="btn-bulk-delete">Delete</button>
+        </div>
+      </div>
+
+      <!-- Display -->
+      <div class="leads-display-wrapper">
+        <!-- Mobile cards -->
+        <div class="mobile-leads-cards" id="mobile-cards-container"></div>
+
+        <!-- Desktop table -->
+        <div class="panel table-panel desktop-table-only">
           <div class="table-container large-table">
-            <table id="leads-table">
+            <table>
               <thead>
                 <tr>
                   <th class="checkbox-col">
@@ -246,247 +312,318 @@
                       <span class="checkmark"></span>
                     </label>
                   </th>
-                  <th>Business Name</th>
-                  <th>Mobile Number</th>
+                  <th>Business & Segment</th>
+                  <th>Phone / WhatsApp</th>
                   <th>Email</th>
-                  <th>Social Medias</th>
-                  <th>Website</th>
-                  <th>Rating</th>
-                  <th>Email Draft</th>
-                  <th>WhatsApp Status</th>
-                  <th class="actions-col"></th>
+                  <th>Website & Socials</th>
+                  <th>Score</th>
+                  <th>Pipeline</th>
+                  <th class="actions-col">Del</th>
                 </tr>
               </thead>
-              <tbody id="leads-list">
-                <!-- Dynamic leads rows go here -->
-              </tbody>
+              <tbody id="leads-list"></tbody>
             </table>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- WhatsApp Logs Section -->
-      <section id="logs" class="content-section">
-        <header class="section-header">
-          <div>
-            <h1>WhatsApp Outreach Log</h1>
-            <p class="subtitle">History and delivery results for sent WhatsApp Cloud messages.</p>
+    <!-- ── CRM PIPELINE ───────────────────────────────────────────────── -->
+    <section id="outreach" class="content-section">
+      <header class="section-header">
+        <div>
+          <h1>📊 CRM Pipeline</h1>
+          <p class="subtitle">Track deals and monitor WhatsApp outreach history.</p>
+        </div>
+      </header>
+
+      <div class="pipeline-kanban">
+        <div class="kanban-col">
+          <div class="kanban-header badge-new">🆕 New (<span id="count-pipeline-new">0</span>)</div>
+          <div class="kanban-list" id="kanban-list-new"></div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-header badge-contacted">📩 Contacted (<span id="count-pipeline-contacted">0</span>)</div>
+          <div class="kanban-list" id="kanban-list-contacted"></div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-header badge-interested">🔥 Interested (<span id="count-pipeline-interested">0</span>)</div>
+          <div class="kanban-list" id="kanban-list-interested"></div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-header badge-closed">🎉 Closed Won (<span id="count-pipeline-closed">0</span>)</div>
+          <div class="kanban-list" id="kanban-list-closed"></div>
+        </div>
+      </div>
+
+      <!-- WA Logs -->
+      <div class="panel" style="margin-top:18px;">
+        <div class="panel-header">
+          <h2>💬 WhatsApp Dispatch History</h2>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Business</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Time</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody id="wa-logs-list"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MEDIA & SOCIAL DIRECTORY ────────────────────────────────────── -->
+    <section id="media" class="content-section">
+      <header class="section-header">
+        <div>
+          <h1>📱 Media & Social Directory</h1>
+          <p class="subtitle">Direct links to Mobile Phone, Website, Facebook, Instagram, LinkedIn & Twitter. 3/3 complete profiles listed first.</p>
+        </div>
+      </header>
+
+      <!-- Filter Controls for Media -->
+      <div class="panel filter-panel">
+        <div class="filters-container">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="media-search-input" placeholder="Search social handles, domains, business names...">
           </div>
-        </header>
-
-        <div class="panel">
-          <div class="table-container">
-            <table id="wa-logs-table">
-              <thead>
-                <tr>
-                  <th>Business Name</th>
-                  <th>Phone Number</th>
-                  <th>Status</th>
-                  <th>Timestamp</th>
-                  <th>Error Detail</th>
-                </tr>
-              </thead>
-              <tbody id="wa-logs-list">
-                <!-- Dynamic logs go here -->
-              </tbody>
-            </table>
+          <div class="filter-controls">
+            <select id="media-filter-segment"><option value="all">All Segments</option></select>
+            <label class="custom-checkbox" style="background:rgba(99,102,241,0.12);padding:5px 12px;border-radius:99px;border:1px solid rgba(99,102,241,0.3);">
+              <input type="checkbox" id="media-filter-3only" checked>
+              <span class="checkmark"></span>
+              <span style="color:#818cf8;font-weight:700;">🏆 3/3 Complete Contact Profiles Only</span>
+            </label>
           </div>
         </div>
-      </section>
+      </div>
 
-      <!-- Settings Section -->
-      <section id="settings" class="content-section">
-        <header class="section-header">
-          <div>
-            <h1>Settings Panel</h1>
-            <p class="subtitle">Configure Google Developer keys, email templates, and Meta WhatsApp credentials.</p>
+      <!-- Media Cards Grid -->
+      <div class="media-directory-grid" id="media-directory-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ── SETTINGS ───────────────────────────────────────────────────── -->
+    <section id="settings" class="content-section">
+      <header class="section-header">
+        <div>
+          <h1>⚙️ Settings</h1>
+          <p class="subtitle">API keys, OAuth, templates, and WhatsApp QR.</p>
+        </div>
+        <button id="btn-save-settings" class="btn btn-primary">💾 Save Settings</button>
+      </header>
+
+      <div class="settings-grid">
+
+        <!-- Google Places -->
+        <div class="settings-card">
+          <div class="card-header">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <h2>Google Places API</h2>
           </div>
-          <button id="btn-save-settings" class="btn btn-primary">
-            Save Settings
-          </button>
-        </header>
-
-        <div class="settings-grid">
-          <!-- Google Places API Key Card -->
-          <div class="settings-card card-full">
-            <div class="card-header">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-icon"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" x2="12" y1="2" y2="8"/><line x1="12" x2="12" y1="16" y2="22"/><line x1="2" x2="8" y1="12" y2="12"/><line x1="16" x2="22" y1="12" y2="12"/></svg>
-              <h2>Google Places API</h2>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label for="setting-places-key">Places API Key</label>
-                <input type="password" id="setting-places-key" placeholder="AIzaSy...">
-                <p class="help-text">Used to query businesses and details from Google Maps. Get a key from the Google Cloud Console (make sure Places API New is enabled).</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Google OAuth Integration Card -->
-          <div class="settings-card card-full">
-            <div class="card-header">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <h2>Google OAuth2 connection</h2>
-            </div>
-            <div class="card-body grid-2col">
-              <div>
-                <div class="form-group">
-                  <label for="setting-google-id">Google Client ID</label>
-                  <input type="text" id="setting-google-id" placeholder="12345-abc.apps.googleusercontent.com">
-                </div>
-                <div class="form-group">
-                  <label for="setting-google-secret">Google Client Secret</label>
-                  <input type="password" id="setting-google-secret" placeholder="GOCSPX-...">
-                </div>
-                <div class="form-group">
-                  <label>Authorized Redirect URI</label>
-                  <input type="text" id="setting-redirect-uri" value="http://localhost:3000/oauth2callback" readonly>
-                  <p class="help-text">Copy and paste this Redirect URI into your Google Developer Console's OAuth 2.0 Client credentials config.</p>
-                </div>
-              </div>
-              <div class="oauth-status-panel">
-                <h3>OAuth Actions</h3>
-                <p class="oauth-desc">Connect your Gmail accounts and Google Drive file permissions to directly create drafts and sync Sheets.</p>
-                
-                <div class="oauth-control-btn-wrapper">
-                  <button id="btn-oauth-connect" class="btn btn-primary">Connect Google Account</button>
-                  <button id="btn-oauth-disconnect" class="btn btn-danger-outline hidden">Disconnect Account</button>
-                </div>
-                
-                <details class="setup-guide" style="margin-top: 15px; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; background-color: rgba(255,255,255,0.01);">
-                  <summary style="cursor: pointer; font-size: 13px; font-weight: 600; color: var(--color-indigo); list-style: none; display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-                    Google Developer Setup Guide
-                  </summary>
-                  <div class="oauth-instructions" style="margin-top: 10px; border-top: 1px solid var(--border-color); padding-top: 10px;">
-                    <ol style="font-size: 12px; color: var(--text-secondary); padding-left: 16px; line-height: 1.6;">
-                      <li>Go to the <a href="https://console.cloud.google.com/" target="_blank" style="color: var(--color-cyan); text-decoration: none;">Google Cloud Console</a>.</li>
-                      <li>Create a Project and enable **Gmail API**, **Google Sheets API**, and **Google Drive API**.</li>
-                      <li>Configure the **OAuth Consent Screen** (User Type: External / Testing, add your email as test user).</li>
-                      <li>Go to **Credentials** > **Create Credentials** > **OAuth Client ID** (Application Type: Web Application).</li>
-                      <li>Add `http://localhost:3000/oauth2callback` to **Authorized Redirect URIs**.</li>
-                      <li>Copy Client ID and Client Secret, paste them into settings, and click Connect.</li>
-                    </ol>
-                  </div>
-                </details>
-              </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="setting-places-key">API Key <span style="color:var(--text-sec);font-weight:400;text-transform:none;">(optional — app works without it)</span></label>
+              <input type="password" id="setting-places-key" placeholder="AIzaSy...">
+              <p class="help-text">Leave empty to use the built-in Instant Lead Generator. Add key for real Google Maps data.</p>
             </div>
           </div>
+        </div>
 
-          <!-- Email outreach Template Card -->
-          <div class="settings-card card-full">
-            <div class="card-header">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-icon"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <h2>Gmail Outreach Template</h2>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label for="setting-email-subject">Email Subject</label>
-                <input type="text" id="setting-email-subject" placeholder="Enter email subject...">
+        <!-- Google OAuth -->
+        <div class="settings-card">
+          <div class="card-header">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <h2>Google OAuth2 (Gmail & Sheets)</h2>
+          </div>
+          <div class="card-body grid-2col">
+            <div>
+              <div class="form-group" style="margin-bottom:12px;">
+                <label for="setting-google-id">Google Client ID</label>
+                <input type="text" id="setting-google-id" placeholder="12345-abc.apps.googleusercontent.com">
+              </div>
+              <div class="form-group" style="margin-bottom:12px;">
+                <label for="setting-google-secret">Client Secret</label>
+                <input type="password" id="setting-google-secret" placeholder="GOCSPX-...">
               </div>
               <div class="form-group">
-                <label for="setting-email-body">Email Body Template</label>
-                <textarea id="setting-email-body" rows="8" placeholder="Enter email content..."></textarea>
-                <p class="help-text">Available placeholders: <code>{{BusinessName}}</code>, <code>{{Location}}</code>, <code>{{Address}}</code>, <code>{{Phone}}</code>, <code>{{Website}}</code></p>
+                <label>Redirect URI (copy to Google Console)</label>
+                <input type="text" value="http://localhost:3000/oauth2callback" readonly style="color:var(--text-sec);font-size:12px;">
               </div>
             </div>
-          </div>
-
-          <!-- WhatsApp Web QR Connection Card -->
-          <div class="settings-card card-full">
-            <div class="card-header">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-icon"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <h2>WhatsApp QR Code Connection</h2>
-            </div>
-            <div class="card-body grid-2col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
-              <div>
-                <div class="form-group">
-                  <label for="setting-wa-template">WhatsApp Message Template</label>
-                  <textarea id="setting-wa-template" rows="8" placeholder="Enter WhatsApp outreach text..."></textarea>
-                  <p class="help-text">Available placeholders: <code>{{BusinessName}}</code>, <code>{{Location}}</code>, <code>{{Address}}</code>, <code>{{Phone}}</code>, <code>{{Website}}</code></p>
-                </div>
-              </div>
-              
-              <div class="oauth-status-panel" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px;">
-                <h3 id="wa-connection-title" style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #fff;">WhatsApp Link Status</h3>
-                <div id="wa-status-badge" class="status-indicator disconnected" style="margin-bottom: 20px;">
-                  <span class="indicator-dot"></span>
-                  <span class="indicator-text" id="wa-status-text">Disconnected</span>
-                </div>
-
-                <div id="wa-qr-container" style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 20px; display: none; width: 180px; height: 180px; align-items: center; justify-content: center;">
-                  <img id="wa-qr-img" src="" alt="Scan QR Code" style="width: 100%; height: 100%; border: none;">
-                </div>
-
-                <div id="wa-loader" style="margin-bottom: 20px; display: none; color: var(--text-secondary); font-size: 13px;">
-                  <div style="width: 24px; height: 24px; border: 2px solid var(--border-color); border-top-color: var(--color-indigo); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 10px;"></div>
-                  <span>Initializing WhatsApp Client...</span>
-                </div>
-
-                <button id="btn-wa-disconnect" class="btn btn-danger-outline hidden" style="width: 100%;">Disconnect WhatsApp</button>
-                <p class="help-text" style="margin-top: 15px; font-size: 11px;">Scan this QR code with WhatsApp on your phone (Linked Devices > Link a Device) to authorize outgoing outreach messages.</p>
+            <div class="oauth-status-panel">
+              <h3>Google Account Status</h3>
+              <p class="oauth-desc">Connect to enable Gmail draft creation and Google Sheets sync for your leads.</p>
+              <div class="oauth-control-btn-wrapper">
+                <button id="btn-oauth-connect" class="btn btn-primary btn-sm">🔗 Connect Google</button>
+                <button id="btn-oauth-disconnect" class="btn btn-danger-outline btn-sm hidden">Disconnect</button>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-    </main>
+        <!-- Email Template -->
+        <div class="settings-card">
+          <div class="card-header">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <h2>Gmail Outreach Template</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group" style="margin-bottom:12px;">
+              <label for="setting-email-subject">Subject Line</label>
+              <input type="text" id="setting-email-subject" placeholder="Partnership Opportunity - {{BusinessName}}">
+            </div>
+            <div class="form-group">
+              <label for="setting-email-body">Email Body</label>
+              <textarea id="setting-email-body" rows="5" placeholder="Hi {{BusinessName}} team..."></textarea>
+              <p class="help-text">Placeholders: <code>{{BusinessName}}</code> <code>{{Location}}</code> <code>{{Segment}}</code> <code>{{Phone}}</code> <code>{{Website}}</code></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="settings-card">
+          <div class="card-header">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <h2>WhatsApp Automation</h2>
+          </div>
+          <div class="card-body grid-2col">
+            <div class="form-group">
+              <label for="setting-wa-template">WA Message Template</label>
+              <textarea id="setting-wa-template" rows="6" placeholder="Hi {{BusinessName}}..."></textarea>
+              <p class="help-text">Placeholders: <code>{{BusinessName}}</code> <code>{{Location}}</code> <code>{{Segment}}</code></p>
+            </div>
+            <div class="oauth-status-panel text-center">
+              <h3 id="wa-connection-title">WhatsApp Status</h3>
+              <div id="wa-status-badge" class="status-indicator disconnected" style="justify-content:center;margin:10px 0;">
+                <span class="indicator-dot"></span>
+                <span class="indicator-text" id="wa-status-text">Disconnected</span>
+              </div>
+              <div id="wa-qr-container" class="qr-box">
+                <img id="wa-qr-img" src="" alt="Scan QR Code">
+              </div>
+              <div id="wa-loader" class="wa-spinner-box">
+                <div class="spinner"></div>
+                <span>Initializing WhatsApp...</span>
+              </div>
+              <button id="btn-wa-disconnect" class="btn btn-danger-outline btn-sm hidden" style="width:100%;margin-top:8px;">Disconnect WhatsApp</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══ BOTTOM NAV (Mobile) ══════════════════════════════════════════ -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-target="dashboard">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span>Generate</span>
+    </button>
+    <button class="nav-item" data-target="segments">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+      <span>Segments</span>
+    </button>
+    <button class="nav-item" data-target="leads">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Leads</span>
+    </button>
+    <button class="nav-item" data-target="media">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      <span>Media</span>
+    </button>
+    <button class="nav-item" data-target="outreach">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v13H3z"/><path d="M3 7l9 6 9-6"/></svg>
+      <span>CRM</span>
+    </button>
+    <button class="nav-item" data-target="settings">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>Settings</span>
+    </button>
+  </nav>
+
+</div><!-- end app-container -->
+
+<!-- ═══ MODALS ════════════════════════════════════════════════════════════ -->
+
+<!-- Segment Modal -->
+<div class="overlay hidden" id="segment-modal-overlay">
+  <div class="progress-dialog">
+    <h3 id="segment-modal-title">Generate Leads</h3>
+    <p>Configure city and count for this segment.</p>
+    <form id="segment-gen-form">
+      <input type="hidden" id="modal-segment-id">
+      <div class="form-group" style="margin-bottom:14px;">
+        <label for="modal-segment-city">Target City / Region</label>
+        <input type="text" id="modal-segment-city" placeholder="e.g. Mumbai, Bangalore, Delhi, Pune" value="Mumbai" required>
+      </div>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label for="modal-segment-count">Number of Leads</label>
+        <select id="modal-segment-count">
+          <option value="10" selected>10 Leads</option>
+          <option value="20">20 Leads</option>
+          <option value="50">50 Leads</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button type="button" id="btn-cancel-segment-modal" class="btn btn-secondary btn-sm">Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm">⚡ Generate Now</button>
+      </div>
+    </form>
   </div>
+</div>
 
-  <!-- Progress Overlay Modal -->
-  <div class="overlay hidden" id="progress-overlay">
-    <div class="progress-dialog card">
-      <h3 id="progress-title">Outreach in Progress</h3>
-      <p id="progress-subtitle">Initializing job details...</p>
-      
-      <div class="progress-bar-container">
-        <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
-      </div>
-      
-      <div class="progress-stats">
-        <span id="progress-text">0 / 0 leads processed</span>
-        <span id="progress-percentage">0%</span>
-      </div>
-
-      <div class="progress-console" id="progress-console">
-        <!-- Live status details are appended here -->
-      </div>
-
-      <div class="progress-actions">
-        <button id="btn-close-progress" class="btn btn-secondary hidden">Close Window</button>
-      </div>
+<!-- Progress Modal -->
+<div class="overlay hidden" id="progress-overlay">
+  <div class="progress-dialog">
+    <h3 id="progress-title">Processing...</h3>
+    <p id="progress-subtitle">Initializing...</p>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+    <div class="progress-stats">
+      <span id="progress-text">0 / 0</span>
+      <span id="progress-percentage">0%</span>
+    </div>
+    <div class="progress-console" id="progress-console"></div>
+    <div class="progress-actions">
+      <button id="btn-close-progress" class="btn btn-secondary hidden">✓ Done — Close</button>
     </div>
   </div>
+</div>
 
-  <!-- Scrape Run Option Modal -->
-  <div class="overlay hidden" id="run-options-overlay">
-    <div class="progress-dialog card" style="max-width: 420px; border-color: rgba(99, 102, 241, 0.3);">
-      <h3 style="font-size: 18px; margin-bottom: 6px; color: #fff;">Run Scraper Options</h3>
-      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Choose how to handle existing leads for this search query.</p>
-      
-      <div class="form-group" style="align-items: flex-start; margin-bottom: 24px; text-align: left;">
-        <label class="custom-checkbox">
-          <input type="checkbox" id="run-overwrite" checked>
-          <span class="checkmark"></span>
-          Clear previous leads for this search
-        </label>
-        <p class="help-text" style="margin-top: 4px; padding-left: 28px; line-height: 1.4;">
-          <strong>Enabled (Recommended)</strong>: Deletes old results for this query to fetch a fresh list.<br>
-          <strong>Disabled</strong>: Keeps old results and appends newly discovered leads.
-        </p>
-      </div>
-
-      <div style="display: flex; gap: 12px; justify-content: flex-end;">
-        <button id="btn-cancel-run" class="btn btn-secondary btn-sm" style="padding: 8px 16px;">Cancel</button>
-        <button id="btn-confirm-run" class="btn btn-primary btn-sm" style="padding: 8px 16px;">Start Scraping</button>
-      </div>
+<!-- Run Options Modal -->
+<div class="overlay hidden" id="run-options-overlay">
+  <div class="progress-dialog" style="max-width:420px;">
+    <h3>Run Scraper</h3>
+    <p>Choose how to handle existing data for this query.</p>
+    <div class="form-group" style="margin-bottom:20px;">
+      <label class="custom-checkbox" style="text-transform:none;font-size:13px;font-weight:600;">
+        <input type="checkbox" id="run-overwrite" checked>
+        <span class="checkmark"></span>
+        Clear old leads for this search first
+      </label>
+      <p class="help-text" style="margin-top:6px;padding-left:24px;">Uncheck to append new leads instead of replacing.</p>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button id="btn-cancel-run" class="btn btn-secondary btn-sm">Cancel</button>
+      <button id="btn-confirm-run" class="btn btn-primary btn-sm">▶ Start Scraping</button>
     </div>
   </div>
+</div>
 
-  <!-- Dynamic Toast Container -->
-  <div class="toast-container" id="toast-container"></div>
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

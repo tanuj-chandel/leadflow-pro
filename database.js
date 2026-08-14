@@ -114,6 +114,19 @@ class Database {
     return this.data.leads;
   }
 
+  calculateQualityScore(lead) {
+    let scorePoints = 0;
+    if (lead.email && lead.email.trim() !== '') scorePoints += 2;
+    if (lead.phone && lead.phone.trim() !== '') scorePoints += 2;
+    if (lead.website && lead.website.trim() !== '') scorePoints += 1;
+    if (lead.rating && parseFloat(lead.rating) >= 4.0) scorePoints += 1;
+    if (lead.facebook || lead.instagram || lead.linkedin || lead.twitter) scorePoints += 1;
+
+    if (scorePoints >= 5) return 'Hot';
+    if (scorePoints >= 3) return 'Warm';
+    return 'Cold';
+  }
+
   addLead(lead) {
     // Check for duplicate website or placeId
     const exists = this.data.leads.some(l => 
@@ -122,11 +135,18 @@ class Database {
     );
     if (exists) return null;
 
+    const qualityScore = lead.qualityScore || this.calculateQualityScore(lead);
+    const segment = lead.segment || 'General Business';
+
     const newLead = {
       id: 'lead_' + Date.now() + Math.random().toString(36).substr(2, 5),
       createdAt: new Date().toISOString(),
       emailStatus: 'Pending', // Pending, Draft Created, Error
       whatsappStatus: 'Pending', // Pending, Sent, Error
+      leadStatus: lead.leadStatus || 'New', // New, Contacted, Interested, Closed, Unqualified
+      segment,
+      qualityScore,
+      notes: lead.notes || '',
       ...lead
     };
     this.data.leads.push(newLead);
@@ -138,6 +158,10 @@ class Database {
     const idx = this.data.leads.findIndex(l => l.id === id);
     if (idx !== -1) {
       this.data.leads[idx] = { ...this.data.leads[idx], ...updates };
+      // Re-evaluate quality score if contacts updated
+      if (updates.email !== undefined || updates.phone !== undefined || updates.website !== undefined) {
+        this.data.leads[idx].qualityScore = this.calculateQualityScore(this.data.leads[idx]);
+      }
       this.save();
       return this.data.leads[idx];
     }

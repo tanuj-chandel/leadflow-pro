@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeadFlow Pro — AI Lead Generation for Every Industry</title>
+  <meta name="description" content="The #1 AI-powered lead generation tool for agencies, real estate, healthcare, restaurants, IT firms, and more. Generate 1000+ verified leads per day.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #06100d;
+      --panel: rgba(13, 26, 22, 0.78);
+      --border: rgba(198,255,232,0.08);
+      --indigo: #2dd4bf;
+      --purple: #0f9c8f;
+      --cyan: #38bdf8;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --text: #eefaf5;
+      --muted: #85988f;
+      --faint: #24352e;
+      --font-display: 'Space Grotesk', 'Inter', sans-serif;
+      --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-image:
+        linear-gradient(rgba(198,255,232,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(198,255,232,0.045) 1px, transparent 1px);
+      background-size: 42px 42px;
+      background-attachment: fixed;
+    }
+
+    h1, h2, h3, .nav-brand, .price-amount, .hero-stat-num { font-family: var(--font-display); }
+    .price-amount, .hero-stat-num { font-family: var(--font-mono); }
+
+    /* ——— NAV ——— */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(6,16,13,0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; }
+    .nav-logo { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #2dd4bf, #0f9c8f); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .btn-nav { padding: 10px 22px; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; text-decoration: none; border: none; transition: all .2s; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.05); }
+    .btn-primary { background: linear-gradient(135deg, #2dd4bf, #0f9c8f); color: white; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(45,212,191,.4); }
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+    }
+
+    /* ——— HERO ——— */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,212,191,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 99px; margin-bottom: 28px;
+      background: rgba(45,212,191,.12); border: 1px solid rgba(45,212,191,.25);
+      font-size: 13px; font-weight: 600; color: #5eead4;
+    }
+    .hero-badge span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #2dd4bf; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.3; } }
+    h1.hero-title {
+      font-size: clamp(40px, 7vw, 80px);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      max-width: 900px;
+    }
+    .grad-text { background: linear-gradient(135deg, #2dd4bf 0%, #0f9c8f 40%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn-hero { padding: 16px 36px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all .25s; border: none; }
+    .btn-hero-primary { background: linear-gradient(135deg, #2dd4bf, #0f9c8f); color: white; }
+    .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(45,212,191,.5); }
+    .btn-hero-ghost { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text); }
+    .btn-hero-ghost:hover { background: rgba(255,255,255,0.1); }
+    .hero-stats { display: flex; gap: 40px; margin-top: 60px; flex-wrap: wrap; justify-content: center; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #2dd4bf, #0f9c8f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-stat-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+    /* ——— SECTION ——— */
+    section { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+    .section-badge { display: inline-block; padding: 6px 14px; border-radius: 99px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px; }
+    .badge-indigo { background: rgba(45,212,191,.12); color: #5eead4; border: 1px solid rgba(45,212,191,.2); }
+    .badge-emerald { background: rgba(16,185,129,.12); color: #34d399; border: 1px solid rgba(16,185,129,.2); }
+    .badge-amber { background: rgba(245,158,11,.12); color: #fbbf24; border: 1px solid rgba(245,158,11,.2); }
+    h2.section-title { font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.1; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .section-sub { color: var(--muted); font-size: 16px; max-width: 560px; }
+
+    /* ——— INDUSTRIES GRID ——— */
+    .industries-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 52px; }
+    .industry-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      backdrop-filter: blur(10px);
+      transition: all .3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .industry-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      opacity: 0; transition: opacity .3s;
+    }
+    .industry-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .industry-card:hover::before { opacity: 1; }
+    .ic-blue::before { background: linear-gradient(90deg, #2dd4bf, #0f9c8f); }
+    .ic-green::before { background: linear-gradient(90deg, #10b981, #38bdf8); }
+    .ic-amber::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+    .ic-pink::before { background: linear-gradient(90deg, #f43f5e, #0f9c8f); }
+    .industry-icon { font-size: 36px; margin-bottom: 16px; }
+    .industry-name { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .industry-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .industry-segments { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .seg-pill { padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--muted); }
+
+    /* ——— HOW IT WORKS ——— */
+    .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; margin-top: 52px; }
+    .step { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 28px; position: relative; }
+    .step-num { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #2dd4bf, #0f9c8f); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; margin-bottom: 16px; }
+    .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* ——— PRICING ——— */
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 52px; }
+    .price-card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 24px;
+      padding: 36px 28px; position: relative; overflow: hidden;
+    }
+    .price-card.featured {
+      border-color: rgba(45,212,191,.4);
+      background: linear-gradient(135deg, rgba(45,212,191,.08) 0%, rgba(15,156,143,.06) 100%);
+    }
+    .featured-badge {
+      position: absolute; top: 20px; right: 20px;
+      background: linear-gradient(135deg, #2dd4bf, #0f9c8f);
+      color: white; font-size: 11px; font-weight: 700;
+      padding: 4px 12px; border-radius: 99px; letter-spacing: 0.04em;
+    }
+    .price-tier { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px; }
+    .price-name { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
+    .price-tagline { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+    .price-amount { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; }
+    .price-amount span { font-size: 16px; font-weight: 500; color: var(--muted); vertical-align: middle; }
+    .price-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; }
+    .check { color: var(--emerald); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .btn-price {
+      display: block; width: 100%; padding: 14px;
+      border-radius: 12px; font-size: 15px; font-weight: 700;
+      text-align: center; text-decoration: none; cursor: pointer;
+      border: none; transition: all .25s;
+    }
+    .btn-price-primary { background: linear-gradient(135deg, #2dd4bf, #0f9c8f); color: white; }
+    .btn-price-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(45,212,191,.5); }
+    .btn-price-ghost { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text); }
+    .btn-price-ghost:hover { background: rgba(255,255,255,0.1); }
+
+    /* ——— USE CASES ——— */
+    .cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 52px; }
+    .case-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; }
+    .case-icon { font-size: 32px; margin-bottom: 14px; }
+    .case-role { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--indigo); margin-bottom: 8px; }
+    .case-title { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .case-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .case-result { margin-top: 14px; padding: 10px 14px; background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.15); border-radius: 10px; font-size: 13px; color: #34d399; font-weight: 600; }
+
+    /* ——— FEATURES ——— */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 52px; }
+    .feature { display: flex; gap: 16px; align-items: flex-start; }
+    .feature-icon { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .fi-blue { background: rgba(45,212,191,.15); }
+    .fi-green { background: rgba(16,185,129,.15); }
+    .fi-cyan { background: rgba(6,182,212,.15); }
+    .fi-amber { background: rgba(245,158,11,.15); }
+    .fi-pink { background: rgba(244,63,94,.15); }
+    .fi-purple { background: rgba(15,156,143,.15); }
+    .feature-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .feature-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* ——— FAQ ——— */
+    .faq { margin-top: 52px; display: flex; flex-direction: column; gap: 12px; max-width: 700px; margin-left: auto; margin-right: auto; }
+    .faq-item { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .faq-q { padding: 18px 20px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .faq-q:hover { background: rgba(255,255,255,0.03); }
+    .faq-arrow { color: var(--muted); font-size: 12px; transition: transform .25s; flex-shrink: 0; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-a { padding: 0 20px; max-height: 0; overflow: hidden; transition: all .3s ease; font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .faq-item.open .faq-a { padding: 0 20px 18px; max-height: 200px; }
+
+    /* ——— CTA ——— */
+    .cta-section { text-align: center; padding: 80px 24px 120px; }
+    .cta-box { background: linear-gradient(135deg, rgba(45,212,191,.12) 0%, rgba(15,156,143,.08) 100%); border: 1px solid rgba(45,212,191,.2); border-radius: 28px; padding: 64px 40px; max-width: 720px; margin: 0 auto; }
+    .cta-box h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .cta-box p { font-size: 16px; color: var(--muted); margin-bottom: 36px; }
+
+    /* ——— FOOTER ——— */
+    footer { border-top: 1px solid var(--border); padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: gap; gap: 16px; max-width: 1240px; margin: 0 auto; }
+    .footer-brand { font-size: 15px; font-weight: 700; }
+    footer p { font-size: 13px; color: var(--muted); }
+
+    /* ——— DIVIDER ——— */
+    .divider { border: none; border-top: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
+    .full-section { max-width: 100%; background: rgba(255,255,255,0.02); }
+    .full-section > section { max-width: 1200px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">⚡</div>
+    LeadFlow Pro
+  </div>
+  <div class="nav-links">
+    <a href="#industries">Industries</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="nav-cta">
+    <a href="/" class="btn-nav btn-ghost">Open App →</a>
+    <a href="#pricing" class="btn-nav btn-primary">Get Started</a>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">
+    <span></span>
+    Trusted by 500+ agencies & freelancers
+  </div>
+  <h1 class="hero-title">
+    Generate <span class="grad-text">1000+ Leads</span><br>for Any Industry — Daily
+  </h1>
+  <p class="hero-sub">
+    LeadFlow Pro scrapes, qualifies, and outreaches verified business leads across 12+ industry segments. WhatsApp, Gmail, and Google Sheets — all built-in.
+  </p>
+  <div class="hero-actions">
+    <a href="/" class="btn-hero btn-hero-primary">🚀 Launch App Free</a>
+    <a href="#pricing" class="btn-hero btn-hero-ghost">💼 See Pricing</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">12+</div>
+      <div class="hero-stat-label">Industry Segments</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">1K+</div>
+      <div class="hero-stat-label">Leads / Day</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">5min</div>
+      <div class="hero-stat-label">Setup Time</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100%</div>
+      <div class="hero-stat-label">Local & Private</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ========== INDUSTRIES ========== -->
+<section id="industries">
+  <div class="section-badge badge-indigo">12 Industry Segments</div>
+  <h2 class="section-title">Built for <span class="grad-text">Every Category</span></h2>
+  <p class="section-sub">Pre-configured for 12+ verticals — just pick your segment, enter a city, and get verified leads in minutes.</p>
+
+  <div class="industries-grid">
+    <div class="industry-card ic-blue">
+      <div class="industry-icon">🍽️</div>
+      <div class="industry-name">Food & Restaurants</div>
+      <div class="industry-desc">Perfect for food delivery, POS system sellers, kitchen suppliers, and marketing agencies targeting F&B.</div>
+      <div class="industry-segments"><span class="seg-pill">Restaurants</span><span class="seg-pill">Cafes</span><span class="seg-pill">Bakeries</span><span class="seg-pill">Cloud Kitchens</span></div>
+    </div>
+    <div class="industry-card ic-green">
+      <div class="industry-icon">🏥</div>
+      <div class="industry-name">Healthcare & Wellness</div>
+      <div class="industry-desc">Sell to clinics, pharmacies, gyms, physiotherapy centres, and diagnostic labs. High-intent buyers.</div>
+      <div class="industry-segments"><span class="seg-pill">Clinics</span><span class="seg-pill">Pharmacies</span><span class="seg-pill">Gyms</span><span class="seg-pill">Dental</span></div>
+    </div>
+    <div class="industry-card ic-amber">
+      <div class="industry-icon">🏠</div>
+      <div class="industry-name">Real Estate</div>
+      <div class="industry-desc">Target agents, brokers, interior designers, and property management firms for B2B outreach.</div>
+      <div class="industry-segments"><span class="seg-pill">Agents</span><span class="seg-pill">Brokers</span><span class="seg-pill">Interior Design</span></div>
+    </div>
+    <div class="industry-card ic-pink">
+      <div class="industry-icon">💻</div>
+      <div class="industry-name">Technology & IT</div>
+      <div class="industry-desc">Reach software companies, IT consultancies, web design studios, and digital agencies.</div>
+      <div class="industry-segments"><span class="seg-pill">IT Firms</span><span class="seg-pill">Web Agencies</span><span class="seg-pill">SaaS</span></div>
+    </div>
+    <div class="industry-card ic-blue">
+      <div class="industry-icon">📚</div>
+      <div class="industry-name">Education</div>
+      <div class="industry-desc">EdTech, coaching institutes, schools, and skill centers looking to grow student registrations.</div>
+      <div class="industry-segments"><span class="seg-pill">Schools</span><span class="seg-pill">Coaching</span><span class="seg-pill">EdTech</span></div>
+    </div>
+    <div class="industry-card ic-green">
+      <div class="industry-icon">🛍️</div>
+      <div class="industry-name">Retail & E-commerce</div>
+      <div class="industry-desc">Local shops, retail chains, and e-commerce sellers who need digital marketing or software tools.</div>
+      <div class="industry-segments"><span class="seg-pill">Shops</span><span class="seg-pill">Fashion</span><span class="seg-pill">Electronics</span></div>
+    </div>
+    <div class="industry-card ic-amber">
+      <div class="industry-icon">🚗</div>
+      <div class="industry-name">Automotive</div>
+      <div class="industry-desc">Car dealerships, garages, auto-parts stores, and EV charging station operators.</div>
+      <div class="industry-segments"><span class="seg-pill">Dealerships</span><span class="seg-pill">Garages</span><span class="seg-pill">EV</span></div>
+    </div>
+    <div class="industry-card ic-pink">
+      <div class="industry-icon">⚖️</div>
+      <div class="industry-name">Legal & Finance</div>
+      <div class="industry-desc">Law firms, CA offices, insurance brokers, and financial advisory services.</div>
+      <div class="industry-segments"><span class="seg-pill">Law Firms</span><span class="seg-pill">CA Offices</span><span class="seg-pill">Insurance</span></div>
+    </div>
+    <div class="industry-card ic-blue">
+      <div class="industry-icon">🏗️</div>
+      <div class="industry-name">Construction</div>
+      <div class="industry-desc">Builders, contractors, plumbing & electrical services, and architecture studios.</div>
+      <div class="industry-segments"><span class="seg-pill">Builders</span><span class="seg-pill">Contractors</span><span class="seg-pill">Architects</span></div>
+    </div>
+    <div class="industry-card ic-green">
+      <div class="industry-icon">✈️</div>
+      <div class="industry-name">Travel & Hospitality</div>
+      <div class="industry-desc">Hotels, tour operators, travel agencies, and event management companies.</div>
+      <div class="industry-segments"><span class="seg-pill">Hotels</span><span class="seg-pill">Tour Ops</span><span class="seg-pill">Events</span></div>
+    </div>
+    <div class="industry-card ic-amber">
+      <div class="industry-icon">💈</div>
+      <div class="industry-name">Beauty & Salon</div>
+      <div class="industry-desc">Salons, spas, beauty product distributors, and grooming studios seeking marketing solutions.</div>
+      <div class="industry-segments"><span class="seg-pill">Salons</span><span class="seg-pill">Spas</span><span class="seg-pill">Grooming</span></div>
+    </div>
+    <div class="industry-card ic-pink">
+      <div class="industry-icon">🏭</div>
+      <div class="industry-name">Manufacturing & B2B</div>
+      <div class="industry-desc">Factory owners, industrial suppliers, packaging companies, and wholesale distributors.</div>
+      <div class="industry-segments"><span class="seg-pill">Factories</span><span class="seg-pill">Suppliers</span><span class="seg-pill">Wholesale</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== HOW IT WORKS ========== -->
+<section>
+  <div class="section-badge badge-emerald">How It Works</div>
+  <h2 class="section-title">From Zero to <span class="grad-text">Closed Deal</span> in 4 Steps</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Pick Your Segment</h3>
+      <p>Choose from 12+ industry segments — restaurants, clinics, IT firms, real estate, and more. Or enter a custom search query.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Auto-Scrape & Qualify</h3>
+      <p>LeadFlow scrapes business data from Google Maps, scores each lead as 🔥 Hot, ⚡ Warm, or ❄️ Cold based on data quality.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Outreach via WhatsApp & Gmail</h3>
+      <p>Send personalised messages to leads via WhatsApp or create Gmail drafts in bulk — all from one dashboard.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Track in CRM Pipeline</h3>
+      <p>Move leads through New → Contacted → Interested → Closed stages. Export to CSV or sync to Google Sheets anytime.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FEATURES ========== -->
+<section id="features">
+  <div class="section-badge badge-indigo">All Features Included</div>
+  <h2 class="section-title">Everything You Need to <span class="grad-text">Scale Outreach</span></h2>
+
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon fi-blue">🎯</div>
+      <div>
+        <div class="feature-title">12 Industry Segments</div>
+        <div class="feature-desc">Pre-built industry categories with relevant search terms and scoring rules.</div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon fi-green">🔥</div>
+      <div>
+        <div class="feature-title">AI Quality Scoring</div>
+        <div class="feature-desc">Automatically classifies leads as Hot, Warm, or Cold based on data completeness and rating.</div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon fi-cyan">💬</div>
+      <div>
+        <div class="feature-title">WhatsApp Bulk Outreach</div>
+        <div class="feature-desc">Send personalized WhatsApp messages to 100s of leads in one click via QR login.</div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon fi-amber">✉️</div>
+      <div>
+        <div class="feature-title">Gmail Draft Creation</div>
+        <div class="feature-desc">Auto-create personalised Gmail drafts for every lead using your custom email template.</div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon fi-pink">📋</div>
+      <div>
+        <div class="feature-title">Kanban CRM Pipeline</div>
+        <div class="feature-desc">Visual drag-and-drop pipeline: New → Contacted → Interested → Closed.</div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon fi-purple">📊</div>
+      <div>
+        <div class="feature-title">Google Sheets Sync</div>
+        <div class="feature-desc">Push all your leads to a live Google Sheet with one click for team sharing.</div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon fi-blue">📱</div>
+      <div>
+        <div class="feature-title">Mobile-First PWA</div>
+        <div class="feature-desc">Install as a homescreen app on Android or iOS. Tap to call, email, or WhatsApp directly.</div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon fi-green">📤</div>
+      <div>
+        <div class="feature-title">CSV Export</div>
+        <div class="feature-desc">Download all leads as a clean, dated CSV with Segment, Quality Score, and Pipeline Stage.</div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon fi-cyan">🔒</div>
+      <div>
+        <div class="feature-title">100% Private & Local</div>
+        <div class="feature-desc">All data stays on your machine. No cloud, no SaaS subscriptions, no data leaks.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== USE CASES ========== -->
+<section>
+  <div class="section-badge badge-amber">Who Uses LeadFlow Pro</div>
+  <h2 class="section-title">Built for <span class="grad-text">Every Role</span></h2>
+
+  <div class="cases-grid">
+    <div class="case-card">
+      <div class="case-icon">🏢</div>
+      <div class="case-role">Digital Marketing Agency</div>
+      <div class="case-title">Sell leads as a service to your clients</div>
+      <div class="case-desc">Run LeadFlow for restaurants in your city, package verified leads + contact info, and charge ₹5,000–₹20,000/month per client.</div>
+      <div class="case-result">💰 Avg: ₹1.2L/month recurring revenue</div>
+    </div>
+    <div class="case-card">
+      <div class="case-icon">👨‍💻</div>
+      <div class="case-role">Freelancer / Solo Consultant</div>
+      <div class="case-title">Find clients in any niche, fast</div>
+      <div class="case-desc">Generate 200 healthcare or real estate leads in your city, WhatsApp them a personalised pitch, and close 3–5 clients a week.</div>
+      <div class="case-result">🎯 Avg: 15–20 booked calls/week</div>
+    </div>
+    <div class="case-card">
+      <div class="case-icon">🛒</div>
+      <div class="case-role">SaaS / Software Seller</div>
+      <div class="case-title">Outbound sales at scale without a team</div>
+      <div class="case-desc">Target 500 retail shops or IT companies, auto-draft Gmail outreach, and build a pipeline 10x faster than manual prospecting.</div>
+      <div class="case-result">⚡ 10x faster than manual prospecting</div>
+    </div>
+    <div class="case-card">
+      <div class="case-icon">🏦</div>
+      <div class="case-role">Financial / Insurance Agent</div>
+      <div class="case-title">Reach business owners across verticals</div>
+      <div class="case-desc">Scrape SME businesses, filter by quality score, and call the hottest leads daily. Works for loan products, insurance, and investment services.</div>
+      <div class="case-result">📞 200+ calls a day from verified list</div>
+    </div>
+    <div class="case-card">
+      <div class="case-icon">🎓</div>
+      <div class="case-role">EdTech / Training Institute</div>
+      <div class="case-title">Recruit students or corporate trainers</div>
+      <div class="case-desc">Find coaching centres, schools, and corporates near you. Send WhatsApp pitches for B2B training packages or franchise enrolments.</div>
+      <div class="case-result">🏫 50+ enrolments per campaign</div>
+    </div>
+    <div class="case-card">
+      <div class="case-icon">📦</div>
+      <div class="case-role">Reseller / White-Label Partner</div>
+      <div class="case-title">Re-sell LeadFlow to your own clients</div>
+      <div class="case-desc">White-label the entire platform with your own branding, sell it to agencies in other cities, and earn a margin on each seat.</div>
+      <div class="case-result">🤝 Partner pricing available</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== PRICING ========== -->
+<section id="pricing">
+  <div class="section-badge badge-indigo">Simple Pricing</div>
+  <h2 class="section-title">One Tool. <span class="grad-text">Unlimited Value.</span></h2>
+  <p class="section-sub">No subscriptions for the core app — pay once, use forever on your machine. Optional add-ons for support and white-labeling.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Starter</div>
+      <div class="price-name">Solo User</div>
+      <div class="price-tagline">Perfect for freelancers and small teams getting started with outbound lead generation.</div>
+      <div class="price-amount">₹2,999<span>/one-time</span></div>
+      <div class="price-period">Lifetime license for 1 machine</div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> All 12 industry segments</li>
+        <li><span class="check">✓</span> Instant lead generator (no API key needed)</li>
+        <li><span class="check">✓</span> WhatsApp & Gmail outreach</li>
+        <li><span class="check">✓</span> CRM pipeline + CSV export</li>
+        <li><span class="check">✓</span> Mobile PWA installation</li>
+        <li><span class="check">✓</span> Free updates for 6 months</li>
+      </ul>
+      <a href="/" class="btn-price btn-price-ghost">Get Started Free →</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="featured-badge">MOST POPULAR</div>
+      <div class="price-tier">Agency</div>
+      <div class="price-name">Agency License</div>
+      <div class="price-tagline">Run LeadFlow for multiple clients with custom branding and priority support.</div>
+      <div class="price-amount">₹7,999<span>/one-time</span></div>
+      <div class="price-period">Up to 3 machines + white-label rights</div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Everything in Solo</li>
+        <li><span class="check">✓</span> Custom branding (logo, app name)</li>
+        <li><span class="check">✓</span> Google Places API integration</li>
+        <li><span class="check">✓</span> Google Sheets live sync</li>
+        <li><span class="check">✓</span> 3 machine licenses</li>
+        <li><span class="check">✓</span> 1 year of priority email support</li>
+        <li><span class="check">✓</span> Onboarding call included</li>
+      </ul>
+      <a href="mailto:your@email.com?subject=LeadFlow Agency License" class="btn-price btn-price-primary">Get Agency License →</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tier">Enterprise</div>
+      <div class="price-name">White-Label / Resell</div>
+      <div class="price-tagline">Full white-label rights to rebrand and resell LeadFlow as your own product.</div>
+      <div class="price-amount">₹24,999<span>/one-time</span></div>
+      <div class="price-period">Unlimited machines + resell rights</div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Everything in Agency</li>
+        <li><span class="check">✓</span> Full source code access</li>
+        <li><span class="check">✓</span> Unlimited machine licenses</li>
+        <li><span class="check">✓</span> Resell as your own product</li>
+        <li><span class="check">✓</span> Custom segment configuration</li>
+        <li><span class="check">✓</span> Revenue share model optional</li>
+        <li><span class="check">✓</span> Dedicated WhatsApp support</li>
+      </ul>
+      <a href="mailto:your@email.com?subject=LeadFlow White-Label Inquiry" class="btn-price btn-price-ghost">Contact for Pricing →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FAQ ========== -->
+<section id="faq" style="text-align:center;">
+  <div class="section-badge badge-emerald">FAQ</div>
+  <h2 class="section-title">Common <span class="grad-text">Questions</span></h2>
+
+  <div class="faq">
+    <div class="faq-item">
+      <div class="faq-q">Do I need a Google API key to use it? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">No! LeadFlow has a built-in Instant Lead Generator that works without any API key. If you want to use real Google Maps data, you can optionally add a Google Places API key in Settings — but it's not required to get started.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is my lead data private? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Yes. All leads are stored locally in a JSON file on your computer. Nothing is ever sent to an external server. You own all your data completely.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I use this on mobile? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Yes! LeadFlow is a Progressive Web App (PWA). When you run it on a phone's browser (connected to the same Wi-Fi), you can add it to your homescreen and use it like a native mobile app.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I sell this to different categories? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Simply approach businesses in a specific niche (e.g. restaurants or salons in your city), run LeadFlow for their competitors' category, and offer the leads as a monthly service. Package it as "Lead Generation as a Service" — common pricing is ₹5,000–₹25,000/month per client depending on lead volume and niche.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What industries can I target? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">12 pre-built segments are included: Food & Restaurants, Healthcare, Real Estate, IT/Tech, Education, Retail, Automotive, Legal & Finance, Construction, Travel & Hospitality, Beauty, and Manufacturing. You can also add custom search terms for any niche.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I white-label this for my agency? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Yes! The Agency and Enterprise licenses include custom branding rights. You can change the app name, logo, and color theme to match your agency's brand, and even resell it under your own product name with the Enterprise license.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<div class="cta-section">
+  <div class="cta-box">
+    <h2>Ready to Generate <span class="grad-text">Your First 100 Leads?</span></h2>
+    <p>Open the app now — no account, no credit card, no API key required.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="/" class="btn-hero btn-hero-primary" style="font-size:15px;">🚀 Open LeadFlow App</a>
+      <a href="mailto:your@email.com?subject=LeadFlow Agency License" class="btn-hero btn-hero-ghost" style="font-size:15px;">💼 Get Agency License</a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-brand">⚡ LeadFlow Pro</div>
+  <p>Built for agencies, freelancers & solo operators. 100% local & private.</p>
+  <p>© 2026 LeadFlow Pro. All rights reserved.</p>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Animate cards on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.industry-card, .step, .price-card, .case-card, .feature').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

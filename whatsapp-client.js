@@ -117,22 +117,28 @@ export async function disconnectWhatsapp() {
   try {
     await client.logout();
   } catch (e) {
-    console.error('Error logging out from WhatsApp:', e);
+    console.error('Error logging out from WhatsApp:', e.message);
   }
   try {
     await client.destroy();
   } catch (e) {
-    console.error('Error destroying WhatsApp client:', e);
+    console.error('Error destroying WhatsApp client:', e.message);
   }
   client = null;
   qrCodeDataUrl = null;
   connectionStatus = 'Disconnected';
   if (broadcastFn) {
     broadcastFn({ type: 'wa-status', status: connectionStatus });
-    broadcastFn({ type: 'log', message: 'WhatsApp session logged out.' });
+    broadcastFn({ type: 'log', message: 'WhatsApp session reset.' });
   }
-  // Re-initialize a clean client instance
-  initWhatsappClient(broadcastFn);
+  // Re-initialize clean client safely after delay
+  setTimeout(() => {
+    try {
+      initWhatsappClient(broadcastFn);
+    } catch (err) {
+      console.error('Re-init WhatsApp failed:', err);
+    }
+  }, 1000);
 }
 
 export async function sendWhatsappMessage(phone, messageText) {
