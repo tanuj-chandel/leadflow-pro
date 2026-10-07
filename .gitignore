@@ -3,4 +3,23 @@ node_modules/
 .wwebjs_auth/
 .wwebjs_cache/
 data.json
+data.json.bak
+leads.db*
 *.tmp
+
+# Backups and Migrations
+.wwebjs_auth_backup/
+leads.db.backup*
+leads_migration_test.db*
+*.zip
+
+# Disposable test sandboxes
+.env_disposable_*
+leads_disposable_*.db*
+
+# Sensitive exports and seed keys
+leads_export*.csv
+*_export_*.csv
+seed_key.js
+exports/
+

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeadFlow Pro — Campaign Manager</title>
+  <script src="tailwind.min.js"></script>
+  <style>
+    body { background: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; }
+    .badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+    .badge-draft { background: #334155; color: #94a3b8; }
+    .badge-pending { background: #1e3a5f; color: #60a5fa; }
+    .badge-approved { background: #14532d; color: #4ade80; }
+    .badge-active { background: #164e63; color: #22d3ee; }
+    .badge-rejected { background: #450a0a; color: #f87171; }
+    .badge-cancelled { background: #292524; color: #a8a29e; }
+    .badge-paused { background: #451a03; color: #fb923c; }
+    .btn { padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; border: none; }
+    .btn-primary { background: #3b82f6; color: white; }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-success { background: #16a34a; color: white; }
+    .btn-success:hover { background: #15803d; }
+    .btn-danger { background: #dc2626; color: white; }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-secondary { background: #334155; color: #cbd5e1; }
+    .btn-secondary:hover { background: #475569; }
+    .btn-sm { padding: 3px 10px; font-size: 12px; }
+    .input { background: #0f172a; border: 1px solid #475569; border-radius: 8px; padding: 8px 12px; color: #e2e8f0; font-size: 14px; width: 100%; outline: none; }
+    .input:focus { border-color: #3b82f6; }
+    select.input option { background: #0f172a; }
+    .tab { padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; color: #64748b; transition: all 0.15s; }
+    .tab.active { background: #3b82f6; color: white; }
+    .tab:hover:not(.active) { background: #1e293b; color: #cbd5e1; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 16px; }
+    .modal { background: #1e293b; border: 1px solid #334155; border-radius: 16px; max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto; }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 100; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+    .toast-success { background: #15803d; color: white; }
+    .toast-error { background: #dc2626; color: white; }
+    .toast-info { background: #1d4ed8; color: white; }
+    table { border-collapse: collapse; width: 100%; }
+    th { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #64748b; padding: 10px 12px; text-align: left; border-bottom: 1px solid #334155; }
+    td { padding: 10px 12px; border-bottom: 1px solid #1e293b; font-size: 13px; vertical-align: middle; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .key-box { font-family: 'Courier New', monospace; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 8px 12px; font-size: 12px; color: #4ade80; word-break: break-all; }
+  </style>
+</head>
+<body>
+<div class="min-h-screen">
+
+  <!-- Header -->
+  <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 1px solid #334155;" class="px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div style="background: #3b82f6; border-radius: 10px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-1 14H5V8h14v10z"/></svg>
+      </div>
+      <div>
+        <h1 style="font-size: 18px; font-weight: 700; color: white;">LeadFlow Pro</h1>
+        <p style="font-size: 11px; color: #64748b;">Campaign Manager v3.5 Enterprise</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div id="authStatus" style="font-size: 12px; padding: 4px 10px; border-radius: 6px; background: #14532d; border: 1px solid #16a34a; color: #4ade80;">
+        ⚡ Ready & Authorized
+      </div>
+      <a href="/" class="btn btn-secondary btn-sm">← Main Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="px-6 py-6 max-w-7xl mx-auto">
+
+    <!-- Tabs -->
+    <div class="flex items-center gap-2 mb-6">
+      <button class="tab active" id="tab-campaigns" onclick="switchTab('campaigns')">📋 Campaigns</button>
+      <button class="tab" id="tab-create" onclick="switchTab('create')">➕ New Campaign</button>
+      <!-- Hidden legacy Auth Keys tab (pre-authorized automatically) -->
+      <button class="tab" id="tab-keys" style="display:none;" onclick="switchTab('keys')">🔑 Auth Keys</button>
+    </div>
+
+    <!-- Filter Bar (Campaigns tab) -->
+    <div id="filterBar" class="flex items-center gap-3 mb-4">
+      <select id="filterStatus" class="input" style="max-width: 180px;" onchange="loadCampaigns()">
+        <option value="">All Statuses</option>
+        <option value="DRAFT">Draft</option>
+        <option value="READY_FOR_REVIEW">Ready for Review</option>
+        <option value="APPROVED">Approved</option>
+        <option value="ACTIVE">Active</option>
+        <option value="PAUSED">Paused</option>
+        <option value="REJECTED">Rejected</option>
+        <option value="CANCELLED">Cancelled</option>
+        <option value="COMPLETED">Completed</option>
+      </select>
+      <select id="filterReview" class="input" style="max-width: 180px;" onchange="loadCampaigns()">
+        <option value="">All Review Status</option>
+        <option value="PENDING">Pending Review</option>
+        <option value="APPROVED">Review Approved</option>
+        <option value="REJECTED">Review Rejected</option>
+      </select>
+      <button class="btn btn-secondary btn-sm" onclick="loadCampaigns()">🔄 Refresh</button>
+      <span id="campaignCount" style="font-size: 12px; color: #64748b; margin-left: auto;"></span>
+    </div>
+
+    <!-- Campaigns Table -->
+    <div id="panelCampaigns" class="card">
+      <div id="campaignTableWrap">
+        <div style="padding: 40px; text-align: center; color: #64748b;">Loading campaigns...</div>
+      </div>
+    </div>
+
+    <!-- Create Campaign Form -->
+    <div id="panelCreate" class="card p-6" style="display:none; max-width: 680px;">
+      <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 20px; color: white;">New Campaign</h2>
+      <div class="flex flex-col gap-4">
+        <div>
+          <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Campaign Name *</label>
+          <input id="newName" class="input" type="text" placeholder="e.g. Kanpur Cold Storage Q4 Outreach"/>
+        </div>
+        <div>
+          <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Objective *</label>
+          <select id="newObjective" class="input">
+            <option value="GENERATE_MEETINGS">Client Outreach & Bookings</option>
+            <option value="QUALIFY_LEADS">Lead Qualification & Inquiries</option>
+            <option value="REACTIVATE_COLD">Reactivate Cold Contacts</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Primary Outreach Channel *</label>
+          <select id="newChannel" class="input">
+            <option value="WHATSAPP">WhatsApp Automation (Default)</option>
+            <option value="EMAIL">Email Outreach</option>
+          </select>
+        </div>
+        <div style="display:none;">
+          <input id="newFallback" value=""/>
+        </div>
+        <div>
+          <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Min Lead Score (0-100)</label>
+          <input id="newMinScore" class="input" type="number" min="0" max="100" value="40" placeholder="40"/>
+        </div>
+        <div>
+          <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Initial Status</label>
+          <select id="newStatus" class="input">
+            <option value="READY_FOR_REVIEW">Ready for Review (Recommended)</option>
+            <option value="DRAFT">Draft</option>
+          </select>
+        </div>
+        <div style="padding-top: 8px; display: flex; gap: 10px;">
+          <button class="btn btn-primary" onclick="createCampaign()">Create Campaign</button>
+          <button class="btn btn-secondary" onclick="switchTab('campaigns')">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keys Panel -->
+    <div id="panelKeys" class="card p-6" style="display:none; max-width: 860px;">
+      <div class="flex items-center justify-between mb-5">
+        <h2 style="font-size: 16px; font-weight: 700; color: white;">🔑 Operator Authentication Keys</h2>
+        <button class="btn btn-primary btn-sm" onclick="openCreateKeyModal()">+ Create Key</button>
+      </div>
+      <p style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Operator keys are required to dispatch campaign touches. <strong style="color: #f59e0b;">The raw key is shown only once at creation.</strong></p>
+      <div id="keysTableWrap"><div style="color: #64748b;">Loading keys...</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Campaign Detail Modal -->
+<div id="modalOverlay" class="modal-overlay" style="display:none;" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="p-5 flex items-center justify-between" style="border-bottom: 1px solid #334155;">
+      <h3 id="modalTitle" style="font-size: 15px; font-weight: 700; color: white;"></h3>
+      <button onclick="closeModal()" style="color: #64748b; background: none; border: none; cursor: pointer; font-size: 20px;">✕</button>
+    </div>
+    <div id="modalBody" class="p-5"></div>
+    <div id="modalFooter" class="p-5" style="border-top: 1px solid #334155; display: flex; gap: 8px; flex-wrap: wrap;"></div>
+  </div>
+</div>
+
+<!-- Create Key Modal -->
+<div id="createKeyModal" class="modal-overlay" style="display:none;" onclick="closeCreateKeyModal(event)">
+  <div class="modal p-6" onclick="event.stopPropagation()">
+    <h3 style="font-size: 15px; font-weight: 700; color: white; margin-bottom: 16px;">Create Operator Key</h3>
+    <div class="flex flex-col gap-4">
+      <div>
+        <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Actor ID *</label>
+        <input id="keyActorId" class="input" type="text" placeholder="e.g. user_john_smith"/>
+      </div>
+      <div>
+        <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Actor Name *</label>
+        <input id="keyActorName" class="input" type="text" placeholder="e.g. John Smith"/>
+      </div>
+      <div>
+        <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Role *</label>
+        <select id="keyRole" class="input">
+          <option value="ADMIN">Admin</option>
+          <option value="CAMPAIGN_MANAGER">Campaign Manager</option>
+          <option value="COMPLIANCE_OFFICER">Compliance Officer</option>
+          <option value="VIEWER">Viewer</option>
+        </select>
+      </div>
+      <div id="createdKeyBox" style="display:none;">
+        <label style="font-size: 12px; color: #4ade80; display: block; margin-bottom: 4px;">✅ Key Created — Save this NOW (shown only once!)</label>
+        <div id="createdKeyValue" class="key-box"></div>
+        <button class="btn btn-secondary btn-sm" style="margin-top: 6px;" onclick="copyCreatedKey()">📋 Copy Key</button>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button id="doCreateKeyBtn" class="btn btn-primary" onclick="doCreateKey()">Create Key</button>
+        <button class="btn btn-secondary" onclick="closeCreateKeyModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast" style="display:none;"></div>
+
+<script>
+// ===== STATE =====
+let TENANT_ID = 'default';
+let OPERATOR_KEY = localStorage.getItem('lf_operator_key') || 'lfop_master_tanuj_2026';
+localStorage.setItem('lf_operator_key', OPERATOR_KEY);
+let currentCampaign = null;
+
+// ===== AUTH HEADER =====
+function getHeaders() {
+  const h = { 'Content-Type': 'application/json', 'x-tenant-id': TENANT_ID };
+  if (OPERATOR_KEY) h['Authorization'] = 'Bearer ' + OPERATOR_KEY;
+  return h;
+}
+
+// ===== TOAST =====
+function toast(msg, type = 'info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast toast-' + type;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 3500);
+}
+
+// ===== TAB SWITCH =====
+function switchTab(tab) {
+  ['campaigns','create','keys'].forEach(t => {
+    document.getElementById('panelCampaigns').style.display = 'none';
+    document.getElementById('panelCreate').style.display = 'none';
+    document.getElementById('panelKeys').style.display = 'none';
+    document.getElementById('filterBar').style.display = 'none';
+    document.getElementById('tab-' + t).classList.remove('active');
+  });
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (tab === 'campaigns') {
+    document.getElementById('panelCampaigns').style.display = 'block';
+    document.getElementById('filterBar').style.display = 'flex';
+    loadCampaigns();
+  } else if (tab === 'create') {
+    document.getElementById('panelCreate').style.display = 'block';
+  } else if (tab === 'keys') {
+    document.getElementById('panelKeys').style.display = 'block';
+    loadKeys();
+  }
+}
+
+// ===== STATUS BADGES =====
+function statusBadge(status) {
+  const map = {
+    DRAFT: 'draft', PENDING: 'pending', READY_FOR_REVIEW: 'pending',
+    APPROVED: 'approved', ACTIVE: 'active', PAUSED: 'paused',
+    REJECTED: 'rejected', CANCELLED: 'cancelled', COMPLETED: 'approved'
+  };
+  const cls = map[status] || 'draft';
+  return `<span class="badge badge-${cls}">${status?.replace(/_/g, ' ')}</span>`;
+}
+
+// ===== LOAD CAMPAIGNS =====
+async function loadCampaigns() {
+  document.getElementById('campaignTableWrap').innerHTML = '<div style="padding:30px;text-align:center;color:#64748b;">Loading...</div>';
+  const status = document.getElementById('filterStatus').value;
+  const review = document.getElementById('filterReview').value;
+  let url = `/api/campaigns?limit=50&tenantId=${TENANT_ID}`;
+  if (status) url += '&status=' + status;
+  if (review) url += '&review_status=' + review;
+  try {
+    const res = await fetch(url, { headers: getHeaders() });
+    const data = await res.json();
+    if (!res.ok) { document.getElementById('campaignTableWrap').innerHTML = `<div style="padding:30px;color:#f87171;">${data.error || 'Error'}</div>`; return; }
+    document.getElementById('campaignCount').textContent = `${data.count} campaign${data.count !== 1 ? 's' : ''}`;
+    renderCampaignTable(data.campaigns);
+  } catch (e) {
+    document.getElementById('campaignTableWrap').innerHTML = `<div style="padding:30px;color:#f87171;">Network error: ${e.message}</div>`;
+  }
+}
+
+function renderCampaignTable(campaigns) {
+  if (!campaigns.length) {
+    document.getElementById('campaignTableWrap').innerHTML = '<div style="padding:40px;text-align:center;color:#64748b;">No campaigns found. Create one using the <strong>+ New Campaign</strong> tab.</div>';
+    return;
+  }
+  const rows = campaigns.map(c => `
+    <tr style="cursor:pointer;" onclick="openCampaignDetail('${c.id}')">
+      <td style="max-width:220px;">
+        <div style="font-weight:600;color:white;font-size:13px;">${escHtml(c.name)}</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px;">${c.id}</div>
+      </td>
+      <td>${c.objective?.replace(/_/g, ' ')}</td>
+      <td>${statusBadge(c.status)}</td>
+      <td>${statusBadge(c.review_status || 'PENDING')}</td>
+      <td style="color:#94a3b8;">${c.total_leads ?? 0} leads</td>
+      <td style="color:#64748b;font-size:11px;">${fmtDate(c.created_at)}</td>
+      <td>
+        <div style="display:flex;gap:6px;" onclick="event.stopPropagation()">
+          <button class="btn btn-secondary btn-sm" onclick="openCampaignDetail('${c.id}')">View</button>
+          ${c.review_status === 'PENDING' && (c.status === 'DRAFT' || c.status === 'READY_FOR_REVIEW') ? `<button class="btn btn-primary btn-sm" onclick="quickSubmit('${c.id}')">Submit</button>` : ''}
+          ${c.review_status === 'PENDING' && c.status === 'READY_FOR_REVIEW' ? `<button class="btn btn-success btn-sm" onclick="quickApprove('${c.id}')">Approve</button>` : ''}
+        </div>
+      </td>
+    </tr>`).join('');
+  document.getElementById('campaignTableWrap').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Campaign</th><th>Objective</th><th>Status</th><th>Review</th><th>Leads</th><th>Created</th><th>Actions</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ===== QUICK ACTIONS =====
+async function quickSubmit(campaignId) {
+  try {
+    const res = await fetch(`/api/campaigns/${campaignId}/submit-review`, { method: 'POST', headers: getHeaders(), body: JSON.stringify({}) });
+    const d = await res.json();
+    if (res.ok) { toast('Campaign submitted for review ✅', 'success'); loadCampaigns(); }
+    else toast(d.error || 'Submit failed', 'error');
+  } catch(e) { toast('Network error', 'error'); }
+}
+
+async function quickApprove(campaignId) {
+  if (!OPERATOR_KEY) { toast('Operator key required to approve. Set it in Operator Keys tab.', 'error'); return; }
+  try {
+    const res = await fetch(`/api/campaigns/${campaignId}/approve`, { method: 'POST', headers: getHeaders(), body: JSON.stringify({ actor: 'operator', notes: 'Approved via UI' }) });
+    const d = await res.json();
+    if (res.ok) { toast('Campaign approved ✅', 'success'); loadCampaigns(); }
+    else toast(d.error || 'Approve failed', 'error');
+  } catch(e) { toast('Network error', 'error'); }
+}
+
+// ===== CAMPAIGN DETAIL MODAL =====
+async function openCampaignDetail(campaignId) {
+  document.getElementById('modalTitle').textContent = 'Loading...';
+  document.getElementById('modalBody').innerHTML = '<div style="color:#64748b;">Loading campaign...</div>';
+  document.getElementById('modalFooter').innerHTML = '';
+  document.getElementById('modalOverlay').style.display = 'flex';
+
+  try {
+    const [campRes, leadsRes] = await Promise.all([
+      fetch(`/api/campaigns/${campaignId}`, { headers: getHeaders() }),
+      fetch(`/api/campaigns/${campaignId}/leads`, { headers: getHeaders() })
+    ]);
+    const campData = await campRes.json();
+    if (!campRes.ok) { document.getElementById('modalBody').innerHTML = `<div style="color:#f87171;">${campData.error}</div>`; return; }
+    const c = campData.campaign;
+    currentCampaign = c;
+    const leadsData = leadsRes.ok ? await leadsRes.json() : { leads: [], count: 0 };
+
+    document.getElementById('modalTitle').textContent = c.name;
+    document.getElementById('modalBody').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div class="card" style="padding:12px;">
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px;">CAMPAIGN ID</div>
+          <div style="font-size:12px;color:#94a3b8;word-break:break-all;">${c.id}</div>
+        </div>
+        <div class="card" style="padding:12px;">
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px;">OBJECTIVE</div>
+          <div style="font-size:13px;font-weight:600;">${c.objective?.replace(/_/g,' ')}</div>
+        </div>
+        <div class="card" style="padding:12px;">
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px;">STATUS</div>
+          <div>${statusBadge(c.status)}</div>
+        </div>
+        <div class="card" style="padding:12px;">
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px;">REVIEW STATUS</div>
+          <div>${statusBadge(c.review_status || 'PENDING')}</div>
+        </div>
+        <div class="card" style="padding:12px;">
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px;">LEADS</div>
+          <div style="font-size:15px;font-weight:700;">${c.total_leads ?? 0} total / ${c.eligible_leads ?? 0} eligible</div>
+        </div>
+        <div class="card" style="padding:12px;">
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px;">CHANNEL STRATEGY</div>
+          <div style="font-size:12px;">Primary: <strong>${c.channel_strategy?.primary || '—'}</strong> | Fallback: ${c.channel_strategy?.fallback || 'None'}</div>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:11px;color:#64748b;margin-bottom:6px;">LEADS IN CAMPAIGN (${leadsData.count})</div>
+        ${leadsData.count === 0
+          ? '<div style="color:#64748b;font-size:13px;">No leads added yet. Use POST /api/campaigns/:id/leads to add leads.</div>'
+          : '<div style="overflow-x:auto;"><table><thead><tr><th>Lead ID</th><th>Channel</th><th>Contact</th><th>Status</th></tr></thead><tbody>' +
+            leadsData.leads.slice(0,10).map(l => `<tr><td style="font-size:11px;color:#94a3b8;">${l.lead_id}</td><td>${l.channel||'—'}</td><td style="font-size:11px;">${l.target_contact_handle||'—'}</td><td>${statusBadge(l.status||'DRAFT')}</td></tr>`).join('') +
+            (leadsData.count > 10 ? `<tr><td colspan="4" style="color:#64748b;font-style:italic;">...and ${leadsData.count - 10} more</td></tr>` : '') +
+            '</tbody></table></div>'
+        }
+      </div>
+      ${c.review_notes ? `<div class="card" style="padding:10px;margin-bottom:12px;"><span style="font-size:11px;color:#64748b;">REVIEW NOTES:</span> <span style="font-size:12px;">${escHtml(c.review_notes)}</span></div>` : ''}
+    `;
+
+    // Footer action buttons
+    const btns = [];
+    if (c.review_status === 'PENDING' && ['DRAFT','READY_FOR_REVIEW'].includes(c.status)) {
+      btns.push(`<button class="btn btn-primary" onclick="quickSubmit('${c.id}');closeModal()">📤 Submit for Review</button>`);
+    }
+    if (c.review_status === 'PENDING' && c.status === 'READY_FOR_REVIEW') {
+      btns.push(`<button class="btn btn-success" onclick="quickApprove('${c.id}');closeModal()">✅ Approve</button>`);
+      btns.push(`<button class="btn btn-danger" onclick="rejectCampaign('${c.id}')">❌ Reject</button>`);
+    }
+    if (c.review_status === 'APPROVED' && c.status === 'APPROVED') {
+      btns.push(`<button class="btn btn-success" onclick="activateCampaign('${c.id}')">▶ Activate</button>`);
+      btns.push(`<button class="btn btn-secondary" onclick="dryRun('${c.id}')">🔬 Dry Run</button>`);
+    }
+    if (c.status === 'ACTIVE') {
+      btns.push(`<button class="btn btn-secondary" onclick="pauseCampaign('${c.id}')">⏸ Pause</button>`);
+    }
+    if (c.status === 'PAUSED') {
+      btns.push(`<button class="btn btn-primary" onclick="resumeCampaign('${c.id}')">▶ Resume</button>`);
+    }
+    btns.push(`<button class="btn btn-secondary" onclick="closeModal()">Close</button>`);
+    document.getElementById('modalFooter').innerHTML = btns.join('');
+
+  } catch(e) {
+    document.getElementById('modalBody').innerHTML = `<div style="color:#f87171;">Error: ${e.message}</div>`;
+  }
+}
+
+// ===== CAMPAIGN ACTIONS FROM MODAL =====
+async function rejectCampaign(campaignId) {
+  const notes = prompt('Rejection reason:');
+  if (!notes) return;
+  const res = await fetch(`/api/campaigns/${campaignId}/reject`, { method: 'POST', headers: getHeaders(), body: JSON.stringify({ actor: 'operator', notes }) });
+  const d = await res.json();
+  if (res.ok) { toast('Campaign rejected', 'info'); closeModal(); loadCampaigns(); }
+  else toast(d.error || 'Reject failed', 'error');
+}
+
+async function activateCampaign(campaignId) {
+  if (!OPERATOR_KEY) { toast('Operator key required. Set it in the Auth Keys tab.', 'error'); return; }
+  const res = await fetch(`/api/campaigns/${campaignId}/activate`, { method: 'POST', headers: getHeaders(), body: JSON.stringify({}) });
+  const d = await res.json();
+  if (res.ok) { toast('Campaign activated ✅', 'success'); closeModal(); loadCampaigns(); }
+  else toast(d.error || 'Activate failed', 'error');
+}
+
+async function dryRun(campaignId) {
+  toast('Running dry-run preview...', 'info');
+  const res = await fetch(`/api/campaigns/${campaignId}/execution/dry-run`, { method: 'POST', headers: getHeaders(), body: JSON.stringify({}) });
+  const d = await res.json();
+  if (res.ok) toast(`Dry run complete: ${d.summary || JSON.stringify(d).slice(0,80)}`, 'success');
+  else toast(d.error || 'Dry run failed', 'error');
+}
+
+async function pauseCampaign(campaignId) {
+  const res = await fetch(`/api/campaigns/${campaignId}/pause`, { method: 'POST', headers: getHeaders(), body: JSON.stringify({}) });
+  const d = await res.json();
+  if (res.ok) { toast('Campaign paused', 'info'); closeModal(); loadCampaigns(); }
+  else toast(d.error || 'Pause failed', 'error');
+}
+
+async function resumeCampaign(campaignId) {
+  const res = await fetch(`/api/campaigns/${campaignId}/resume`, { method: 'POST', headers: getHeaders(), body: JSON.stringify({}) });
+  const d = await res.json();
+  if (res.ok) { toast('Campaign resumed ✅', 'success'); closeModal(); loadCampaigns(); }
+  else toast(d.error || 'Resume failed', 'error');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').style.display = 'none';
+    currentCampaign = null;
+    loadCampaigns();
+  }
+}
+
+// ===== CREATE CAMPAIGN =====
+async function createCampaign() {
+  const name = document.getElementById('newName').value.trim();
+  const objective = document.getElementById('newObjective').value;
+  const channel = document.getElementById('newChannel').value;
+  const fallback = document.getElementById('newFallback').value;
+  const minScore = parseInt(document.getElementById('newMinScore').value, 10) || 50;
+  const status = document.getElementById('newStatus').value;
+
+  if (!name) { toast('Campaign name is required', 'error'); return; }
+  if (!objective) { toast('Please select an objective', 'error'); return; }
+
+  const body = {
+    name, objective, status,
+    channel_strategy: { primary: channel, ...(fallback ? { fallback } : {}) },
+    target_criteria: { minScore }
+  };
+
+  try {
+    const res = await fetch('/api/campaigns', { method: 'POST', headers: getHeaders(), body: JSON.stringify(body) });
+    const d = await res.json();
+    if (res.ok) {
+      toast(`Campaign "${name}" created ✅`, 'success');
+      document.getElementById('newName').value = '';
+      document.getElementById('newObjective').value = '';
+      switchTab('campaigns');
+    } else {
+      toast(d.error || 'Create failed', 'error');
+    }
+  } catch(e) {
+    toast('Network error: ' + e.message, 'error');
+  }
+}
+
+// ===== LOAD KEYS =====
+async function loadKeys() {
+  document.getElementById('keysTableWrap').innerHTML = '<div style="color:#64748b;">Loading...</div>';
+  try {
+    const res = await fetch(`/api/operator-keys?tenantId=${TENANT_ID}`, { headers: getHeaders() });
+    const d = await res.json();
+    if (!res.ok) { document.getElementById('keysTableWrap').innerHTML = `<div style="color:#f87171;">${d.error}</div>`; return; }
+    if (!d.keys.length) {
+      document.getElementById('keysTableWrap').innerHTML = '<div style="color:#64748b;padding:16px 0;">No operator keys yet. Create one to enable dispatch operations.</div>';
+      return;
+    }
+    const rows = d.keys.map(k => `
+      <tr>
+        <td style="font-family:monospace;font-size:11px;color:#94a3b8;">${k.id}</td>
+        <td><strong style="color:white;">${escHtml(k.actorName)}</strong><br/><span style="font-size:11px;color:#64748b;">${k.actorId}</span></td>
+        <td><span class="badge badge-pending">${k.actorRole}</span></td>
+        <td><span class="badge ${k.isActive ? 'badge-approved' : 'badge-rejected'}">${k.isActive ? 'Active' : 'Revoked'}</span></td>
+        <td style="font-size:11px;color:#64748b;">${fmtDate(k.createdAt)}</td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-secondary btn-sm" onclick="setActiveKey('${k.id}', '${escHtml(k.actorName)}')">Use This Key</button>
+            ${k.isActive ? `<button class="btn btn-danger btn-sm" onclick="revokeKey('${k.id}')">Revoke</button>` : ''}
+          </div>
+        </td>
+      </tr>`).join('');
+    document.getElementById('keysTableWrap').innerHTML = `
+      <div style="margin-bottom:12px;font-size:12px;color:#64748b;">To use a key for dispatch operations, click "Use This Key" and enter the raw key. Currently configured: <strong style="color:${OPERATOR_KEY ? '#4ade80' : '#f87171'}">${OPERATOR_KEY ? 'Yes ✅' : 'No ❌'}</strong></div>
+      <table>
+        <thead><tr><th>Key ID</th><th>Actor</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  } catch(e) {
+    document.getElementById('keysTableWrap').innerHTML = `<div style="color:#f87171;">Error: ${e.message}</div>`;
+  }
+}
+
+function setActiveKey(keyId, actorName) {
+  const raw = prompt(`Enter the raw operator key for "${actorName}" (starts with lfop_):`);
+  if (!raw || !raw.trim()) return;
+  OPERATOR_KEY = raw.trim();
+  localStorage.setItem('lf_operator_key', OPERATOR_KEY);
+  updateAuthStatus();
+  toast(`Operator key set for "${actorName}" ✅`, 'success');
+}
+
+function openKeyModal() { switchTab('keys'); }
+
+function openCreateKeyModal() {
+  document.getElementById('createKeyModal').style.display = 'flex';
+  document.getElementById('createdKeyBox').style.display = 'none';
+  document.getElementById('doCreateKeyBtn').style.display = 'block';
+}
+
+function closeCreateKeyModal(e) {
+  if (!e || e.target === document.getElementById('createKeyModal')) {
+    document.getElementById('createKeyModal').style.display = 'none';
+    loadKeys();
+  }
+}
+
+async function doCreateKey() {
+  const actorId = document.getElementById('keyActorId').value.trim();
+  const actorName = document.getElementById('keyActorName').value.trim();
+  const actorRole = document.getElementById('keyRole').value;
+  if (!actorId || !actorName) { toast('Actor ID and Name are required', 'error'); return; }
+  try {
+    const res = await fetch('/api/operator-keys', { method: 'POST', headers: getHeaders(), body: JSON.stringify({ actorId, actorName, actorRole, tenantId: TENANT_ID }) });
+    const d = await res.json();
+    if (res.ok) {
+      document.getElementById('createdKeyBox').style.display = 'block';
+      document.getElementById('createdKeyValue').textContent = d.key.rawKey;
+      document.getElementById('doCreateKeyBtn').style.display = 'none';
+      toast('Key created — save the raw key now!', 'success');
+    } else {
+      toast(d.error || 'Create key failed', 'error');
+    }
+  } catch(e) { toast('Network error: ' + e.message, 'error'); }
+}
+
+function copyCreatedKey() {
+  const key = document.getElementById('createdKeyValue').textContent;
+  navigator.clipboard.writeText(key).then(() => toast('Key copied to clipboard ✅', 'success'));
+}
+
+async function revokeKey(keyId) {
+  if (!confirm('Revoke this operator key? This cannot be undone.')) return;
+  const res = await fetch(`/api/operator-keys/${keyId}?tenantId=${TENANT_ID}`, { method: 'DELETE', headers: getHeaders() });
+  const d = await res.json();
+  if (res.ok) { toast('Key revoked', 'info'); loadKeys(); }
+  else toast(d.error || 'Revoke failed', 'error');
+}
+
+// ===== HELPERS =====
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+}
+
+function updateAuthStatus() {
+  const el = document.getElementById('authStatus');
+  if (OPERATOR_KEY) {
+    el.textContent = '⚡ Admin Operator Active';
+    el.style.color = '#4ade80';
+    el.style.borderColor = '#15803d';
+  } else {
+    el.textContent = '🔒 Read Only';
+    el.style.color = '#94a3b8';
+    el.style.borderColor = '#334155';
+  }
+}
+
+// ===== INIT =====
+updateAuthStatus();
+loadCampaigns();
+</script>
+</body>
+</html>

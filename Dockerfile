@@ -1,8 +1,11 @@
-FROM node:18-slim
+FROM node:20-bullseye-slim
 
-# Install Chromium and required libraries for Puppeteer
+# Install Chromium, build tools for native modules, and font packages
 RUN apt-get update && apt-get install -y \
     chromium \
+    python3 \
+    make \
+    g++ \
     fonts-ipafont-gothic \
     fonts-wqy-zenhei \
     fonts-thai-tlwg \
@@ -12,18 +15,25 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-# Set Puppeteer environment variables
+# Puppeteer Chromium settings for Docker/Linux VPS
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
+    NODE_ENV=production \
+    PORT=3000
 
 WORKDIR /usr/src/app
 
+# Copy dependency manifests
 COPY package*.json ./
 
-RUN npm ci
+# Install production dependencies
+RUN npm install --omit=dev
 
+# Copy application code
 COPY . .
 
+# Expose server port
 EXPOSE 3000
 
+# Start server
 CMD [ "npm", "start" ]

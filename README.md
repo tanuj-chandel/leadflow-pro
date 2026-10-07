@@ -58,8 +58,8 @@
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/map-lead-scraper.git
-   cd map-lead-scraper
+   git clone https://github.com/tanuj-chandel/leadflow-pro.git
+   cd leadflow-pro
    ```
 
 2. **Install dependencies:**
@@ -67,18 +67,23 @@
    npm install
    ```
 
-3. **Configure Environment Variables (Optional):**
+3. **Configure Environment Variables:**
    Create a `.env` file in the root directory:
    ```env
-   PORT=3000
+   PORT=3001
+   ADMIN_USERNAME=admin
+   ADMIN_PASSWORD=your_secure_admin_password
+   STAFF_USERNAME=operator
+   STAFF_PASSWORD=your_secure_staff_password
    ```
 
 4. **Start the application:**
    ```bash
    npm start
    ```
+   Or run `START_LEADFLOW.bat` on Windows.
 
-5. Open your browser and navigate to `http://localhost:3000`.
+5. Open your browser and navigate to `http://localhost:3001`.
 
 ---
 

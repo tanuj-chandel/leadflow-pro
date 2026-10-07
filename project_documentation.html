@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI AutomationHubs - Project Documentation & Blueprint</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --secondary: #3b82f6;
+    --dark: #0f172a;
+    --dark-card: #1e293b;
+    --light-bg: #f8fafc;
+    --text-pri: #0f172a;
+    --text-sec: #475569;
+    --text-muted: #94a3b8;
+    --border: #e2e8f0;
+    --accent: #8b5cf6;
+    --danger: #ef4444;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-pri);
+    background: #ffffff;
+    line-height: 1.6;
+    font-size: 11pt;
+  }
+
+  @page {
+    size: A4;
+    margin: 16mm 14mm 16mm 14mm;
+    @bottom-right {
+      content: "Page " counter(page) " of " counter(pages);
+      font-size: 8pt;
+      color: #94a3b8;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  .no-break {
+    page-break-inside: avoid;
+  }
+
+  /* Cover Page */
+  .cover {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 24px 24px 24px;
+    background: linear-gradient(135deg, #090d16 0%, #0f172a 60%, #132337 100%);
+    color: #ffffff;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .badge-enterprise {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .cover-body {
+    margin: 40px 0;
+  }
+
+  .cover-title {
+    font-size: 28pt;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .cover-title span {
+    background: linear-gradient(to right, #34d399, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .cover-subtitle {
+    font-size: 12pt;
+    color: #94a3b8;
+    max-width: 90%;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .cover-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 90%;
+  }
+
+  .feature-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 8.5pt;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e2e8f0;
+  }
+
+  .cover-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 8.5pt;
+    color: #94a3b8;
+  }
+
+  .founder-info strong {
+    color: #f8fafc;
+    font-size: 9.5pt;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* Document Typography */
+  h1 {
+    font-size: 18pt;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 6px;
+  }
+
+  h2 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 12px;
+    margin-bottom: 6px;
+  }
+
+  p {
+    color: var(--text-sec);
+    margin-bottom: 10px;
+    font-size: 9.5pt;
+    line-height: 1.55;
+  }
+
+  ul, ol {
+    margin-left: 20px;
+    margin-bottom: 12px;
+    color: var(--text-sec);
+    font-size: 9pt;
+  }
+
+  li {
+    margin-bottom: 4px;
+  }
+
+  /* Callouts */
+  .callout {
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin: 12px 0;
+    font-size: 9pt;
+    border-left: 4px solid var(--primary);
+    background: #f0fdf4;
+    color: #166534;
+  }
+
+  .callout.info {
+    border-left-color: var(--secondary);
+    background: #eff6ff;
+    color: #1e40af;
+  }
+
+  .callout.warning {
+    border-left-color: #f59e0b;
+    background: #fffbeb;
+    color: #92400e;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 8.5pt;
+  }
+
+  th {
+    background: #f1f5f9;
+    color: #1e293b;
+    text-align: left;
+    padding: 7px 9px;
+    font-weight: 700;
+    border-bottom: 2px solid var(--border);
+  }
+
+  td {
+    padding: 6px 9px;
+    border-bottom: 1px solid var(--border);
+    color: #334155;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* Grid Cards */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 12px 0;
+  }
+
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: #ffffff;
+  }
+
+  .card h4 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .card p {
+    font-size: 8pt;
+    margin-bottom: 0;
+    color: var(--text-sec);
+  }
+
+  /* Code block */
+  pre, code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 7.5pt;
+    overflow-x: auto;
+    margin: 8px 0;
+    line-height: 1.45;
+  }
+
+  code {
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 8pt;
+  }
+
+  pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-size: 7.5pt;
+    font-weight: 600;
+  }
+  .badge-success { background: #dcfce7; color: #15803d; }
+  .badge-primary { background: #dbeafe; color: #1d4ed8; }
+  .badge-warning { background: #fef3c7; color: #b45309; }
+
+  .header-tag {
+    font-size: 8pt;
+    color: var(--primary-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= COVER PAGE ================= -->
+<div class="cover">
+  <div class="cover-header">
+    <div style="font-weight:800; font-size:16pt; letter-spacing:-0.5px;">
+      ⚡ AI AutomationHubs
+    </div>
+    <div class="badge-enterprise">Enterprise Architecture v3.5</div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-title">
+      Autonomous Map Lead Scraper<br>& <span>Multi-Channel Outreach Engine</span>
+    </div>
+    <div class="cover-subtitle">
+      Complete Technical Architecture, Operational Blueprint, Anti-Ban Resilience & International Client Acquisition Engine (UK, UAE & Global).
+    </div>
+
+    <div class="cover-features">
+      <div class="feature-pill">📍 Google Places API (New) Real Scraping</div>
+      <div class="feature-pill">🌐 Deep Website Crawler & Email Extractor</div>
+      <div class="feature-pill">📲 WhatsApp Automation (Typing Emulation)</div>
+      <div class="feature-pill">✈️ Telegram UserBot (GramJS Resolution)</div>
+      <div class="feature-pill">✉️ Gmail API 1-Click Draft Generation</div>
+      <div class="feature-pill">📊 SQLite WAL High-Concurrency CRM Engine</div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="founder-info">
+      <strong>Engineering & Founders:</strong>
+      Tanuj Chandel (Co-Founder & AI Generalist)<br>
+      Amit Pandey (Co-Founder & AI Automation Engineer)
+    </div>
+    <div style="text-align:right;">
+      <strong>AI AutomationHubs India</strong><br>
+      ai-automation-hubs.com • September 2026<br>
+      Confidential System Documentation
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE 2: EXECUTIVE SUMMARY & ARCHITECTURE ================= -->
+<div class="page-break"></div>
+
+<span class="header-tag">Section 1</span>
+<h1>Executive Summary & System Overview</h1>
+
+<p>
+  <strong>AI AutomationHubs LeadFlow Pro</strong> is an autonomous, full-stack B2B lead generation and customer outreach engine engineered for rapid client acquisition across international commercial hubs (United Kingdom, UAE, USA, and India).
+</p>
+
+<div class="callout">
+  <strong>Key Operational Metric:</strong> Eliminates manual prospecting by automatically mining authentic businesses from Google Maps, crawling official websites for direct emails and decision-maker phone numbers, and initiating outreach across WhatsApp, Telegram, and Gmail with zero ban risk.
+</div>
+
+<h2>Core Capabilities</h2>
+<div class="grid-3 no-break">
+  <div class="card">
+    <h4>📍 Real Places Mining</h4>
+    <p>Direct integration with Google Places API v1 (New) ensuring 100% verified physical addresses, verified ratings, phone numbers, and official websites. Zero mock/fake records.</p>
+  </div>
+  <div class="card">
+    <h4>🕷️ Deep Website Enrichment</h4>
+    <p>Crawls business homepages, contact-us, and about pages to extract official domain emails, WhatsApp click-to-chat links, and social links (Instagram, LinkedIn).</p>
+  </div>
+  <div class="card">
+    <h4>🚀 Multi-Channel Outreach</h4>
+    <p>Integrated with WhatsApp Web (Puppeteer), Telegram UserBot (MTProto GramJS), and Gmail API for personalized 1-click & automated outreach.</p>
+  </div>
+</div>
+
+<h2>Technology Stack Specifications</h2>
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Technologies / Libraries</th>
+      <th>Architectural Role & Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Backend Runtime</strong></td>
+      <td>Node.js v24.19 (ESM Mode)</td>
+      <td>Asynchronous event-driven server runtime handling long-polling and scraping tasks.</td>
+    </tr>
+    <tr>
+      <td><strong>Database</strong></td>
+      <td>better-sqlite3 v13.0</td>
+      <td>Embedded SQL database with Write-Ahead Logging (WAL) for high concurrency and zero locks.</td>
+    </tr>
+    <tr>
+      <td><strong>Maps Data</strong></td>
+      <td>Google Places API v1 (New)</td>
+      <td>Queries Google Maps search endpoint for global business listings with field masking.</td>
+    </tr>
+    <tr>
+      <td><strong>WhatsApp Core</strong></td>
+      <td>whatsapp-web.js (Pedroslopez Edge)</td>
+      <td>Puppeteer-controlled headless Chromium running WhatsApp Web with session caching.</td>
+    </tr>
+    <tr>
+      <td><strong>Telegram UserBot</strong></td>
+      <td>GramJS (telegram npm v2.26.22)</td>
+      <td>Direct MTProto connection to Telegram servers as authenticated user (Tanuj Chandel).</td>
+    </tr>
+    <tr>
+      <td><strong>Email Outreach</strong></td>
+      <td>googleapis v140.0.1</td>
+      <td>Official Google OAuth2 client for drafting personalized outreach in Gmail.</td>
+    </tr>
+    <tr>
+      <td><strong>Phone Intelligence</strong></td>
+      <td>libphonenumber-js v1.13</td>
+      <td>Validates worldwide numbers, detects landline vs mobile, and normalizes into E.164.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ================= PAGE 3: ENGINE DEEP DIVE ================= -->
+<div class="page-break"></div>
+
+<span class="header-tag">Section 2</span>
+<h1>Lead Scraping & Phone Intelligence Engine</h1>
+
+<p>
+  The data collection pipeline is designed with a strict <strong>Zero Fake Data policy</strong>. It operates in multiple cascading phases to guarantee authentic business names, verified contact info, and high delivery rates.
+</p>
+
+<h2>Phase 1: Google Places API (New) Extraction</h2>
+<p>
+  When a search is launched (e.g. <em>"Private Dental Clinics in London, UK"</em> or <em>"Real Estate Agencies in Dubai, UAE"</em>), the engine calls Google's latest v1 Places API endpoint:
+</p>
+<pre><code>POST https://places.googleapis.com/v1/places:searchText
+Headers:
+  Content-Type: application/json
+  X-Goog-Api-Key: [API_KEY]
+  X-Goog-FieldMask: places.displayName,places.formattedAddress,places.nationalPhoneNumber,
+                    places.internationalPhoneNumber,places.websiteUri,places.rating,
+                    places.id,nextPageToken
+Body:
+  { "textQuery": "Real Estate Agency in Dubai, UAE", "pageSize": 20 }</code></pre>
+
+<div class="callout info no-break">
+  <strong>Pagination & Rate Control:</strong> If more than 20 leads are requested (e.g., 50 leads), the engine tracks <code>nextPageToken</code>, pauses for 1,500ms to allow Google token registration, and cycles through consecutive pages until the quota is satisfied.
+</div>
+
+<h2>Phase 2: Deep HTML Website Crawler</h2>
+<p>
+  For every business that has an official website listed on Google Maps, the scraper runs an autonomous multi-page crawler across <code>/</code>, <code>/contact</code>, <code>/about</code>, and <code>/reach-us</code>.
+</p>
+<ol class="no-break">
+  <li><strong>Direct Business Emails:</strong> Uses regular expressions combined with domain blacklists to capture authentic corporate inboxes.</li>
+  <li><strong>WhatsApp Click-to-Chat Numbers:</strong> Scans for <code>wa.me/&lt;number&gt;</code> and <code>api.whatsapp.com/send?phone=&lt;number&gt;</code> embedded in chat widgets. This captures direct mobile phones even when the Google Maps listing displays an office landline!</li>
+  <li><strong>Social Proof Profiles:</strong> Automatically pulls links to Instagram, LinkedIn company pages, Facebook, and Telegram channels.</li>
+</ol>
+
+<h2>Phase 3: International Phone Classification</h2>
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Format Pattern</th>
+      <th>Region / Carrier</th>
+      <th>Classification</th>
+      <th>Delivery Channels</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>+971 50 / 52 / 54 / 55 / 56 / 58</code></td>
+      <td>UAE Mobile (Etisalat / du)</td>
+      <td><span class="badge badge-success">Mobile Ready</span></td>
+      <td>WhatsApp, Telegram, SMS, Call</td>
+    </tr>
+    <tr>
+      <td><code>+971 4 xxx xxxx</code></td>
+      <td>Dubai Landline (Fixed Line)</td>
+      <td><span class="badge badge-warning">Fixed Office Desk</span></td>
+      <td>Office Direct Call, Email</td>
+    </tr>
+    <tr>
+      <td><code>+44 7xxx xxxxxx</code></td>
+      <td>UK Mobile</td>
+      <td><span class="badge badge-success">Mobile Ready</span></td>
+      <td>WhatsApp, Telegram, SMS</td>
+    </tr>
+    <tr>
+      <td><code>+44 20 xxxx xxxx</code></td>
+      <td>London Landline (Fixed Line)</td>
+      <td><span class="badge badge-warning">Reception Desk</span></td>
+      <td>Direct Call, Verified Email</td>
+    </tr>
+    <tr>
+      <td><code>+91 6xxx - 9xxx</code></td>
+      <td>Indian Mobile (Jio/Airtel/Vi)</td>
+      <td><span class="badge badge-success">Mobile Ready</span></td>
+      <td>WhatsApp, Telegram, SMS</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ================= PAGE 4: MULTI-CHANNEL OUTREACH ENGINES ================= -->
+<div class="page-break"></div>
+
+<span class="header-tag">Section 3</span>
+<h1>Autonomous Multi-Channel Outreach Systems</h1>
+
+<div class="grid-2 no-break">
+  <div class="card">
+    <h4>📲 1. WhatsApp Automation Client</h4>
+    <p><strong>Underlying Engine:</strong> Headless Chromium via Puppeteer with WhatsApp Web interface.</p>
+    <ul style="margin-top:8px; font-size:8pt;">
+      <li><strong>Human Typing Emulation:</strong> Triggers realistic typing presence for 600–1,400ms prior to dispatching messages.</li>
+      <li><strong>LID & JID Pre-Verification:</strong> Queries <code>client.getNumberId()</code> to confirm registration before sending.</li>
+      <li><strong>Anti-Detection Stealth:</strong> Modern desktop User-Agent, disabled <code>AutomationControlled</code> blink feature.</li>
+      <li><strong>Auto-Recovery Watchdog:</strong> Automatically clears stale locks (<code>DevToolsActivePort</code>, <code>SingletonLock</code>) and self-heals in 5s.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>✈️ 2. Telegram UserBot (MTProto GramJS)</h4>
+    <p><strong>Underlying Engine:</strong> GramJS MTProto client operating directly as Tanuj Chandel's authenticated account.</p>
+    <ul style="margin-top:8px; font-size:8pt;">
+      <li><strong>Phone-to-Entity Resolution:</strong> Resolves cold business numbers through <code>Api.contacts.ImportContacts</code> before messaging.</li>
+      <li><strong>Permanent SQLite Session:</strong> Session string stored in SQLite settings; never requires re-authentication.</li>
+      <li><strong>Anti-Flood Throttler:</strong> Automatically spaces consecutive messages with randomized 15–25s pauses.</li>
+      <li><strong>1-Tap & Bulk Execution:</strong> Accessible via individual row buttons and bulk operations bar.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="grid-2 no-break" style="margin-top:10px;">
+  <div class="card">
+    <h4>✉️ 3. Gmail API OAuth2 Engine</h4>
+    <p><strong>Underlying Engine:</strong> Google APIs Node.js Client with token persistence.</p>
+    <ul style="margin-top:8px; font-size:8pt;">
+      <li><strong>1-Click Draft Generation:</strong> Creates fully personalized drafts directly in founder's Gmail inbox.</li>
+      <li><strong>Dynamic Placeholders:</strong> Injects <code>{{BusinessName}}</code>, <code>{{Location}}</code>, <code>{{Rating}}</code>.</li>
+      <li><strong>Human-in-the-Loop Safety:</strong> Drafts are created for review, giving 100% control over tone and timing.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>🔔 4. Real-Time Telegram Founder Alert Bot</h4>
+    <p><strong>Underlying Engine:</strong> Telegram Bot API integrated with SSE event listeners.</p>
+    <ul style="margin-top:8px; font-size:8pt;">
+      <li><strong>Instant Inbound Alerts:</strong> Whenever a client replies on WhatsApp or Telegram, an instant alert is pushed to founders.</li>
+      <li><strong>OpenAI Suggested Reply:</strong> Analyzes the inquiry and generates an AI draft response ready for 1-tap dispatch.</li>
+      <li><strong>1-Tap Quick Action Links:</strong> Direct <code>wa.me</code> deep links and <code>tel:</code> links included in every notification.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================= PAGE 5: CAMPAIGN RESULTS & CASE STUDIES ================= -->
+<div class="page-break"></div>
+
+<span class="header-tag">Section 4</span>
+<h1>International Market Case Studies & Live Data</h1>
+
+<p>
+  The system has been verified across two primary international commercial hubs: <strong>London, United Kingdom</strong> (Private Healthcare & Dental) and <strong>Dubai, United Arab Emirates</strong> (Real Estate & Property Brokers).
+</p>
+
+<h2>Campaign A: 50 Real Estate Agencies in Dubai, UAE</h2>
+<div class="callout info no-break">
+  <strong>Market Profile:</strong> Dubai property brokers have extremely high transaction sizes (AED 2M – 50M). Missing an inquiry costs thousands of dollars, making them prime buyers for 24/7 AI Lead Qualification Bots.
+</div>
+
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Agency Name</th>
+      <th>Contact Number</th>
+      <th>Official Business Email</th>
+      <th>Rating</th>
+      <th>Primary Outreach</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Time Homes Real Estate</strong></td>
+      <td><code>+971 56 448 4762</code> (Mobile)</td>
+      <td><code>info@timehomesrealestate.com</code></td>
+      <td>4.7 ★</td>
+      <td><span class="badge badge-success">WhatsApp + TG</span></td>
+    </tr>
+    <tr>
+      <td><strong>Axis Real Estate Brokerage</strong></td>
+      <td><code>+971 52 875 9269</code> (Mobile)</td>
+      <td><code>info@axisrealestate.com</code></td>
+      <td>4.9 ★</td>
+      <td><span class="badge badge-success">WhatsApp + TG</span></td>
+    </tr>
+    <tr>
+      <td><strong>Impressive Real Estate LLC</strong></td>
+      <td><code>+971 50 746 5012</code> (Mobile)</td>
+      <td><code>shetty@impressiverealestate.net</code></td>
+      <td>4.8 ★</td>
+      <td><span class="badge badge-success">WhatsApp + TG</span></td>
+    </tr>
+    <tr>
+      <td><strong>TheRealtorDubai Brokerage</strong></td>
+      <td><code>+971 55 195 2518</code> (Mobile)</td>
+      <td><code>info@therealtordubai.com</code></td>
+      <td>5.0 ★</td>
+      <td><span class="badge badge-success">WhatsApp + TG</span></td>
+    </tr>
+    <tr>
+      <td><strong>Homeland Realty Real Estate</strong></td>
+      <td><code>+971 55 661 0000</code> (Mobile)</td>
+      <td><code>info@homeland.ae</code></td>
+      <td>4.9 ★</td>
+      <td><span class="badge badge-success">WhatsApp + TG</span></td>
+    </tr>
+    <tr>
+      <td><strong>Luxfolio Real Estate</strong></td>
+      <td><code>+971 4 335 6007</code> (Office)</td>
+      <td><code>info@luxfoliorealestate.ae</code></td>
+      <td>4.6 ★</td>
+      <td><span class="badge badge-primary">Direct Email</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Campaign B: 50 Private Dental Clinics in London, UK</h2>
+<div class="callout no-break">
+  <strong>Market Profile:</strong> UK practices list reception desk landlines (<code>+44 20...</code>) on Google Maps and operate almost entirely on corporate email. 36 verified direct emails were extracted, and 36 Gmail drafts were generated in 1-click.
+</div>
+
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Clinic Name</th>
+      <th>London Desk Phone</th>
+      <th>Verified Clinic Email</th>
+      <th>Rating</th>
+      <th>Outreach Channel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pro Dental Clinic</strong></td>
+      <td><code>+44 20 3026 4402</code></td>
+      <td><code>enquiries@prodentalclinic.london</code></td>
+      <td>4.7 ★</td>
+      <td><span class="badge badge-primary">Gmail Drafted</span></td>
+    </tr>
+    <tr>
+      <td><strong>Elleven Dental London</strong></td>
+      <td><code>+44 20 7487 2711</code></td>
+      <td><code>info@ellevendental.com</code></td>
+      <td>4.8 ★</td>
+      <td><span class="badge badge-primary">Gmail Drafted</span></td>
+    </tr>
+    <tr>
+      <td><strong>Square Mile Dental Centre</strong></td>
+      <td><code>+44 20 7377 0990</code></td>
+      <td><code>info@squaremiledentalcentre.co.uk</code></td>
+      <td>5.0 ★</td>
+      <td><span class="badge badge-primary">Gmail Drafted</span></td>
+    </tr>
+    <tr>
+      <td><strong>Dental Care London</strong></td>
+      <td><code>+44 20 3538 9449</code></td>
+      <td><code>smile@dentalcarelondon.co.uk</code></td>
+      <td>4.8 ★</td>
+      <td><span class="badge badge-primary">Gmail Drafted</span></td>
+    </tr>
+    <tr>
+      <td><strong>Marylebone Smile Clinic</strong></td>
+      <td><code>+44 20 7126 8526</code></td>
+      <td><code>info@marylebonesmileclinic.co.uk</code></td>
+      <td>5.0 ★</td>
+      <td><span class="badge badge-primary">Gmail Drafted</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ================= PAGE 6: DATABASE & API REFERENCE ================= -->
+<div class="page-break"></div>
+
+<span class="header-tag">Section 5</span>
+<h1>Database Architecture, Endpoints & Operations</h1>
+
+<h2>SQLite Database Schema</h2>
+<div class="grid-2 no-break">
+  <div class="card">
+    <h4>📋 leads Table Structure</h4>
+    <pre style="font-size:7pt; margin:4px 0;">
+id TEXT PRIMARY KEY,
+createdAt TEXT,
+searchTerm TEXT,
+location TEXT,
+businessName TEXT,
+address TEXT,
+phone TEXT,
+website TEXT,
+email TEXT,
+rating REAL,
+segment TEXT,
+qualityScore TEXT,   -- Hot, Warm, Cold
+leadStatus TEXT,     -- New, Contacted, Interested, Closed
+emailStatus TEXT,    -- Pending, Draft Created, Sent
+whatsappStatus TEXT, -- Pending, Sent, Error
+telegram TEXT,       -- Sent, Not on Telegram
+notes TEXT,
+dataMode TEXT        -- REAL</pre>
+  </div>
+
+  <div class="card">
+    <h4>⚙️ locations & settings Tables</h4>
+    <pre style="font-size:7pt; margin:4px 0;">
+-- locations table (Scrape Jobs)
+id TEXT PRIMARY KEY,
+term TEXT,
+location TEXT,
+maxLeads INTEGER DEFAULT 20,
+status TEXT,         -- Pending, Scraping, Done
+error TEXT,
+createdAt TEXT
+
+-- settings table (Stored Credentials)
+id INTEGER PRIMARY KEY CHECK (id = 1),
+data TEXT            -- JSON containing API keys,
+                     -- templates, Telegram session,
+                     -- and OAuth tokens</pre>
+  </div>
+</div>
+
+<h2>Core API Endpoints Reference</h2>
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Endpoint</th>
+      <th>Method</th>
+      <th>Description & Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/api/locations</code></td>
+      <td><code>POST</code></td>
+      <td>Creates a new scraping location. Body: <code>{ term, location, maxLeads }</code>.</td>
+    </tr>
+    <tr>
+      <td><code>/api/locations/:id/run</code></td>
+      <td><code>POST</code></td>
+      <td>Triggers background scraper run. Body: <code>{ overwrite: boolean }</code>.</td>
+    </tr>
+    <tr>
+      <td><code>/api/leads</code></td>
+      <td><code>GET</code></td>
+      <td>Returns filtered leads list with search, segment, and status queries.</td>
+    </tr>
+    <tr>
+      <td><code>/api/whatsapp/status</code></td>
+      <td><code>GET</code></td>
+      <td>Returns WhatsApp client link status (<code>Disconnected</code>, <code>QR_Ready</code>, <code>Connected</code>).</td>
+    </tr>
+    <tr>
+      <td><code>/api/whatsapp/disconnect</code></td>
+      <td><code>POST</code></td>
+      <td>Safely closes session, cleans stale lock files, and prepares fresh client.</td>
+    </tr>
+    <tr>
+      <td><code>/api/outreach/telegram</code></td>
+      <td><code>POST</code></td>
+      <td>Triggers bulk Telegram outreach to selected lead IDs with anti-spam delays.</td>
+    </tr>
+    <tr>
+      <td><code>/api/telegram-user/status</code></td>
+      <td><code>GET</code></td>
+      <td>Checks Telegram UserBot session state (configured, hasSession, isConnected).</td>
+    </tr>
+    <tr>
+      <td><code>/api/gmail/draft/:leadId</code></td>
+      <td><code>POST</code></td>
+      <td>Creates a personalized outreach email draft directly in Gmail inbox.</td>
+    </tr>
+    <tr>
+      <td><code>/api/logs/stream</code></td>
+      <td><code>GET</code></td>
+      <td>Server-Sent Events (SSE) stream broadcasting real-time logs to the UI.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="margin-top:30px; padding-top:14px; border-top:1px solid var(--border); display:flex; justify-content:space-between; font-size:8pt; color:var(--text-muted);">
+  <span>© 2026 AI AutomationHubs India. All Rights Reserved.</span>
+  <span>LeadFlow Pro Enterprise System Architecture Documentation</span>
+</div>
+
+</body>
+</html>

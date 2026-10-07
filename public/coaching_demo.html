@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduRank AI — Coaching Institute WhatsApp Admissions Copilot | AI AutomationHubs</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wa-header: #075e54;
+      --wa-teal: #128c7e;
+      --wa-green: #25d366;
+      --wa-light-green: #dcf8c6;
+      --wa-dark-bg: #0b141a;
+      --wa-dark-panel: #111b21;
+      --wa-dark-msg-in: #202c33;
+      --wa-dark-msg-out: #005c4b;
+      --primary: #10b981;
+      --accent: #f59e0b;
+      --dark-bg: #090d16;
+      --card-bg: #111827;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Banner */
+    .top-nav {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      height: 38px;
+      object-fit: contain;
+    }
+
+    .brand-text h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 99px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-back {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-back:hover { background: rgba(255, 255, 255, 0.15); }
+
+    .btn-cta {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    }
+    .btn-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5); }
+
+    /* Showcase Layout */
+    .showcase-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 60px 24px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 40px;
+      align-items: center;
+      flex: 1;
+    }
+
+    @media (max-width: 960px) {
+      .showcase-container {
+        grid-template-columns: 1fr;
+        padding: 24px 16px;
+      }
+    }
+
+    /* Left Pitch Info */
+    .pitch-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .badge-market {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #818cf8;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      width: fit-content;
+    }
+
+    .pitch-title {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    .pitch-subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .metric-card {
+      background: rgba(17, 24, 39, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .metric-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: #10b981;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+
+    .feature-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(99, 102, 241, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .contact-info h4 {
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .contact-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Right WhatsApp Phone Mockup */
+    .phone-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .phone-frame {
+      width: 380px;
+      height: 680px;
+      background: var(--wa-dark-bg);
+      border-radius: 40px;
+      border: 10px solid #1e293b;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.2);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 22px;
+      background: #1e293b;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+      z-index: 100;
+    }
+
+    .wa-top-bar {
+      background: var(--wa-dark-panel);
+      padding: 30px 16px 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 10;
+    }
+
+    .wa-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .online-badge {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 11px;
+      height: 11px;
+      background: var(--wa-green);
+      border: 2px solid var(--wa-dark-panel);
+      border-radius: 50%;
+    }
+
+    .wa-profile-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .wa-profile-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .verified-icon {
+      color: var(--wa-green);
+      font-size: 13px;
+    }
+
+    .wa-status-text {
+      font-size: 11px;
+      color: var(--wa-green);
+    }
+
+    .wa-btn-restart {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .wa-btn-restart:hover { color: #fff; }
+
+    /* Chat Area */
+    .wa-chat-area {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }
+
+    .wa-chat-area::-webkit-scrollbar { width: 4px; }
+    .wa-chat-area::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 99px; }
+
+    .msg-bubble {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.45;
+      position: relative;
+      animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(8px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .msg-incoming {
+      align-self: flex-start;
+      background: var(--wa-dark-msg-in);
+      color: #e2e8f0;
+      border-top-left-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .msg-outgoing {
+      align-self: flex-end;
+      background: var(--wa-dark-msg-out);
+      color: #fff;
+      border-top-right-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .msg-time {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.5);
+      float: right;
+      margin-left: 8px;
+      margin-top: 4px;
+    }
+
+    .check-double {
+      color: #38bdf8;
+      font-weight: 800;
+    }
+
+    .quick-chips-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chip-option {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip-option:hover {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: #10b981;
+      transform: translateX(2px);
+    }
+
+    /* Typing Indicator */
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      background: var(--wa-dark-msg-in);
+      padding: 10px 16px;
+      border-radius: 12px;
+      border-top-left-radius: 2px;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #94a3b8;
+      border-radius: 50%;
+      animation: blink 1.2s infinite ease-in-out;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+      40% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Input Bar */
+    .wa-input-bar {
+      background: var(--wa-dark-panel);
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .wa-text-input {
+      flex: 1;
+      background: #2a3942;
+      border: none;
+      border-radius: 20px;
+      padding: 9px 16px;
+      font-size: 13px;
+      color: #fff;
+      outline: none;
+    }
+    .wa-text-input::placeholder { color: #8696a0; }
+
+    .wa-send-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #00a884;
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .wa-send-btn:hover { background: #02906f; transform: scale(1.05); }
+
+    .scholarship-card {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="brand-box">
+      <img src="logo.png" alt="AI AutomationHubs" class="brand-logo">
+      <div class="brand-text">
+        <h1>🎓 EduRank AI — Coaching Institute Admissions Copilot</h1>
+        <p>JEE, NEET, Foundation & Govt Exam Admissions • By AI AutomationHubs</p>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="/" class="btn-pill btn-back">← Back to Dashboard</a>
+      <a href="https://wa.me/917704077700?text=Namaste%20Tanuj,%20Maine%20EduRank%20Coaching%20Demo%20test%20kiya!" target="_blank" class="btn-pill btn-cta">📲 WhatsApp Tanuj</a>
+    </div>
+  </nav>
+
+  <!-- Main Showcase Grid -->
+  <main class="showcase-container">
+
+    <!-- Left Pitch Info -->
+    <div class="pitch-panel">
+      <span class="badge-market">🇮🇳 India Coaching & EdTech Admissions Edition</span>
+      
+      <h2 class="pitch-title">India's 24/7 WhatsApp Admission Counselor for Coaching Institutes</h2>
+      
+      <p class="pitch-subtitle">
+        Jaipur & Kota coaching institutes lose 40% of prospective students because parents message after 7 PM or on weekends when counselors are offline. EduRank AI responds in 5 seconds, qualifies target exam, and books demo classes on auto-pilot.
+      </p>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-val">&lt; 5s</div>
+          <div class="metric-label">Response Time</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">42%</div>
+          <div class="metric-label">More Walk-Ins</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">Zero</div>
+          <div class="metric-label">Missed Inquiries</div>
+        </div>
+      </div>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <span class="feature-icon">📚</span>
+          <div><strong>Smart Course Qualification:</strong> Instantly qualifies student's target exam (IIT-JEE, NEET, CUET, Foundation, NDA) and current class.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🎯</span>
+          <div><strong>Scholarship Test & Fee Qualifier:</strong> Automatically explains batch timings, scholarship admission tests, and fee structures.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🏫</span>
+          <div><strong>Free Demo Class & Walk-In Booking:</strong> Collects student & parent details and reserves an offline demo lecture seat automatically.</div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-info">
+          <h4>Want this setup for your Coaching Institute in 48 hours?</h4>
+          <p>Tanuj Chandel (+91-7704077700) & Amit Pandey (+91-9990080408)</p>
+        </div>
+        <button onclick="restartDemo()" class="btn-pill btn-back" style="cursor:pointer;">🔄 Restart Demo</button>
+      </div>
+    </div>
+
+    <!-- Right Interactive Smartphone Mockup -->
+    <div class="phone-wrapper">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+
+        <!-- WhatsApp Bar -->
+        <div class="wa-top-bar">
+          <div class="wa-avatar">
+            🎓
+            <span class="online-badge"></span>
+          </div>
+          <div class="wa-profile-info">
+            <div class="wa-profile-name">
+              <span>Apex Academy Admissions</span>
+              <span class="verified-icon">✓</span>
+            </div>
+            <div class="wa-status-text">Online • Official Admissions Counselor</div>
+          </div>
+          <button class="wa-btn-restart" onclick="restartDemo()" title="Restart Simulation">🔄</button>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="wa-chat-area" id="chat-box">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typing-indicator">
+          <div class="typing-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="wa-input-bar">
+          <input type="text" id="user-input" class="wa-text-input" placeholder="Type a message..." onkeydown="handleKey(event)">
+          <button class="wa-send-btn" onclick="sendCustomMessage()">➤</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const chatBox = document.getElementById('chat-box');
+    const typingIndicator = document.getElementById('typing-indicator');
+    const userInput = document.getElementById('user-input');
+
+    let currentStep = 0;
+    let studentData = {
+      targetExam: '',
+      studentClass: '',
+      batchType: '',
+      studentName: '',
+      parentPhone: ''
+    };
+
+    function getTime() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function showTyping(ms = 800) {
+      typingIndicator.style.display = 'block';
+      chatBox.scrollTop = chatBox.scrollHeight;
+      return new Promise(r => setTimeout(r, ms)).then(() => {
+        typingIndicator.style.display = 'none';
+      });
+    }
+
+    function addBotMessage(html) {
+      const div = document.createElement('div');
+      div.className = 'msg-bubble msg-incoming';
+      div.innerHTML = `${html}<span class="msg-time">${getTime()}</span>`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function addUserMessage(text) {
+      const div = document.createElement('div');
+      div.className = 'msg-bubble msg-outgoing';
+      div.innerHTML = `${text}<span class="msg-time">${getTime()} <span class="check-double">✓✓</span></span>`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function startConversation() {
+      chatBox.innerHTML = '';
+      currentStep = 0;
+      await showTyping(600);
+      addBotMessage(`
+        Namaste! 🙏 <b>Apex Career Institute</b> me aapka swagat hai.<br><br>
+        Aap kis exam ki taiyari ke liye admission ya course details janna chahte hain?
+        <div class="quick-chips-container">
+          <button class="chip-option" onclick="handleSelect('IIT-JEE (Mains + Advanced)', 'targetExam')">🔬 IIT-JEE (Engineering)</button>
+          <button class="chip-option" onclick="handleSelect('NEET-UG (Medical)', 'targetExam')">🩺 NEET-UG (Medical)</button>
+          <button class="chip-option" onclick="handleSelect('Class 9th-10th Foundation / NTSE', 'targetExam')">📖 Class 9th-10th Foundation</button>
+          <button class="chip-option" onclick="handleSelect('Govt Exams (SSC / Banking / NDA)', 'targetExam')">🏛️ Govt Exams / NDA / SSC</button>
+        </div>
+      `);
+    }
+
+    async function handleSelect(val, field) {
+      studentData[field] = val;
+      addUserMessage(val);
+
+      if (field === 'targetExam') {
+        await showTyping(800);
+        addBotMessage(`
+          Bahut achha! Student abhi <b>kis class me padh rahe hain</b>?
+          <div class="quick-chips-container">
+            <button class="chip-option" onclick="handleSelect('Moving to Class 11th (2-Year Batch)', 'studentClass')">🎯 10th to 11th Moving (2-Year Batch)</button>
+            <button class="chip-option" onclick="handleSelect('Moving to Class 12th (1-Year Batch)', 'studentClass')">📚 11th to 12th Moving (1-Year Batch)</button>
+            <button class="chip-option" onclick="handleSelect('12th Passed / Dropper Batch', 'studentClass')">⚡ 12th Passed / Dropper Repeater Batch</button>
+          </div>
+        `);
+      } else if (field === 'studentClass') {
+        await showTyping(800);
+        addBotMessage(`
+          Noted! Aap kis mode me classes attend karna chahte hain?
+          <div class="quick-chips-container">
+            <button class="chip-option" onclick="handleSelect('Offline Classroom (Jaipur Campus)', 'batchType')">🏫 Offline Classroom (Jaipur Campus)</button>
+            <button class="chip-option" onclick="handleSelect('Online Live Interactive Batch', 'batchType')">💻 Online Live Interactive Batch</button>
+          </div>
+        `);
+      } else if (field === 'batchType') {
+        await showTyping(1200);
+
+        addBotMessage(`
+          🎉 <b>Naya Batch Agle Somwar Se Shuru Ho Raha Hai!</b><br><br>
+          Aapke selected course <b>(${studentData.targetExam})</b> ke liye admission details:
+          <div class="scholarship-card">
+            👨‍🏫 <b>Faculty:</b> Top Ex-Kota Senior Faculties<br>
+            🏆 <b>Scholarship Test (ASAT):</b> Up to 90% Fee Waiver Eligible<br>
+            📚 <b>Study Material:</b> Complete Printed Modules + All India Test Series Included<br>
+            🎁 <b>Special Offer:</b> Free 2-Day Offline Demo Classes
+          </div>
+          <br>
+          Kya aap student ke liye <b>FREE 2-Day Demo Class Seat</b> reserve karna chahte hain?
+          <div class="quick-chips-container">
+            <button class="chip-option" onclick="handleSelect('Yes, Book Free Demo Seat', 'book')">🎟️ Haan, Free Demo Class Seat Book Karein</button>
+            <button class="chip-option" onclick="handleSelect('Talk to Academic Counselor', 'book')">📞 Academic Counselor Se Call Par Baat Karein</button>
+          </div>
+        `);
+      } else if (field === 'book') {
+        await showTyping(800);
+        addBotMessage(`
+          Shandaar! Kripya <b>Student ka Naam aur Parent ka Mobile Number</b> bata dijiye taaki hum Demo Pass aur Campus Address WhatsApp par bhej sakein:
+        `);
+        userInput.placeholder = "e.g. Aryan Sharma, 98290XXXXX";
+        userInput.focus();
+        currentStep = 99;
+      }
+    }
+
+    async function sendCustomMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+      userInput.value = '';
+      addUserMessage(text);
+
+      if (currentStep === 99) {
+        await showTyping(1000);
+        addBotMessage(`
+          ✅ <b>Demo Pass Successfully Generated!</b><br><br>
+          Dhanyawad <b>${text.split(',')[0] || 'Ji'}</b>! Aapka demo seat reserve ho gaya hai.<br><br>
+          Aapke WhatsApp number par batch timings, syllabus schedule aur campus location map bhej diya gaya hai. Hamare counselor aapse connect karenge! 🎓🌟
+          <div class="quick-chips-container" style="margin-top:12px;">
+            <button class="chip-option" onclick="restartDemo()">🔄 Test Another Course / Exam</button>
+          </div>
+        `);
+        currentStep = 0;
+        userInput.placeholder = "Type a message...";
+      } else {
+        await showTyping(800);
+        addBotMessage(`
+          Dhanyawad! Hamare academic counselor jaldi connect karenge. Ya upar diye gaye options me se select karein.
+        `);
+      }
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter') sendCustomMessage();
+    }
+
+    function restartDemo() {
+      studentData = { targetExam: '', studentClass: '', batchType: '', studentName: '', parentPhone: '' };
+      userInput.placeholder = "Type a message...";
+      startConversation();
+    }
+
+    window.addEventListener('DOMContentLoaded', startConversation);
+  </script>
+</body>
+</html>

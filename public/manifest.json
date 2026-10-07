@@ -1,32 +1,25 @@
 {
-  "name": "LeadFlow Pro — Multi-Segment Lead Generator",
-  "short_name": "LeadFlow",
-  "description": "Generate, qualify, and outreach business leads across all industry segments.",
+  "name": "AI AutomationHubs — Lead & WhatsApp Agent",
+  "short_name": "AI Hubs",
+  "description": "Autonomous Lead Intelligence & 24/7 WhatsApp AI Outreach Command Center",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#060913",
-  "theme_color": "#6366f1",
+  "theme_color": "#0ea5e9",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%236366f1'/><circle cx='256' cy='256' r='120' fill='none' stroke='white' stroke-width='30'/><circle cx='256' cy='256' r='60' fill='white'/><line x1='136' y1='256' x2='100' y2='220' stroke='white' stroke-width='22' stroke-linecap='round'/><line x1='136' y1='256' x2='100' y2='292' stroke='white' stroke-width='22' stroke-linecap='round'/><line x1='376' y1='256' x2='412' y2='220' stroke='white' stroke-width='22' stroke-linecap='round'/><line x1='376' y1='256' x2='412' y2='292' stroke='white' stroke-width='22' stroke-linecap='round'/></svg>",
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["business", "productivity"],
-  "screenshots": [],
-  "shortcuts": [
-    {
-      "name": "Segments Hub",
-      "url": "/#segments",
-      "description": "Generate leads by industry segment"
-    },
-    {
-      "name": "Leads Feed",
-      "url": "/#leads",
-      "description": "View all scraped leads"
-    }
-  ]
+  "categories": ["business", "productivity"]
 }

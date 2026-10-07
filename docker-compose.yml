@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: leadflow-pro
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+    volumes:
+      # Persistent SQLite database storage
+      - ./leads.db:/usr/src/app/leads.db
+      # Persistent WhatsApp authentication session (no need to rescan on container restart)
+      - ./.wwebjs_auth:/usr/src/app/.wwebjs_auth
+    healthcheck:
+      test: ["CMD-SHELL", "node -e 'fetch(\"http://localhost:3000/api/settings\").then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

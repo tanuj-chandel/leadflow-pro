@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeadFlow Pro — Agent Launcher</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    @keyframes pulseGlow { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
+    .pulse-glow { animation: pulseGlow 3s infinite ease-in-out; }
+  </style>
+</head>
+<body class="bg-[#0b0f19] text-[#f1f5f9] min-h-screen flex flex-col items-center justify-center p-6 relative overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+
+  <!-- Background decorative glows -->
+  <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-indigo-600/15 via-purple-600/10 to-cyan-400/10 rounded-full blur-3xl pointer-events-none pulse-glow"></div>
+
+  <div class="relative z-10 w-full max-w-xl">
+
+    <!-- Header / Brand -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 text-white text-3xl shadow-xl shadow-indigo-500/25 mb-4">
+        ⚡
+      </div>
+      <h1 class="text-3xl font-black tracking-tight text-white flex items-center justify-center gap-2">
+        LeadFlow <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300">PRO</span>
+      </h1>
+      <p class="text-xs text-slate-400 mt-1 uppercase tracking-widest font-semibold">
+        Global Lead Scraper & Cold Outreach Agent
+      </p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="bg-[#131b2e]/90 border border-indigo-900/40 rounded-3xl p-6 shadow-2xl backdrop-blur-xl">
+
+      <!-- Server Live Status Banner -->
+      <div id="statusBanner" class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center justify-between transition-all duration-300 mb-6">
+        <div class="flex items-center gap-3">
+          <span id="statusDot" class="w-3.5 h-3.5 rounded-full bg-amber-400 animate-pulse"></span>
+          <div>
+            <div id="statusText" class="text-xs font-bold text-slate-200">Checking Agent Server...</div>
+            <div id="statusSubtext" class="text-[11px] text-slate-400 font-mono mt-0.5" id="targetHostLabel">http://localhost:3000</div>
+          </div>
+        </div>
+        <button onclick="checkServer()" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center gap-1">
+          <span>🔄</span> Refresh
+        </button>
+      </div>
+
+      <!-- Action Buttons (Shown when online) -->
+      <div id="onlineActions" class="space-y-3 mb-6">
+        <a id="btnControlCenter" href="http://localhost:3000/control_center.html" target="_blank"
+          class="group w-full p-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-sm shadow-xl shadow-indigo-600/30 flex items-center justify-between transition transform hover:-translate-y-0.5">
+          <div class="flex items-center gap-3">
+            <span class="text-xl">🚀</span>
+            <div class="text-left">
+              <div>Launch Agent Control Center</div>
+              <div class="text-[11px] font-normal text-indigo-200">Discovery engine, WhatsApp node & Human review</div>
+            </div>
+          </div>
+          <span class="text-indigo-200 group-hover:translate-x-1 transition text-lg">→</span>
+        </a>
+
+        <div class="grid grid-cols-2 gap-3">
+          <a id="btnDashboard" href="http://localhost:3000/" target="_blank"
+            class="p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-semibold text-xs flex items-center gap-2.5 transition">
+            <span class="text-lg">📊</span>
+            <div>
+              <div class="text-white">Main Dashboard</div>
+              <div class="text-[10px] text-slate-400">Leads Feed & Export</div>
+            </div>
+          </a>
+
+          <a id="btnSellPage" href="http://localhost:3000/sell.html" target="_blank"
+            class="p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-semibold text-xs flex items-center gap-2.5 transition">
+            <span class="text-lg">💼</span>
+            <div>
+              <div class="text-white">Landing Page</div>
+              <div class="text-[10px] text-slate-400">Features & Demo</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Offline Helper Box (Shown when offline) -->
+      <div id="offlineHelp" class="hidden p-4 rounded-2xl bg-amber-950/30 border border-amber-500/30 mb-6 text-xs text-amber-200 space-y-2">
+        <div class="font-bold flex items-center gap-2 text-amber-300">
+          <span>⚠️</span> Server is not running
+        </div>
+        <p class="text-amber-200/80 leading-relaxed">
+          Start the local server or enter your remote VPS URL below.
+        </p>
+        <div class="bg-black/50 p-2.5 rounded-xl font-mono text-[11px] text-slate-300 flex items-center justify-between border border-amber-500/20">
+          <span>npm start</span>
+          <button onclick="copyCommand('npm start')" class="text-[10px] uppercase font-bold text-amber-400 hover:text-amber-300">Copy</button>
+        </div>
+      </div>
+
+      <!-- Configuration Settings / Target Server -->
+      <div class="border-t border-slate-800 pt-4">
+        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Target Host / VPS URL</label>
+        <div class="flex gap-2">
+          <input type="text" id="hostInput" value="http://localhost:3000"
+            class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-indigo-500 transition">
+          <button onclick="updateHost()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">
+            Save
+          </button>
+        </div>
+        <div class="flex items-center justify-between mt-3 text-[11px] text-slate-500">
+          <span>Switch between Localhost and your remote VPS IP</span>
+          <label class="flex items-center gap-1.5 cursor-pointer">
+            <input type="checkbox" id="autoRedirect" class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0">
+            <span class="text-slate-400">Auto-open when online</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-6 text-xs text-slate-500 flex items-center justify-center gap-4">
+      <span>Node.js Backend</span>
+      <span>•</span>
+      <span>SQLite WAL Storage</span>
+      <span>•</span>
+      <span>WhatsApp QR Node</span>
+    </div>
+
+  </div>
+
+  <script>
+    let currentHost = localStorage.getItem('leadflow_host') || 'http://localhost:3000';
+    document.getElementById('hostInput').value = currentHost;
+
+    function updateLinks() {
+      const cleanHost = currentHost.replace(/\/$/, '');
+      document.getElementById('btnControlCenter').href = `${cleanHost}/control_center.html`;
+      document.getElementById('btnDashboard').href = `${cleanHost}/`;
+      document.getElementById('btnSellPage').href = `${cleanHost}/sell.html`;
+      document.getElementById('statusSubtext').innerText = cleanHost;
+    }
+
+    async function checkServer() {
+      const dot = document.getElementById('statusDot');
+      const text = document.getElementById('statusText');
+      const offlineHelp = document.getElementById('offlineHelp');
+      const onlineActions = document.getElementById('onlineActions');
+      const cleanHost = currentHost.replace(/\/$/, '');
+
+      dot.className = 'w-3.5 h-3.5 rounded-full bg-amber-400 animate-pulse';
+      text.innerText = 'Pinging Agent Server...';
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+        const res = await fetch(`${cleanHost}/api/settings`, { 
+          method: 'GET',
+          signal: controller.signal 
+        });
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          dot.className = 'w-3.5 h-3.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50';
+          text.innerHTML = '<span class="text-emerald-400">Agent Online & Ready</span>';
+          offlineHelp.classList.add('hidden');
+          onlineActions.classList.remove('opacity-50', 'pointer-events-none');
+
+          if (document.getElementById('autoRedirect').checked) {
+            window.location.href = `${cleanHost}/control_center.html`;
+          }
+        } else {
+          throw new Error('Server returned non-200');
+        }
+      } catch (err) {
+        dot.className = 'w-3.5 h-3.5 rounded-full bg-rose-400';
+        text.innerHTML = '<span class="text-rose-400">Agent Offline</span>';
+        offlineHelp.classList.remove('hidden');
+        onlineActions.classList.add('opacity-50', 'pointer-events-none');
+      }
+    }
+
+    function updateHost() {
+      const val = document.getElementById('hostInput').value.trim();
+      if (!val) return;
+      currentHost = val;
+      localStorage.setItem('leadflow_host', currentHost);
+      updateLinks();
+      checkServer();
+    }
+
+    function copyCommand(cmd) {
+      navigator.clipboard.writeText(cmd);
+      alert('Copied to clipboard: ' + cmd);
+    }
+
+    updateLinks();
+    checkServer();
+    setInterval(checkServer, 6000);
+  </script>
+</body>
+</html>

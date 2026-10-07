@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>LeadFlow Pro — AI Lead Generator</title>
-  <meta name="description" content="Generate, qualify & outreach business leads across 12+ segments. WhatsApp, Gmail, CRM pipeline built-in.">
-  <meta name="theme-color" content="#6366f1">
+  <title>AI AutomationHubs — Lead Intelligence & Outreach Platform</title>
+  <meta name="description" content="AI Copilots & Business Automation. Generate, qualify & outreach verified B2B leads. WhatsApp, Telegram & Gmail built-in.">
+  <link rel="icon" type="image/png" href="logo.png">
+  <meta name="theme-color" content="#0ea5e9">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3.3">
 </head>
 <body>
 <div class="app-container">
@@ -20,15 +21,15 @@
   <!-- ═══ TOP MOBILE HEADER ════════════════════════════════════════════ -->
   <header class="mobile-header">
     <div class="header-brand">
-      <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-      <span class="brand-title">LeadFlow <small class="version-badge">PRO</small></span>
+      <img src="logo.png" alt="AI AutomationHubs" class="brand-logo-img" style="height:32px;">
+      <span class="brand-title">AI Automation<span style="color:#38bdf8;">Hubs</span></span>
     </div>
     <div class="header-status-pills">
+      <button onclick="openVisitingCardModal()" class="pill-badge" style="background:rgba(14,165,233,0.15);border-color:rgba(14,165,233,0.3);text-decoration:none;color:#38bdf8;">
+        <span>📇</span><span class="pill-text">Card</span>
+      </button>
       <a href="/api/leads/export-csv" class="pill-badge pill-demo" style="text-decoration:none;">
         <span>📤</span><span class="pill-text">Export</span>
-      </a>
-      <a href="/sell.html" target="_blank" class="pill-badge" style="background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.25);text-decoration:none;color:#818cf8;">
-        <span>💼</span><span class="pill-text">Sell</span>
       </a>
     </div>
   </header>
@@ -36,15 +37,16 @@
   <!-- ═══ SIDEBAR (Desktop) ════════════════════════════════════════════ -->
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-      <span>LeadFlow Pro</span>
+      <img src="logo.png" alt="AI AutomationHubs" class="brand-logo-img">
+      <span>AI Automation<span style="color:#38bdf8;">Hubs</span></span>
     </div>
     <nav class="sidebar-menu">
       <button class="menu-item active" data-target="dashboard">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         Generator
       </button>
-      <button class="menu-item" data-target="segments">
+      <!-- HIDDEN: Segments Hub (mock/fake data generator — not useful for real ops) -->
+      <button class="menu-item" data-target="segments" style="display:none;">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
         Segments Hub
       </button>
@@ -52,7 +54,12 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Leads Feed
       </button>
-      <button class="menu-item" data-target="media">
+      <button class="menu-item" data-target="campaigns">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+        Campaigns
+      </button>
+      <!-- HIDDEN: Media & Social Hub (no real functionality) -->
+      <button class="menu-item" data-target="media" style="display:none;">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         Media & Social Hub
       </button>
@@ -60,20 +67,63 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v13H3z"/><path d="M3 7l9 6 9-6"/></svg>
         CRM Pipeline
       </button>
-      <button class="menu-item" data-target="settings">
+      <button class="menu-item" data-target="compliance">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Compliance & Safety
+      </button>
+      <button class="menu-item" data-target="settings" id="nav-settings-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         Settings
       </button>
+      <a href="/control_center.html" class="menu-item" style="background:linear-gradient(135deg, rgba(99,102,241,0.25), rgba(168,85,247,0.25));border:1px solid rgba(99,102,241,0.5);color:#e0e7ff;margin-top:12px;text-decoration:none;border-radius:10px;padding:9px 14px;" target="_blank">
+        <span style="font-size:16px;">🎛️</span>
+        <span style="font-weight:700;font-size:12px;">Control Center ↗</span>
+      </a>
+      <a href="/solar_demo.html" class="menu-item" style="background:linear-gradient(135deg, rgba(245,158,11,0.2), rgba(239,68,68,0.2));border:1px solid rgba(245,158,11,0.5);color:#fef3c7;margin-top:6px;text-decoration:none;border-radius:10px;padding:9px 14px;" target="_blank">
+        <span style="font-size:16px;">☀️</span>
+        <span style="font-weight:700;font-size:12px;">Solar AI Demo ↗</span>
+      </a>
+      <a href="/coaching_demo.html" class="menu-item" style="background:linear-gradient(135deg, rgba(16,185,129,0.2), rgba(6,182,212,0.2));border:1px solid rgba(16,185,129,0.5);color:#ecfdf5;margin-top:6px;text-decoration:none;border-radius:10px;padding:9px 14px;" target="_blank">
+        <span style="font-size:16px;">🎓</span>
+        <span style="font-weight:700;font-size:12px;">Coaching AI Demo ↗</span>
+      </a>
+      <a href="/landing.html" class="menu-item" style="background:linear-gradient(135deg, rgba(0,245,155,0.25), rgba(56,189,248,0.25));border:1px solid rgba(0,245,155,0.5);color:#ecfdf5;margin-top:6px;text-decoration:none;border-radius:10px;padding:9px 14px;" target="_blank">
+        <span style="font-size:16px;">🌐</span>
+        <span style="font-weight:700;font-size:12px;">Premium Website ↗</span>
+      </a>
     </nav>
     <div class="sidebar-footer">
+      <!-- Digital Visiting Card Widget -->
+      <div class="sidebar-vcard-widget" onclick="openVisitingCardModal()" title="Click to view our Visiting Card">
+        <div class="vcard-widget-header">
+          <span>📇 Our Visiting Card</span>
+          <span style="color:#38bdf8;font-size:10px;">View ↗</span>
+        </div>
+        <img src="visiting_card.jpg" alt="AI AutomationHubs Visiting Card" class="vcard-thumb-img">
+      </div>
+
       <div id="google-status" class="status-indicator disconnected">
         <span class="indicator-dot"></span>
         <span class="indicator-text">Google Disconnected</span>
       </div>
       <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
         <a href="/api/leads/export-csv" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;font-size:11px;">📤 CSV</a>
-        <a href="/sell.html" target="_blank" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;font-size:11px;">💼 Sell</a>
+        <button onclick="openVisitingCardModal()" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;font-size:11px;">📇 Card</button>
       </div>
+      <div id="sidebar-user-section" style="margin-top:10px;padding:8px 10px;background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:8px;overflow:hidden;">
+          <span style="font-size:16px;">👤</span>
+          <div style="overflow:hidden;">
+            <div id="user-display-name" style="font-size:11px;font-weight:700;color:#f8fafc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Admin</div>
+            <div id="user-role-badge" style="font-size:9.5px;color:#38bdf8;font-weight:600;">ADMIN</div>
+          </div>
+        </div>
+        <button onclick="handleLogout()" title="Logout" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:14px;padding:4px;display:flex;align-items:center;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">🚪</button>
+      </div>
+      <a href="/AI_AutomationHubs_Lead_Scraper_System_Documentation.pdf" target="_blank" class="btn btn-primary btn-sm" style="width:100%;margin-top:8px;justify-content:center;font-size:11px;text-decoration:none;display:flex;align-items:center;gap:6px;">
+        <span>📄</span>
+        <span>Download Project PDF</span>
+      </a>
     </div>
   </aside>
 
@@ -82,15 +132,24 @@
 
     <!-- ── GENERATOR ─────────────────────────────────────────────────── -->
     <section id="dashboard" class="content-section active">
-      <header class="section-header">
-        <div>
-          <h1>⚡ Lead Generator</h1>
-          <p class="subtitle">Scrape Google Maps or use the instant AI engine — no API key required.</p>
+      <!-- Executive Overview Banner -->
+      <div class="dash-overview-banner">
+        <div class="dash-banner-left" style="display:flex;align-items:center;gap:16px;">
+          <img src="logo.png" alt="AI AutomationHubs" style="height:48px;object-fit:contain;filter:drop-shadow(0 2px 10px rgba(14,165,233,0.4));">
+          <div>
+            <h2>🚀 AI AutomationHubs — Command Center</h2>
+            <p class="subtitle">AI Copilots & Workflow Automation. B2B Lead Intelligence & Multi-Channel Outreach.</p>
+          </div>
         </div>
-      </header>
+        <div class="dash-status-pills">
+          <span class="status-pill active-pill">🤖 OpenAI Engine: Active</span>
+          <span class="status-pill whatsapp-pill" id="dash-wa-pill">💬 WhatsApp: Ready</span>
+          <span class="status-pill tg-pill">✈️ Telegram: Active</span>
+        </div>
+      </div>
 
-      <!-- Stats -->
-      <div class="stats-grid">
+      <!-- 5-Card Stats Grid -->
+      <div class="stats-grid-5">
         <div class="stat-card indigo-glow">
           <div class="stat-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -123,10 +182,64 @@
             <p class="stat-value" id="stat-email-leads">0</p>
           </div>
         </div>
+        <div class="stat-card amber-glow">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-content">
+            <h3>3/3 Complete</h3>
+            <p class="stat-value" id="stat-complete-leads">0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Outreach Pipeline Snapshot -->
+      <div class="panel pipeline-summary-panel">
+        <div class="pipeline-summary-header">
+          <div>
+            <h3>📊 Outreach Pipeline Funnel</h3>
+            <span class="panel-subtitle">Instant progress of all leads in your sales process</span>
+          </div>
+          <a href="#outreach" class="dash-view-all-link">Open Full CRM →</a>
+        </div>
+        <div class="pipeline-funnel-grid">
+          <div class="funnel-step new-step">
+            <span class="funnel-badge">🆕 New Leads</span>
+            <span class="funnel-count" id="dash-funnel-new">0</span>
+            <span class="funnel-label">Awaiting initial message</span>
+          </div>
+          <div class="funnel-step contacted-step">
+            <span class="funnel-badge">📩 Contacted</span>
+            <span class="funnel-count" id="dash-funnel-contacted">0</span>
+            <span class="funnel-label">Outreach sent</span>
+          </div>
+          <div class="funnel-step interested-step">
+            <span class="funnel-badge">🔥 Interested</span>
+            <span class="funnel-count" id="dash-funnel-interested">0</span>
+            <span class="funnel-label">Positive replies / Warm</span>
+          </div>
+          <div class="funnel-step closed-step">
+            <span class="funnel-badge">🎉 Closed Deals</span>
+            <span class="funnel-count" id="dash-funnel-closed">0</span>
+            <span class="funnel-label">Won contracts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Hot Leads (Quick 1-Click Outreach) -->
+      <div class="panel" style="margin-top:2px;">
+        <div class="panel-header">
+          <div>
+            <h2>🔥 Recent Verified Leads (1-Click Outreach)</h2>
+            <p class="panel-subtitle">Directly dispatch WhatsApp, Telegram, or Email without switching tabs</p>
+          </div>
+          <a href="#leads" class="btn btn-secondary btn-sm">View All Leads →</a>
+        </div>
+        <div id="dash-recent-leads" class="dash-recent-leads-list">
+          <div style="text-align:center;padding:16px;color:var(--text-sec);font-size:12px;">Loading recent leads...</div>
+        </div>
       </div>
 
       <!-- Dashboard layout -->
-      <div class="dashboard-layout">
+      <div class="dashboard-layout" style="margin-top:2px;">
         <!-- Search Panel -->
         <div class="panel">
           <div class="panel-header">
@@ -149,6 +262,7 @@
               <div class="form-group flex-1">
                 <label for="max-leads">Limit</label>
                 <select id="max-leads">
+                  <option value="5">5 Leads (Free Sample)</option>
                   <option value="10">10 Leads</option>
                   <option value="20" selected>20 Leads</option>
                   <option value="50">50 Leads</option>
@@ -271,6 +385,33 @@
               <option value="Closed">🎉 Closed</option>
               <option value="Unqualified">❌ Unqualified</option>
             </select>
+            <select id="filter-rating">
+              <option value="all">⭐ All Ratings</option>
+              <option value="4.5">🏆 4.5★ & Above (Top Tier)</option>
+              <option value="4.0">⭐ 4.0★ & Above (Established)</option>
+              <option value="under4">⚠️ Under 4.0★ (Reputation Pitch)</option>
+            </select>
+            <select id="filter-safety-status">
+              <option value="all">🛡️ All Safety States</option>
+              <option value="ALLOWED">🟢 Outreach Allowed (Safe)</option>
+              <option value="RESTRICTED">🟡 Restricted (Cooldown/Limit)</option>
+              <option value="BLOCKED">🔴 Outreach Blocked</option>
+            </select>
+            <label class="custom-checkbox" style="background:rgba(245,158,11,0.12);padding:4px 10px;border-radius:99px;border:1px solid rgba(245,158,11,0.35);">
+              <input type="checkbox" id="filter-no-website">
+              <span class="checkmark"></span>
+              <span style="color:#fbbf24;font-weight:700;">🎯 High Potential (No Website & 4★+)</span>
+            </label>
+            <label class="custom-checkbox" style="background:rgba(16,185,129,0.1);padding:4px 10px;border-radius:99px;border:1px solid rgba(16,185,129,0.25);">
+              <input type="checkbox" id="filter-mobile-only">
+              <span class="checkmark"></span>
+              <span style="color:#34d399;font-weight:700;">📱 Mobile Only (WhatsApp Ready)</span>
+            </label>
+            <label class="custom-checkbox" style="background:rgba(14,165,233,0.1);padding:4px 10px;border-radius:99px;border:1px solid rgba(14,165,233,0.3);">
+              <input type="checkbox" id="filter-telegram-ready">
+              <span class="checkmark"></span>
+              <span style="color:#38bdf8;font-weight:700;">✈️ Telegram Ready</span>
+            </label>
             <label class="custom-checkbox">
               <input type="checkbox" id="filter-has-phone">
               <span class="checkmark"></span>
@@ -291,6 +432,7 @@
         <div class="bulk-actions">
           <button class="btn btn-primary btn-sm" id="btn-bulk-email">✉️ Gmail Drafts</button>
           <button class="btn btn-accent btn-sm" id="btn-bulk-wa">💬 WhatsApp</button>
+          <button class="btn btn-sm" id="btn-bulk-tg" style="background:#0284c7;color:white;border:none;">✈️ Auto Telegram</button>
           <button class="btn btn-danger-outline btn-sm" id="btn-bulk-delete">Delete</button>
         </div>
       </div>
@@ -411,6 +553,316 @@
       </div>
     </section>
 
+    <!-- ── COMPLIANCE & SAFETY CONTROL CENTER ────────────────────────── -->
+    <section id="compliance" class="content-section">
+      <header class="section-header">
+        <div>
+          <h1>🛡️ Compliance & Safety Engine</h1>
+          <p class="subtitle">Fail-Closed Safety Gate, Channel Quotas, Suppression Management & Audit Trails.</p>
+        </div>
+        <div class="action-row">
+          <button id="btn-refresh-compliance" class="btn btn-secondary btn-sm" onclick="loadComplianceData()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Refresh State
+          </button>
+          <button id="btn-open-add-suppression" class="btn btn-primary btn-sm" onclick="openAddSuppressionModal()">
+            + Add Suppression
+          </button>
+        </div>
+      </header>
+
+      <!-- Global Engine Status Cards -->
+      <div class="compliance-status-banner">
+        <div class="compliance-status-card">
+          <div class="c-stat-title">Compliance Engine</div>
+          <div class="c-stat-val text-emerald">
+            <span class="status-dot online"></span> ACTIVE
+          </div>
+          <div class="c-stat-sub">Centralized Safety Gate</div>
+        </div>
+
+        <div class="compliance-status-card">
+          <div class="c-stat-title">Outbound Safety Gate</div>
+          <div class="c-stat-val text-cyan">
+            <span class="status-dot online"></span> VERIFIED
+          </div>
+          <div class="c-stat-sub">Mandatory Preflight Gate</div>
+        </div>
+
+        <div class="compliance-status-card">
+          <div class="c-stat-title">Fail-Closed Protection</div>
+          <div class="c-stat-val text-emerald">
+            <span class="status-dot online"></span> ACTIVE
+          </div>
+          <div class="c-stat-sub">Zero Leaks on Error</div>
+        </div>
+
+        <div class="compliance-status-card">
+          <div class="c-stat-title">Last Compliance Audit</div>
+          <div class="c-stat-val text-amber" id="compliance-last-time" style="font-size:13px;font-family:var(--font-mono);">
+            Just Now
+          </div>
+          <div class="c-stat-sub" id="compliance-last-decision">Verdict: ALLOWED</div>
+        </div>
+      </div>
+
+      <!-- Channel Quota & Safety Grid -->
+      <h3 class="compliance-subheading">📡 Channel Safety & Daily Quotas</h3>
+      <div class="compliance-channels-grid">
+
+        <!-- WhatsApp Card -->
+        <div class="c-channel-card" id="card-channel-wa">
+          <div class="c-channel-header">
+            <div class="c-channel-name">
+              <span class="c-channel-icon">💬</span>
+              <strong>WhatsApp</strong>
+            </div>
+            <span class="c-channel-badge badge-allowed" id="wa-channel-badge">🟢 ALLOWED</span>
+          </div>
+
+          <div class="c-meter-wrap">
+            <div class="c-meter-labels">
+              <span>Daily Quota Used</span>
+              <strong id="wa-quota-text">0 / 50</strong>
+            </div>
+            <div class="c-progress-track">
+              <div class="c-progress-fill fill-emerald" id="wa-quota-bar" style="width: 0%;"></div>
+            </div>
+            <div class="c-meter-foot">
+              <span id="wa-remaining-badge" class="c-pill-tag">50 Remaining</span>
+              <span id="wa-percent-text" style="color:var(--text-sec);font-size:11px;">0%</span>
+            </div>
+          </div>
+
+          <div class="c-channel-details">
+            <div class="c-detail-row">
+              <span>Suppressed Contacts:</span>
+              <strong id="wa-suppressed-count">0</strong>
+            </div>
+            <div class="c-detail-row">
+              <span>Attempts Today:</span>
+              <strong id="wa-attempts-today">0</strong>
+            </div>
+            <div class="c-detail-row">
+              <span>Success / Blocked:</span>
+              <span style="font-size:12px;"><span id="wa-success-today" class="text-emerald">0</span> / <span id="wa-blocked-today" class="text-rose">0</span></span>
+            </div>
+            <div class="c-detail-row">
+              <span>Cooldown Period:</span>
+              <span id="wa-cooldown-hours">48 hours</span>
+            </div>
+            <div class="c-detail-row">
+              <span>Max Attempts / Lead:</span>
+              <span id="wa-max-attempts">3</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telegram Card -->
+        <div class="c-channel-card" id="card-channel-tg">
+          <div class="c-channel-header">
+            <div class="c-channel-name">
+              <span class="c-channel-icon">✈️</span>
+              <strong>Telegram</strong>
+            </div>
+            <span class="c-channel-badge badge-allowed" id="tg-channel-badge">🟢 ALLOWED</span>
+          </div>
+
+          <div class="c-meter-wrap">
+            <div class="c-meter-labels">
+              <span>Daily Quota Used</span>
+              <strong id="tg-quota-text">0 / 30</strong>
+            </div>
+            <div class="c-progress-track">
+              <div class="c-progress-fill fill-cyan" id="tg-quota-bar" style="width: 0%;"></div>
+            </div>
+            <div class="c-meter-foot">
+              <span id="tg-remaining-badge" class="c-pill-tag">30 Remaining</span>
+              <span id="tg-percent-text" style="color:var(--text-sec);font-size:11px;">0%</span>
+            </div>
+          </div>
+
+          <div class="c-channel-details">
+            <div class="c-detail-row">
+              <span>Suppressed Contacts:</span>
+              <strong id="tg-suppressed-count">0</strong>
+            </div>
+            <div class="c-detail-row">
+              <span>Attempts Today:</span>
+              <strong id="tg-attempts-today">0</strong>
+            </div>
+            <div class="c-detail-row">
+              <span>Success / Blocked:</span>
+              <span style="font-size:12px;"><span id="tg-success-today" class="text-emerald">0</span> / <span id="tg-blocked-today" class="text-rose">0</span></span>
+            </div>
+            <div class="c-detail-row">
+              <span>Cooldown Period:</span>
+              <span id="tg-cooldown-hours">48 hours</span>
+            </div>
+            <div class="c-detail-row">
+              <span>Max Attempts / Lead:</span>
+              <span id="tg-max-attempts">3</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gmail Card -->
+        <div class="c-channel-card" id="card-channel-email">
+          <div class="c-channel-header">
+            <div class="c-channel-name">
+              <span class="c-channel-icon">✉️</span>
+              <strong>Gmail / Email</strong>
+            </div>
+            <span class="c-channel-badge badge-allowed" id="email-channel-badge">🟢 ALLOWED</span>
+          </div>
+
+          <div class="c-meter-wrap">
+            <div class="c-meter-labels">
+              <span>Daily Quota Used</span>
+              <strong id="email-quota-text">0 / 100</strong>
+            </div>
+            <div class="c-progress-track">
+              <div class="c-progress-fill fill-purple" id="email-quota-bar" style="width: 0%;"></div>
+            </div>
+            <div class="c-meter-foot">
+              <span id="email-remaining-badge" class="c-pill-tag">100 Remaining</span>
+              <span id="email-percent-text" style="color:var(--text-sec);font-size:11px;">0%</span>
+            </div>
+          </div>
+
+          <div class="c-channel-details">
+            <div class="c-detail-row">
+              <span>Suppressed Contacts:</span>
+              <strong id="email-suppressed-count">0</strong>
+            </div>
+            <div class="c-detail-row">
+              <span>Attempts Today:</span>
+              <strong id="email-attempts-today">0</strong>
+            </div>
+            <div class="c-detail-row">
+              <span>Success / Blocked:</span>
+              <span style="font-size:12px;"><span id="email-success-today" class="text-emerald">0</span> / <span id="email-blocked-today" class="text-rose">0</span></span>
+            </div>
+            <div class="c-detail-row">
+              <span>Cooldown Period:</span>
+              <span id="email-cooldown-hours">72 hours</span>
+            </div>
+            <div class="c-detail-row">
+              <span>Max Attempts / Lead:</span>
+              <span id="email-max-attempts">5</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navigation Subtabs for Suppression vs Audit Log -->
+      <div class="c-subtabs-row">
+        <button class="c-subtab-btn active" id="tab-btn-suppressions" onclick="switchComplianceSubtab('suppressions')">
+          🚫 Suppression List (<span id="count-suppressions-badge">0</span>)
+        </button>
+        <button class="c-subtab-btn" id="tab-btn-audit" onclick="switchComplianceSubtab('audit')">
+          📋 Compliance Audit Trail (<span id="count-audit-badge">0</span>)
+        </button>
+      </div>
+
+      <!-- Module 1: Suppression List Table View -->
+      <div id="c-view-suppressions" class="c-subtab-view">
+        <div class="panel" style="margin-top:12px;">
+          <div class="filters-container" style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <div class="search-box" style="flex:1;min-width:240px;">
+              <input type="text" id="suppression-search" placeholder="Search by phone, email, reason, or business..." oninput="debounce(loadSuppressions, 300)()">
+            </div>
+            <div class="filter-controls">
+              <select id="suppression-channel-filter" onchange="loadSuppressions()">
+                <option value="ALL">All Channels / Global</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="telegram">Telegram</option>
+                <option value="email">Email</option>
+              </select>
+              <select id="suppression-type-filter" onchange="loadSuppressions()">
+                <option value="ALL">All Contact Types</option>
+                <option value="phone">Phone Numbers</option>
+                <option value="email">Email Addresses</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Contact Identifier</th>
+                  <th>Matched Business</th>
+                  <th>Channel Scope</th>
+                  <th>Reason</th>
+                  <th>Source</th>
+                  <th>Added At</th>
+                  <th>Status</th>
+                  <th class="actions-col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="suppressions-tbody">
+                <!-- JS populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 2: Compliance Audit Log View -->
+      <div id="c-view-audit" class="c-subtab-view hidden">
+        <div class="panel" style="margin-top:12px;">
+          <div class="filters-container" style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <div class="filter-controls" style="flex-wrap:wrap;gap:8px;">
+              <select id="audit-channel-filter" onchange="loadAuditLogs()">
+                <option value="ALL">All Channels</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="telegram">Telegram</option>
+                <option value="email">Email</option>
+              </select>
+              <select id="audit-decision-filter" onchange="loadAuditLogs()">
+                <option value="ALL">All Decisions</option>
+                <option value="ALLOWED">🟢 ALLOWED</option>
+                <option value="BLOCKED">🔴 BLOCKED</option>
+                <option value="REMOVED">🟣 REMOVED</option>
+              </select>
+              <select id="audit-event-filter" onchange="loadAuditLogs()">
+                <option value="ALL">All Event Types</option>
+                <option value="outreach_gate">Outreach Gate Preflight</option>
+                <option value="outreach_allowed">Outreach Allowed & Sent</option>
+                <option value="outreach_blocked">Outreach Blocked</option>
+                <option value="inbound_opt_out">Inbound STOP / Opt-Out</option>
+                <option value="suppression_added">Suppression Added</option>
+                <option value="suppression_removed">Suppression Removed</option>
+              </select>
+              <button class="btn btn-secondary btn-sm" onclick="loadAuditLogs()">🔄 Refresh Logs</button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Lead / Contact</th>
+                  <th>Channel</th>
+                  <th>Event Type</th>
+                  <th>Decision</th>
+                  <th>Reason Code & Notes</th>
+                  <th>Actor / Source</th>
+                </tr>
+              </thead>
+              <tbody id="audit-logs-tbody">
+                <!-- JS populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
     <!-- ── SETTINGS ───────────────────────────────────────────────────── -->
     <section id="settings" class="content-section">
       <header class="section-header">
@@ -423,6 +875,30 @@
 
       <div class="settings-grid">
 
+        <!-- OpenAI Lead Discovery & Intelligence -->
+        <div class="settings-card" style="border: 1px solid rgba(16, 185, 129, 0.35); box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);">
+          <div class="card-header">
+            <svg class="header-icon" style="color:#10b981;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2z"/><path d="m9 12 2 2 4-4"/></svg>
+            <h2>🤖 OpenAI Lead Intelligence (Recommended)</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group" style="margin-bottom:12px;">
+              <label for="setting-openai-key">OpenAI API Key <span style="color:#10b981;font-weight:600;">(bypasses Google billing entirely)</span></label>
+              <input type="password" id="setting-openai-key" placeholder="sk-proj-..." autocomplete="off">
+              <p class="help-text">Finds businesses worldwide with emails, socials, websites, and custom personalized pitch lines. Powered by GPT-4o-mini.</p>
+            </div>
+            <div class="form-group">
+              <label for="setting-lead-provider">Preferred Lead Source</label>
+              <select id="setting-lead-provider" class="form-control" style="width:100%;padding:9px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;">
+                <option value="auto">⚡ Automatic (OpenAI if key exists, else Google / Instant)</option>
+                <option value="openai">🤖 OpenAI Worldwide Lead Discovery</option>
+                <option value="places">🗺️ Google Places API (Requires active billing)</option>
+                <option value="instant">🚀 Built-in Instant Lead Generator</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <!-- Google Places -->
         <div class="settings-card">
           <div class="card-header">
@@ -433,7 +909,7 @@
             <div class="form-group">
               <label for="setting-places-key">API Key <span style="color:var(--text-sec);font-weight:400;text-transform:none;">(optional — app works without it)</span></label>
               <input type="password" id="setting-places-key" placeholder="AIzaSy...">
-              <p class="help-text">Leave empty to use the built-in Instant Lead Generator. Add key for real Google Maps data.</p>
+              <p class="help-text">Leave empty to use OpenAI or the built-in Lead Generator.</p>
             </div>
           </div>
         </div>
@@ -497,9 +973,14 @@
           </div>
           <div class="card-body grid-2col">
             <div class="form-group">
-              <label for="setting-wa-template">WA Message Template</label>
+              <label for="setting-wa-template">WA Message Template (Standard)</label>
               <textarea id="setting-wa-template" rows="6" placeholder="Hi {{BusinessName}}..."></textarea>
-              <p class="help-text">Placeholders: <code>{{BusinessName}}</code> <code>{{Location}}</code> <code>{{Segment}}</code></p>
+              <p class="help-text">Placeholders: <code>{{BusinessName}}</code> <code>{{Location}}</code> <code>{{Segment}}</code> <code>{{Phone}}</code> <code>{{Website}}</code> <code>{{Rating}}</code> <code>{{PersonalizedPitch}}</code></p>
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1; margin-top: 10px; background: rgba(245,158,11,0.06); padding: 12px; border-radius: 12px; border: 1px solid rgba(245,158,11,0.2);">
+              <label for="setting-wa-no-website-template" style="color:#fbbf24;font-weight:700;">🎯 High-Potential "No Website" WhatsApp Pitch Template</label>
+              <textarea id="setting-wa-no-website-template" rows="5" placeholder="Namaste {{BusinessName}} team!..."></textarea>
+              <p class="help-text" style="color:var(--text-muted);">Automatically dispatched to businesses that have Google reviews but no website.</p>
             </div>
             <div class="oauth-status-panel text-center">
               <h3 id="wa-connection-title">WhatsApp Status</h3>
@@ -507,19 +988,111 @@
                 <span class="indicator-dot"></span>
                 <span class="indicator-text" id="wa-status-text">Disconnected</span>
               </div>
-              <div id="wa-qr-container" class="qr-box">
-                <img id="wa-qr-img" src="" alt="Scan QR Code">
-              </div>
               <div id="wa-loader" class="wa-spinner-box">
                 <div class="spinner"></div>
-                <span>Initializing WhatsApp...</span>
+                <span id="wa-loader-text">Initializing WhatsApp...</span>
               </div>
-              <button id="btn-wa-disconnect" class="btn btn-danger-outline btn-sm hidden" style="width:100%;margin-top:8px;">Disconnect WhatsApp</button>
+              <div id="wa-qr-container" class="qr-box">
+                <img id="wa-qr-img" src="" alt="Scan QR Code">
+                <p style="font-size:11.5px;color:var(--text-sec);margin-top:10px;text-align:center;">
+                  📱 Open WhatsApp &gt; Linked Devices &gt; Link a Device
+                </p>
+              </div>
+              <button id="btn-wa-refresh-qr" type="button" class="btn btn-secondary btn-sm" onclick="handleRefreshWaQR()">
+                🔄 Refresh QR Code
+              </button>
+
+              <!-- Test WhatsApp Message Box (active when connected) -->
+              <div id="wa-test-box" class="hidden" style="margin-top:14px;padding:12px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.25);border-radius:var(--r-md);text-align:left;">
+                <label for="wa-test-phone" style="font-size:11.5px;font-weight:600;color:var(--text-pri);display:block;margin-bottom:6px;">
+                  🧪 Send Test WhatsApp Message
+                </label>
+                <div style="display:flex;gap:8px;">
+                  <input type="text" id="wa-test-phone" class="form-input" placeholder="+91 9161636888 or 9161636888" value="+919161636888" style="flex:1;font-size:12.5px;padding:6px 10px;">
+                  <button id="btn-wa-test" type="button" class="btn btn-primary btn-sm" onclick="handleSendTestWaMessage()" style="white-space:nowrap;font-size:12px;padding:6px 12px;">
+                    📲 Send Test
+                  </button>
+                </div>
+                <p style="font-size:10.5px;color:var(--text-sec);margin-top:5px;margin-bottom:0;">
+                  Enter 10-digit number with or without +91 (e.g. <code>9161636888</code> or <code>+91 8791338600</code>).
+                </p>
+              </div>
+
+              <button id="btn-wa-disconnect" class="btn btn-danger-outline btn-sm hidden" style="width:100%;margin-top:10px;">Disconnect WhatsApp</button>
             </div>
           </div>
         </div>
 
+        <!-- SMS Template -->
+        <div class="settings-card">
+          <div class="card-header">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <h2>📱 SMS Template</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="setting-sms-template">SMS Message Template</label>
+              <textarea id="setting-sms-template" rows="4" placeholder="Hi {{BusinessName}}, we noticed your business in {{Location}}..."></textarea>
+              <p class="help-text">Keep under 160 chars for a single SMS. Placeholders: <code>{{BusinessName}}</code> <code>{{Location}}</code> <code>{{Phone}}</code> <code>{{Segment}}</code> <code>{{PersonalizedPitch}}</code></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telegram Automation & Bot Alerts -->
+        <div class="settings-card">
+          <div class="card-header">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <h2>✈️ Telegram Bot & Automation</h2>
+          </div>
+          <div class="card-body">
+            <!-- Bot Credentials -->
+            <div class="form-row" style="margin-bottom: 14px;">
+              <div class="form-group flex-2">
+                <label for="setting-telegram-bot-token">Telegram Bot Token (from @BotFather)</label>
+                <input type="text" id="setting-telegram-bot-token" placeholder="e.g. 7123456789:AAHk... (get from @BotFather)">
+                <p class="help-text">Create your bot via <code>@BotFather</code> on Telegram and paste the API token here.</p>
+              </div>
+              <div class="form-group flex-2">
+                <label for="setting-telegram-chat-ids">Telegram Chat IDs (for Tanuj & Amit)</label>
+                <input type="text" id="setting-telegram-chat-ids" placeholder="e.g. 123456789, 987654321 (comma separated)">
+                <p class="help-text">Find your numeric ID by messaging <code>@userinfobot</code> or <code>@GetMyChatID_Bot</code>.</p>
+              </div>
+            </div>
+
+            <!-- Test Connection Button -->
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap;">
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-test-telegram" onclick="handleTestTelegramBot()" style="border-color:rgba(14,165,233,0.4);color:#38bdf8;">
+                ⚡ Send Test Message to Both Numbers
+              </button>
+              <span id="telegram-test-status" style="font-size:12px;color:var(--text-sec);"></span>
+            </div>
+
+            <!-- 2-Minute Setup Instructions -->
+            <div style="background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.2);border-radius:var(--r-md);padding:12px 16px;margin-bottom:16px;font-size:12px;line-height:1.6;color:var(--text-sec);">
+              <div style="font-weight:700;color:var(--text);margin-bottom:4px;">📱 2-Minute Telegram Bot Setup for Both Numbers:</div>
+              1. Open Telegram on your phone and search for <strong>@BotFather</strong>, then send <code>/newbot</code> and follow the instructions to get your <strong>Bot Token</strong>.<br>
+              2. Open your new bot's link on both phones (+91-7704077700 & +91-9990080408) and tap <strong>Start</strong>.<br>
+              3. Search <strong>@userinfobot</strong> on Telegram from each phone to see your numeric <strong>Id</strong> (e.g. <code>123456789</code>).<br>
+              4. Paste both IDs above separated by a comma (e.g. <code>123456789, 987654321</code>), then click <strong>Send Test Message</strong>.
+            </div>
+
+            <!-- Message Template -->
+            <div class="form-group">
+              <label for="setting-telegram-template">Telegram Outreach Pitch Template</label>
+              <textarea id="setting-telegram-template" rows="5" placeholder="Hi {{BusinessName}} team 👋..."></textarea>
+              <p class="help-text">Placeholders: <code>{{BusinessName}}</code> <code>{{Location}}</code> <code>{{Segment}}</code> <code>{{Phone}}</code> <code>{{Website}}</code> <code>{{PersonalizedPitch}}</code></p>
+            </div>
+            <div style="background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.25);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text-secondary);">
+              💡 <strong>1-Click Telegram Direct:</strong> Generates instant <code>t.me</code> chat links pre-filled with this pitch message for any lead with a phone or Telegram handle.
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <!-- ── CAMPAIGNS (EMBEDDED FOR SEAMLESS IN-APP EXPERIENCE) ───────── -->
+    <section id="campaigns" class="content-section" style="padding:0;height:calc(100vh - 70px);">
+      <iframe src="/campaigns.html" style="width:100%;height:100%;border:none;background:#0f172a;" title="Campaign Manager"></iframe>
     </section>
   </main>
 
@@ -529,7 +1102,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       <span>Generate</span>
     </button>
-    <button class="nav-item" data-target="segments">
+    <!-- HIDDEN: Segments (mobile nav) -->
+    <button class="nav-item" data-target="segments" style="display:none;">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
       <span>Segments</span>
     </button>
@@ -537,7 +1111,12 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       <span>Leads</span>
     </button>
-    <button class="nav-item" data-target="media">
+    <button class="nav-item" data-target="campaigns">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+      <span>Campaigns</span>
+    </button>
+    <!-- HIDDEN: Media (mobile nav) -->
+    <button class="nav-item" data-target="media" style="display:none;">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
       <span>Media</span>
     </button>
@@ -601,6 +1180,231 @@
   </div>
 </div>
 
+<!-- Lead Dossier Side-Drawer -->
+<div class="drawer-overlay hidden" id="lead-drawer-overlay" onclick="closeLeadDrawer()">
+  <div class="lead-drawer" id="lead-drawer" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <span class="segment-tag-pill" id="drawer-segment">General</span>
+        <span class="badge-quality badge-hot" id="drawer-quality">🔥 Hot</span>
+        <span style="font-size:11.5px;font-weight:700;color:#fbbf24;" id="drawer-rating">⭐ 4.8</span>
+      </div>
+      <button class="btn-drawer-close" onclick="closeLeadDrawer()">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <div>
+        <h2 class="drawer-title" id="drawer-title">Business Name</h2>
+        <div class="drawer-location" id="drawer-location" style="margin-top:6px;">📍 Location Address</div>
+      </div>
+
+      <!-- Quick Action Bar -->
+      <div class="drawer-actions-bar">
+        <a href="#" target="_blank" id="drawer-btn-wa" class="btn-drawer-action btn-dash-wa">💬 WhatsApp</a>
+        <a href="#" target="_blank" id="drawer-btn-tg" class="btn-drawer-action btn-dash-tg">✈️ Telegram</a>
+        <a href="#" id="drawer-btn-email" class="btn-drawer-action btn-dash-email">✉️ Email Draft</a>
+        <button type="button" id="drawer-btn-push-tg" class="btn-drawer-action btn-secondary" onclick="handlePushLeadToTelegram()" title="Push this lead's dossier to Tanuj & Amit's Telegram">📲 Alert Bot</button>
+      </div>
+
+      <!-- Client Reply & AI Copilot Draft Card (Visible if client replied) -->
+      <div class="drawer-card client-reply-card hidden" id="drawer-reply-card">
+        <div class="drawer-card-header" style="color:#38bdf8;">
+          <span>💬 Client Reply Received</span>
+          <span id="drawer-reply-time" style="font-size:10.5px;color:var(--text-sec);"></span>
+        </div>
+        <div class="drawer-reply-box" id="drawer-reply-text"></div>
+
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(56,189,248,0.2);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:11px;font-weight:700;color:#34d399;">🤖 OpenAI Suggested Reply:</span>
+            <button class="btn-copy-mini" onclick="copyAiSuggestedReply()">📋 Copy Reply</button>
+          </div>
+          <div class="ai-suggested-box" id="drawer-ai-draft"></div>
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <a href="#" target="_blank" id="drawer-btn-send-wa-draft" class="btn btn-primary btn-sm" style="flex:1;justify-content:center;font-size:11px;">
+              💬 Open in WhatsApp with AI Reply
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Icebreaker Pitch Card -->
+      <div class="drawer-card ai-pitch-card">
+        <div class="drawer-card-header">
+          <span>🤖 AI Personalized Sales Pitch</span>
+          <button class="btn-copy-mini" onclick="copyDrawerPitch()">📋 Copy Pitch</button>
+        </div>
+        <p class="drawer-pitch-text" id="drawer-pitch">Loading personalized pitch...</p>
+      </div>
+
+      <!-- Phase 2 Step 4: Lead Scoring & Sales Priority Card -->
+      <div class="drawer-card" id="drawer-scoring-card" style="border: 1px solid rgba(99,102,241,0.3); background: rgba(99,102,241,0.04);">
+        <div class="drawer-card-header" style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#818cf8;font-weight:700;">🎯 Sales Priority & ICP Fit Analysis</span>
+          <span id="drawer-score-priority-badge" class="badge-priority" style="font-size:11px;padding:3px 8px;border-radius:4px;font-weight:700;background:rgba(99,102,241,0.2);color:#a5b4fc;">P5 — INSUFFICIENT DATA</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;margin-top:10px;text-align:center;">
+          <div style="background:rgba(0,0,0,0.25);padding:8px 6px;border-radius:6px;border:1px solid rgba(255,255,255,0.05);">
+            <div style="font-size:10px;color:var(--text-sec);text-transform:uppercase;">Sales Priority</div>
+            <div id="drawer-score-sales-val" style="font-size:16px;font-weight:800;color:#38bdf8;margin-top:2px;">—</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.25);padding:8px 6px;border-radius:6px;border:1px solid rgba(255,255,255,0.05);">
+            <div style="font-size:10px;color:var(--text-sec);text-transform:uppercase;">ICP Fit</div>
+            <div id="drawer-score-icp-val" style="font-size:16px;font-weight:800;color:#34d399;margin-top:2px;">—</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.25);padding:8px 6px;border-radius:6px;border:1px solid rgba(255,255,255,0.05);">
+            <div style="font-size:10px;color:var(--text-sec);text-transform:uppercase;">Confidence</div>
+            <div id="drawer-score-conf-val" style="font-size:16px;font-weight:800;color:#fbbf24;margin-top:2px;">—</div>
+          </div>
+        </div>
+
+        <!-- Explainable Factors Breakdown -->
+        <div style="margin-top:12px;font-size:11.5px;">
+          <div style="color:#34d399;font-weight:700;margin-bottom:4px;">✅ Key Positive Factors:</div>
+          <ul id="drawer-score-positive-list" style="margin:0 0 8px 14px;padding:0;color:var(--text);line-height:1.4;">
+            <li>Analyzing signals...</li>
+          </ul>
+
+          <div style="color:#f87171;font-weight:700;margin-bottom:4px;">⚠️ Missing / Negative Signals:</div>
+          <ul id="drawer-score-negative-list" style="margin:0 0 8px 14px;padding:0;color:var(--text-sec);line-height:1.4;">
+            <li>Analyzing missing data...</li>
+          </ul>
+
+          <div style="color:#94a3b8;font-weight:700;margin-bottom:4px;">ℹ️ Unknown / Unobserved:</div>
+          <ul id="drawer-score-unknown-list" style="margin:0 0 10px 14px;padding:0;color:var(--text-sec);line-height:1.4;">
+            <li>Checking coverage...</li>
+          </ul>
+        </div>
+
+        <!-- Mandatory Disclaimer -->
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:6px 10px;font-size:10.5px;color:var(--text-sec);line-height:1.35;">
+          ⚖️ <strong>Decision-Support Notice:</strong> Priority score is an evidence-based sales prioritization aid, not a prediction of conversion, revenue, or business success.
+        </div>
+      </div>
+
+      <!-- Sales Action Recommendation Card (Phase 2 Step 5) -->
+      <div class="drawer-card" id="drawer-recommendation-card" style="border: 1px solid rgba(16,185,129,0.4); background: rgba(16,185,129,0.03);">
+        <div class="drawer-card-header" style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#34d399;font-weight:700;">⚡ Sales Action Recommendation</span>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <span id="drawer-rec-urgency-badge" style="font-size:10px;padding:2px 6px;border-radius:4px;font-weight:800;background:rgba(239,68,68,0.2);color:#f87171;">HIGH</span>
+            <span id="drawer-rec-action-badge" style="font-size:11px;padding:3px 8px;border-radius:4px;font-weight:700;background:rgba(16,185,129,0.2);color:#34d399;">DIRECT_OUTREACH</span>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;padding:8px 10px;background:rgba(0,0,0,0.3);border-radius:6px;border:1px solid rgba(255,255,255,0.05);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:11px;color:var(--text-sec);text-transform:uppercase;letter-spacing:0.5px;">Recommended Channel</span>
+            <span id="drawer-rec-channel-badge" style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(14,165,233,0.2);color:#38bdf8;">WHATSAPP</span>
+          </div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);" id="drawer-rec-headline">Evaluating recommended sales action...</div>
+          <div style="font-size:11.5px;color:var(--text-sec);margin-top:4px;line-height:1.4;" id="drawer-rec-reasoning">—</div>
+          <div style="font-size:11px;color:#a5b4fc;margin-top:4px;display:flex;align-items:center;gap:4px;" id="drawer-rec-contact-target">🎯 Target: —</div>
+        </div>
+
+        <!-- Multi-Location Guidance (if applicable) -->
+        <div id="drawer-rec-multilocation-box" style="display:none;margin-top:8px;padding:6px 10px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.25);border-radius:6px;font-size:11px;color:#c084fc;">
+          🏢 <span id="drawer-rec-multilocation-text">Multi-location guidance</span>
+        </div>
+
+        <!-- Segregated Facts -->
+        <div style="margin-top:12px;font-size:11.5px;">
+          <div style="color:#34d399;font-weight:700;margin-bottom:4px;">🛡️ Verified Facts (Evidence-Backed):</div>
+          <ul id="drawer-rec-verified-facts" style="margin:0 0 8px 14px;padding:0;color:var(--text);line-height:1.4;">
+            <li>Loading verified evidence...</li>
+          </ul>
+
+          <div style="color:#fbbf24;font-weight:700;margin-bottom:4px;">💡 Inferred Gaps & Signals:</div>
+          <ul id="drawer-rec-inferred-facts" style="margin:0 0 8px 14px;padding:0;color:var(--text-sec);line-height:1.4;">
+            <li>Loading inferred signals...</li>
+          </ul>
+
+          <div style="color:#94a3b8;font-weight:700;margin-bottom:4px;">❓ Unknown / Missing Attributes:</div>
+          <ul id="drawer-rec-unknown-facts" style="margin:0 0 10px 14px;padding:0;color:var(--text-sec);line-height:1.4;">
+            <li>Loading unconfirmed attributes...</li>
+          </ul>
+        </div>
+
+        <!-- Human-in-the-Loop Review Controls -->
+        <div style="margin-top:10px;padding:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-size:11px;font-weight:700;color:var(--text-sec);">Human Review Status:</span>
+            <span id="drawer-rec-review-status" style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(245,158,11,0.2);color:#fbbf24;">PENDING</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="btn btn-sm" id="btn-rec-accept" style="background:#10b981;color:#fff;font-weight:600;font-size:11px;border:none;padding:5px 10px;cursor:pointer;border-radius:4px;" onclick="handleReviewRecommendation('ACCEPTED')">✅ Accept Action</button>
+            <button class="btn btn-sm" id="btn-rec-dismiss" style="background:rgba(239,68,68,0.2);color:#f87171;font-weight:600;font-size:11px;border:1px solid rgba(239,68,68,0.3);padding:5px 10px;cursor:pointer;border-radius:4px;" onclick="handleReviewRecommendation('DISMISSED')">🚫 Dismiss</button>
+            <button class="btn btn-sm" id="btn-rec-refresh" style="background:rgba(255,255,255,0.05);color:var(--text);font-weight:600;font-size:11px;border:1px solid rgba(255,255,255,0.1);padding:5px 10px;cursor:pointer;border-radius:4px;" onclick="handleRefreshRecommendation()">🔄 Recalculate</button>
+          </div>
+        </div>
+
+        <!-- Advisory Non-Autonomous Disclaimer -->
+        <div style="margin-top:10px;background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.15);border-radius:6px;padding:6px 10px;font-size:10.5px;color:var(--text-sec);line-height:1.35;">
+          🛡️ <strong>Human Decision Support:</strong> Sales action recommendations are advisory decision-support suggestions for human sales representatives. Zero autonomous outreach is performed.
+        </div>
+      </div>
+
+      <!-- Contact Dossier Card -->
+      <div class="drawer-card">
+        <div class="drawer-card-header">
+          <span>📞 Contact Information</span>
+        </div>
+        <div class="drawer-contact-list">
+          <div class="drawer-contact-item">
+            <span class="contact-icon">📞 Phone:</span>
+            <span class="contact-val" id="drawer-phone">—</span>
+            <button class="btn-copy-mini" onclick="copyText(document.getElementById('drawer-phone').innerText, 'Phone')">📋</button>
+          </div>
+          <div class="drawer-contact-item">
+            <span class="contact-icon">✉️ Email:</span>
+            <span class="contact-val" id="drawer-email">—</span>
+            <button class="btn-copy-mini" onclick="copyText(document.getElementById('drawer-email').innerText, 'Email')">📋</button>
+          </div>
+          <div class="drawer-contact-item">
+            <span class="contact-icon">🌐 Website:</span>
+            <a href="#" target="_blank" class="contact-val table-url-link" id="drawer-website">—</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified Socials Card -->
+      <div class="drawer-card">
+        <div class="drawer-card-header">
+          <span>🌐 Social Media & Channels</span>
+        </div>
+        <div class="drawer-socials-row" id="drawer-socials">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Attached Visiting Card Preview -->
+      <div class="drawer-card" style="cursor:pointer;" onclick="openVisitingCardModal()">
+        <div class="drawer-card-header">
+          <span>📇 Our Visiting Card (Attached in Outreach)</span>
+          <span style="color:#38bdf8;font-size:11px;">View Full ↗</span>
+        </div>
+        <img src="visiting_card.jpg" alt="Visiting Card" style="width:100%;border-radius:6px;border:1px solid rgba(255,255,255,0.15);margin-top:6px;display:block;">
+      </div>
+
+      <!-- Pipeline Stage Card -->
+      <div class="drawer-card">
+        <div class="drawer-card-header">
+          <span>📊 Pipeline Stage</span>
+        </div>
+        <select id="drawer-pipeline-select" class="drawer-select" onchange="handleDrawerStatusChange(this.value)">
+          <option value="New">🆕 New Lead</option>
+          <option value="Contacted">📩 Contacted</option>
+          <option value="Interested">🔥 Interested Prospect</option>
+          <option value="Closed">🎉 Closed Won</option>
+          <option value="Unqualified">❌ Unqualified</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- Run Options Modal -->
 <div class="overlay hidden" id="run-options-overlay">
   <div class="progress-dialog" style="max-width:420px;">
@@ -621,9 +1425,238 @@
   </div>
 </div>
 
-<!-- Toast Container -->
-<div class="toast-container" id="toast-container"></div>
+<!-- Visiting Card Modal -->
+<div class="overlay hidden" id="visiting-card-modal" onclick="closeVisitingCardModal()">
+  <div class="vcard-modal-content" onclick="event.stopPropagation()">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="logo.png" alt="AI AutomationHubs" style="height:34px;object-fit:contain;">
+        <h3 style="font-size:16px;font-weight:700;color:var(--text);margin:0;">AI AutomationHubs — Digital Visiting Card</h3>
+      </div>
+      <button class="btn-drawer-close" onclick="closeVisitingCardModal()">✕</button>
+    </div>
 
-<script src="app.js"></script>
+    <!-- Visiting Card Full Image -->
+    <img src="visiting_card.jpg" alt="Visiting Card" class="vcard-full-img">
+
+    <!-- Contact Cards for Tanuj & Amit -->
+    <div class="vcard-contact-grid">
+      <div class="vcard-contact-card">
+        <h4>Tanuj Chandel</h4>
+        <span>Co-founder & AI Generalist</span>
+        <a href="tel:+917704077700">📞 +91-7704077700</a>
+        <a href="https://wa.me/917704077700" target="_blank">💬 WhatsApp Direct</a>
+        <a href="https://t.me/+917704077700" target="_blank" style="color:#38bdf8;">✈️ Telegram Direct</a>
+      </div>
+      <div class="vcard-contact-card">
+        <h4>Amit Pandey</h4>
+        <span>Co-founder & AI Automation Engineer</span>
+        <a href="tel:+919990080408">📞 +91-9990080408</a>
+        <a href="https://wa.me/919990080408" target="_blank">💬 WhatsApp Direct</a>
+        <a href="https://t.me/+919990080408" target="_blank" style="color:#38bdf8;">✈️ Telegram Direct</a>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">
+      <button class="btn btn-secondary btn-sm" onclick="copyText('http://localhost:3000/visiting_card.jpg', 'Visiting Card Link')">📋 Copy Card Link</button>
+      <a href="visiting_card.jpg" download="AI_AutomationHubs_Visiting_Card.jpg" class="btn btn-primary btn-sm">📥 Download Card Image</a>
+      <a href="https://ai-automation-hubs.com" target="_blank" class="btn btn-secondary btn-sm">🌐 Visit Website</a>
+    </div>
+  </div>
+</div>
+
+<!-- Add Suppression Modal -->
+<div class="overlay hidden" id="add-suppression-modal">
+  <div class="progress-dialog" style="max-width:440px;">
+    <h3>🚫 Add Suppression Entry</h3>
+    <p>Manually block a contact from receiving automated outreach.</p>
+    <form id="add-suppression-form" onsubmit="handleAddSuppression(event)">
+      <div class="form-group" style="margin-bottom:12px;">
+        <label for="suppress-contact">Contact (Phone or Email)</label>
+        <input type="text" id="suppress-contact" placeholder="e.g. +919876543210 or name@domain.com" required>
+      </div>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label for="suppress-type">Contact Type</label>
+        <select id="suppress-type">
+          <option value="phone">Phone Number</option>
+          <option value="email">Email Address</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label for="suppress-channel">Channel Scope</label>
+        <select id="suppress-channel">
+          <option value="ALL">ALL (Global Suppression)</option>
+          <option value="whatsapp">WhatsApp Only</option>
+          <option value="telegram">Telegram Only</option>
+          <option value="email">Email Only</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label for="suppress-reason">Reason Code</label>
+        <select id="suppress-reason">
+          <option value="OPT_OUT">OPT_OUT (User requested STOP)</option>
+          <option value="COMPLAINT">COMPLAINT (Spam report / complaint)</option>
+          <option value="MANUAL_REQUEST">MANUAL_REQUEST (Admin requested suppression)</option>
+          <option value="HARD_BOUNCE">HARD_BOUNCE (Invalid destination)</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:18px;">
+        <label for="suppress-notes">Internal Notes (Optional)</label>
+        <input type="text" id="suppress-notes" placeholder="e.g. Customer requested removal via phone call">
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeAddSuppressionModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm" style="background:var(--rose);border-color:var(--rose);">Confirm Suppression</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Bulk Outreach Safety Preflight Modal -->
+<div class="overlay hidden" id="bulk-preflight-modal">
+  <div class="progress-dialog" style="max-width:580px;text-align:left;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <h3 style="margin:0;display:flex;align-items:center;gap:8px;">
+        <span>🛡️ Pre-Outreach Safety Verification</span>
+      </h3>
+      <span class="segment-tag-pill" id="preflight-channel-badge" style="text-transform:uppercase;">WHATSAPP</span>
+    </div>
+    <p style="margin-bottom:14px;font-size:12px;color:var(--text-sec);">
+      The Compliance Engine evaluated selected leads before outbound dispatch. Blocked contacts will be skipped to protect account safety.
+    </p>
+
+    <!-- Verification Stats Summary -->
+    <div class="preflight-stats-grid">
+      <div class="preflight-stat-box">
+        <div class="p-stat-title">Selected</div>
+        <div class="p-stat-val" id="preflight-total-count">0</div>
+      </div>
+      <div class="preflight-stat-box box-allowed">
+        <div class="p-stat-title">Eligible (Safe)</div>
+        <div class="p-stat-val text-emerald" id="preflight-eligible-count">0</div>
+      </div>
+      <div class="preflight-stat-box box-blocked">
+        <div class="p-stat-title">Blocked</div>
+        <div class="p-stat-val text-rose" id="preflight-blocked-count">0</div>
+      </div>
+      <div class="preflight-stat-box">
+        <div class="p-stat-title">Daily Quota Left</div>
+        <div class="p-stat-val text-cyan" id="preflight-quota-left">0</div>
+      </div>
+    </div>
+
+    <!-- Blocked Reason Breakdown List -->
+    <div id="preflight-blocked-section" style="margin-top:14px;max-height:160px;overflow-y:auto;">
+      <div style="font-size:11px;font-weight:700;color:var(--text-sec);text-transform:uppercase;margin-bottom:6px;">
+        Blocked Leads Breakdown:
+      </div>
+      <div id="preflight-blocked-list">
+        <!-- JS populated rows -->
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="closeBulkPreflightModal()">Cancel</button>
+      <button type="button" id="btn-preflight-proceed" class="btn btn-primary btn-sm" onclick="executeVerifiedBulkSend()">
+        Proceed with Eligible Leads Only
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Single Lead Safety Feedback Modal -->
+<div class="overlay hidden" id="single-safety-modal">
+  <div class="progress-dialog" style="max-width:440px;">
+    <div style="font-size:36px;margin-bottom:8px;" id="single-safety-icon">🛑</div>
+    <h3 id="single-safety-title">Outreach Blocked</h3>
+    <p id="single-safety-message" style="margin:12px 0;font-size:13px;line-height:1.5;color:var(--text-sec);"></p>
+    <div id="single-safety-badge-container" style="margin-bottom:16px;"></div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="closeSingleSafetyModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- WhatsApp Quick Link / QR Modal -->
+<div class="overlay hidden" id="wa-quick-modal" onclick="closeWaQuickModal()">
+  <div class="progress-dialog" style="max-width:420px;text-align:center;padding:24px;" onclick="event.stopPropagation()">
+    <div style="font-size:32px;margin-bottom:8px;">📱</div>
+    <h3 style="font-size:18px;margin-bottom:6px;">Link WhatsApp Account</h3>
+    <p id="wa-modal-subtext" style="font-size:12.5px;color:var(--text-sec);line-height:1.5;margin-bottom:16px;">
+      Open <b>WhatsApp</b> on your phone &rarr; <b>Settings / Linked Devices</b> &rarr; <b>Link a Device</b>, then scan this code.
+    </p>
+
+    <div id="wa-modal-qr-container" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;padding:16px;border-radius:12px;margin:0 auto 16px auto;max-width:280px;box-shadow:0 4px 20px rgba(0,0,0,0.25);">
+      <img id="wa-modal-qr-img" src="" alt="WhatsApp QR Code" style="width:240px;height:240px;object-fit:contain;display:block;">
+      <div id="wa-modal-loader" style="display:none;flex-direction:column;align-items:center;padding:20px;color:#1e293b;">
+        <div class="spinner" style="border-top-color:#0284c7;width:32px;height:32px;margin-bottom:10px;"></div>
+        <span style="font-size:12px;font-weight:600;">Generating fresh QR code...</span>
+      </div>
+    </div>
+
+    <div id="wa-modal-status-text" style="font-size:12px;font-weight:600;margin-bottom:16px;color:#fbbf24;">
+      ⏳ Waiting for scan...
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="closeWaQuickModal()">Close</button>
+      <button type="button" class="btn btn-primary btn-sm" onclick="refreshWaQuickModal()">🔄 Refresh QR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECURE LOGIN OVERLAY MODAL ═══════════════════════════════════ -->
+<div id="login-modal-overlay" style="position:fixed;inset:0;background:rgba(5,9,16,0.85);z-index:999999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(14px);padding:20px;">
+  <div style="background:#131d31;border:1px solid rgba(255,255,255,0.1);box-shadow:0 25px 50px -12px rgba(0,0,0,0.8), 0 0 30px rgba(16,185,129,0.15);border-radius:20px;max-width:420px;width:100%;padding:36px;text-align:center;">
+    <div style="margin-bottom:16px;display:inline-flex;padding:12px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);border-radius:16px;">
+      <img src="logo.png" alt="AI AutomationHubs" style="height:44px;object-fit:contain;">
+    </div>
+    <h2 style="font-size:22px;font-weight:800;color:#f8fafc;margin-bottom:4px;letter-spacing:-0.5px;">LeadFlow Pro v3.5</h2>
+    <p style="font-size:13px;color:#94a3b8;margin-bottom:24px;line-height:1.4;">Enterprise Access Portal. Please enter your credentials to proceed.</p>
+    
+    <form id="login-form" onsubmit="handleLoginSubmit(event)" style="text-align:left;">
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-size:11.5px;font-weight:700;color:#cbd5e1;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">Username / ID</label>
+        <div style="position:relative;">
+          <input type="text" id="login-username" required autocomplete="username" placeholder="Enter username" style="width:100%;box-sizing:border-box;padding:11px 14px 11px 38px;background:#0d1424;border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#f8fafc;font-size:13.5px;outline:none;" onfocus="this.style.borderColor='#10b981';this.style.boxShadow='0 0 0 3px rgba(16,185,129,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)';this.style.boxShadow='none'">
+          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#64748b;">👤</span>
+        </div>
+      </div>
+      
+      <div style="margin-bottom:22px;">
+        <label style="display:block;font-size:11.5px;font-weight:700;color:#cbd5e1;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">Password</label>
+        <div style="position:relative;">
+          <input type="password" id="login-password" required autocomplete="current-password" placeholder="••••••••••••" style="width:100%;box-sizing:border-box;padding:11px 14px 11px 38px;background:#0d1424;border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#f8fafc;font-size:13.5px;outline:none;" onfocus="this.style.borderColor='#10b981';this.style.boxShadow='0 0 0 3px rgba(16,185,129,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)';this.style.boxShadow='none'">
+          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#64748b;">🔒</span>
+        </div>
+      </div>
+
+      <div id="login-error-msg" style="display:none;padding:10px 12px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#f87171;font-size:12.5px;margin-bottom:16px;text-align:center;font-weight:600;"></div>
+
+      <button type="submit" id="btn-login-submit" style="width:100%;padding:12px;background:linear-gradient(135deg, #10b981 0%, #059669 100%);border:none;border-radius:10px;color:#fff;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(16,185,129,0.35);" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <span>Sign In</span>
+        <span style="font-size:16px;">➔</span>
+      </button>
+    </form>
+    
+    <div style="margin-top:20px;font-size:11px;color:#64748b;line-height:1.5;">
+      🛡️ Secured with Role-Based Access Control<br>
+      Settings & API Credentials are Admin-Locked
+    </div>
+  </div>
+</div>
+
+<script src="app.js?v=3.3"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(err => {
+        console.log('SW registration note:', err);
+      });
+    });
+  }
+</script>
 </body>
 </html>

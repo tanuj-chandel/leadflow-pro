@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SuryaShakti AI — India Rooftop Solar WhatsApp Demo | AI AutomationHubs</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wa-header: #075e54;
+      --wa-teal: #128c7e;
+      --wa-green: #25d366;
+      --wa-light-green: #dcf8c6;
+      --wa-bg: #efeae2;
+      --wa-dark-bg: #0b141a;
+      --wa-dark-panel: #111b21;
+      --wa-dark-msg-in: #202c33;
+      --wa-dark-msg-out: #005c4b;
+      --primary: #0ea5e9;
+      --accent: #f59e0b;
+      --dark-bg: #090d16;
+      --card-bg: #111827;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Banner */
+    .top-nav {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      height: 38px;
+      object-fit: contain;
+    }
+
+    .brand-text h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 99px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-back {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid var(--border);
+    }
+    .btn-back:hover { background: rgba(255, 255, 255, 0.15); }
+
+    .btn-cta {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: #fff;
+      font-weight: 700;
+    }
+    .btn-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4); }
+
+    /* Main Showcase Container */
+    .showcase-container {
+      flex: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 32px 20px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 960px) {
+      .showcase-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    /* Left Pitch Panel */
+    .pitch-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .badge-market {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      font-size: 13px;
+      font-weight: 700;
+      width: fit-content;
+    }
+
+    .pitch-title {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .pitch-subtitle {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .metric-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+
+    .feature-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(99, 102, 241, 0.1));
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .contact-info h4 {
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .contact-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Right WhatsApp Phone Mockup */
+    .phone-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .phone-frame {
+      width: 380px;
+      height: 680px;
+      background: var(--wa-dark-bg);
+      border-radius: 40px;
+      border: 10px solid #1e293b;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(14, 165, 233, 0.2);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Phone Speaker & Camera Notch */
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 22px;
+      background: #1e293b;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+      z-index: 100;
+    }
+
+    /* WhatsApp Header */
+    .wa-top-bar {
+      background: var(--wa-dark-panel);
+      padding: 30px 16px 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 10;
+    }
+
+    .wa-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .online-badge {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #22c55e;
+      border: 2px solid var(--wa-dark-panel);
+    }
+
+    .wa-profile-info {
+      flex: 1;
+    }
+
+    .wa-profile-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e9edef;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .verified-icon {
+      color: #22c55e;
+      font-size: 13px;
+    }
+
+    .wa-status-text {
+      font-size: 11px;
+      color: #8696a0;
+    }
+
+    .wa-btn-restart {
+      background: transparent;
+      border: none;
+      color: #8696a0;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .wa-btn-restart:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+
+    /* Chat Messages Canvas */
+    .wa-chat-area {
+      flex: 1;
+      background: #0b141a url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" opacity="0.03"><path fill="%23fff" d="M30 15a15 15 0 1 0 0 30 15 15 0 0 0 0-30z"/></svg>');
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Scrollbar */
+    .wa-chat-area::-webkit-scrollbar { width: 4px; }
+    .wa-chat-area::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+
+    .msg-bubble {
+      max-width: 82%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.45;
+      position: relative;
+      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.92) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .msg-incoming {
+      align-self: flex-start;
+      background: var(--wa-dark-msg-in);
+      color: #e9edef;
+      border-top-left-radius: 2px;
+    }
+
+    .msg-outgoing {
+      align-self: flex-end;
+      background: var(--wa-dark-msg-out);
+      color: #e9edef;
+      border-top-right-radius: 2px;
+    }
+
+    .msg-time {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.5);
+      float: right;
+      margin-left: 8px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .check-double {
+      color: #53bdeb;
+      font-size: 11px;
+    }
+
+    /* Quick Reply Choice Buttons */
+    .quick-chips-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .chip-option {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(14, 165, 233, 0.4);
+      color: #38bdf8;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chip-option:hover {
+      background: #0ea5e9;
+      color: #fff;
+      border-color: #0ea5e9;
+      transform: translateX(3px);
+    }
+
+    /* Typing Indicator */
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      background: var(--wa-dark-msg-in);
+      padding: 8px 14px;
+      border-radius: 12px;
+      width: fit-content;
+      margin-bottom: 4px;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #8696a0;
+      animation: pulse 1.4s infinite ease-in-out;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes pulse {
+      0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+      40% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Bottom Input Bar */
+    .wa-input-bar {
+      background: var(--wa-dark-panel);
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .wa-text-input {
+      flex: 1;
+      background: #2a3942;
+      border: none;
+      border-radius: 20px;
+      padding: 9px 14px;
+      color: #e9edef;
+      font-size: 13px;
+      outline: none;
+    }
+    .wa-text-input::placeholder { color: #8696a0; }
+
+    .wa-send-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #00a884;
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .wa-send-btn:hover { background: #02906f; transform: scale(1.05); }
+
+    /* Highlights / Callout Badges */
+    .savings-card {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="brand-box">
+      <img src="logo.png" alt="AI AutomationHubs" class="brand-logo">
+      <div class="brand-text">
+        <h1>☀️ SuryaShakti AI — India Rooftop Solar Copilot</h1>
+        <p>PM Surya Ghar Yojana (₹78,000 Subsidy) • By AI AutomationHubs</p>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="/" class="btn-pill btn-back">← Back to Dashboard</a>
+      <a href="https://wa.me/917704077700?text=Namaste%20Tanuj,%20Maine%20SuryaShakti%20Solar%20AI%20Demo%20test%20kiya!" target="_blank" class="btn-pill btn-cta">📲 WhatsApp Tanuj</a>
+    </div>
+  </nav>
+
+  <!-- Main Showcase Grid -->
+  <main class="showcase-container">
+
+    <!-- Left Pitch Info -->
+    <div class="pitch-panel">
+      <span class="badge-market">🇮🇳 India PM Surya Ghar: Muft Bijli Yojana Edition</span>
+      
+      <h2 class="pitch-title">India's 24/7 AI WhatsApp Qualifier for Rooftop Solar Installers</h2>
+      
+      <p class="pitch-subtitle">
+        Indian solar vendors lose 60%+ leads because inquiries come on WhatsApp when team is on rooftops or in site visits. Our AI qualifies rooftop area, DISCOM bill, and calculates PM subsidy in 8 seconds.
+      </p>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-val">&lt; 8s</div>
+          <div class="metric-label">Response Speed</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">₹78,000</div>
+          <div class="metric-label">PM Subsidy Auto-Calc</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">3.4x</div>
+          <div class="metric-label">More Site Visits Booked</div>
+        </div>
+      </div>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <span class="feature-icon">⚡</span>
+          <div><strong>Instant Lead Qualification:</strong> Asks monthly DISCOM electricity bill, roof type (RCC pakki chhat vs tin shed), and property ownership automatically.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">💰</span>
+          <div><strong>PM Surya Ghar Subsidy Calculator:</strong> Calculates exact 3kW/5kW system size and upfront government subsidy eligibility instantly.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📅</span>
+          <div><strong>Free Site Feasibility Booking:</strong> Collects customer address and books engineer rooftop inspection with zero manual calls.</div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-info">
+          <h4>Want this setup for your Solar Business in 48 hours?</h4>
+          <p>Tanuj Chandel (+91-7704077700) & Amit Pandey (+91-9990080408)</p>
+        </div>
+        <button onclick="restartDemo()" class="btn-pill btn-back" style="cursor:pointer;">🔄 Restart Demo</button>
+      </div>
+    </div>
+
+    <!-- Right Interactive Smartphone Mockup -->
+    <div class="phone-wrapper">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+
+        <!-- WhatsApp Bar -->
+        <div class="wa-top-bar">
+          <div class="wa-avatar">
+            ☀️
+            <span class="online-badge"></span>
+          </div>
+          <div class="wa-profile-info">
+            <div class="wa-profile-name">
+              <span>SuryaShakti Solar AI</span>
+              <span class="verified-icon">✓</span>
+            </div>
+            <div class="wa-status-text">Replies in &lt; 5s • PM Subsidy Verified</div>
+          </div>
+          <button class="wa-btn-restart" onclick="restartDemo()" title="Restart Simulation">🔄</button>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="wa-chat-area" id="chat-box">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typing-indicator">
+          <div class="typing-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="wa-input-bar">
+          <input type="text" id="user-input" class="wa-text-input" placeholder="Type a message..." onkeydown="handleKey(event)">
+          <button class="wa-send-btn" onclick="sendCustomMessage()">➤</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const chatBox = document.getElementById('chat-box');
+    const typingIndicator = document.getElementById('typing-indicator');
+    const userInput = document.getElementById('user-input');
+
+    let currentStep = 0;
+    let userData = {
+      propertyType: '',
+      billRange: '',
+      roofType: '',
+      name: '',
+      phone: ''
+    };
+
+    function getTime() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function showTyping(ms = 800) {
+      typingIndicator.style.display = 'block';
+      chatBox.scrollTop = chatBox.scrollHeight;
+      return new Promise(r => setTimeout(r, ms)).then(() => {
+        typingIndicator.style.display = 'none';
+      });
+    }
+
+    function addBotMessage(html) {
+      const div = document.createElement('div');
+      div.className = 'msg-bubble msg-incoming';
+      div.innerHTML = `${html}<span class="msg-time">${getTime()}</span>`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function addUserMessage(text) {
+      const div = document.createElement('div');
+      div.className = 'msg-bubble msg-outgoing';
+      div.innerHTML = `${text}<span class="msg-time">${getTime()} <span class="check-double">✓✓</span></span>`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function startConversation() {
+      chatBox.innerHTML = '';
+      currentStep = 0;
+      await showTyping(600);
+      addBotMessage(`
+        Namaste! 🙏 <b>SuryaShakti Solar Solutions</b> me aapka swagat hai.<br><br>
+        Kya aap <b>PM Surya Ghar Yojana (₹78,000 Subsidy)</b> ke tahat rooftop solar lagwa kar apna bijli bill ZERO karna chahte hain?
+        <div class="quick-chips-container">
+          <button class="chip-option" onclick="handleSelect('Residential Home (Ghar / Kothi)', 'propertyType')">🏡 Ghar / Kothi (Residential)</button>
+          <button class="chip-option" onclick="handleSelect('Commercial / Factory / Godown', 'propertyType')">🏭 Commercial / Factory / Shop</button>
+        </div>
+      `);
+    }
+
+    async function handleSelect(val, field) {
+      userData[field] = val;
+      addUserMessage(val);
+
+      if (field === 'propertyType') {
+        await showTyping(800);
+        addBotMessage(`
+          Bahut badiya! Sahi solar plant size aur government subsidy calculate karne ke liye, aapka <b>lagbhag monthly bijli bill kitna aata hai</b>?
+          <div class="quick-chips-container">
+            <button class="chip-option" onclick="handleSelect('₹1,500 – ₹3,500 / month', 'billRange')">⚡ ₹1,500 – ₹3,500 / month</button>
+            <button class="chip-option" onclick="handleSelect('₹3,500 – ₹8,000 / month', 'billRange')">⚡ ₹3,500 – ₹8,000 / month</button>
+            <button class="chip-option" onclick="handleSelect('₹8,000+ / month (High Usage)', 'billRange')">⚡ ₹8,000+ / month (High Usage)</button>
+          </div>
+        `);
+      } else if (field === 'billRange') {
+        await showTyping(800);
+        addBotMessage(`
+          Noted! Solar panels lagane ke liye aapki <b>chhat (roof) kis tarah ki hai</b>?
+          <div class="quick-chips-container">
+            <button class="chip-option" onclick="handleSelect('Pakki Chhat (Flat RCC Concrete Roof)', 'roofType')">🏢 Pakki Chhat (Flat RCC Concrete)</button>
+            <button class="chip-option" onclick="handleSelect('Tin / Metal Shed Roof', 'roofType')">🏭 Tin / Metal Shed Roof</button>
+            <button class="chip-option" onclick="handleSelect('Sloped Tile Roof (Bungalow)', 'roofType')">🏡 Dhalwan Chhat (Tile Roof)</button>
+          </div>
+        `);
+      } else if (field === 'roofType') {
+        await showTyping(1200);
+
+        let estSize = '3kW On-Grid System';
+        let estSubsidy = '₹78,000 (Central Govt Direct DBT)';
+        let estSavings = '₹36,000 – ₹45,000 har saal';
+
+        if (userData.billRange.includes('8,000+')) {
+          estSize = '5kW – 10kW On-Grid Solar Plant';
+          estSubsidy = '₹78,000 Max Subsidy + Accelerated Depreciation';
+          estSavings = '₹75,000 – ₹1,20,000 har saal';
+        } else if (userData.billRange.includes('1,500 – ₹3,500')) {
+          estSize = '2kW – 3kW Rooftop System';
+          estSubsidy = '₹60,000 – ₹78,000 Central Govt Subsidy';
+          estSavings = '₹24,000 – ₹32,000 har saal';
+        }
+
+        addBotMessage(`
+          🎉 <b>Shubh Samachar! Aap PM Surya Ghar Yojana ke tahat subsidised solar ke liye eligible hain!</b><br><br>
+          Aapki ${userData.roofType} aur bijli khapat ke hisaab se recommended setup:
+          <div class="savings-card">
+            ☀️ <b>Recommended System:</b> ${estSize}<br>
+            🏛️ <b>Govt Subsidy:</b> ${estSubsidy}<br>
+            💰 <b>Annual Savings:</b> ${estSavings}<br>
+            ⚡ <b>Net Metering:</b> DISCOM Approval Support Included
+          </div>
+          <br>
+          Kya aap hamare senior solar engineer se <b>FREE rooftop feasibility survey aur exact quotation</b> chahte hain?
+          <div class="quick-chips-container">
+            <button class="chip-option" onclick="handleSelect('Yes, Book Free Rooftop Survey', 'book')">📅 Haan, Free Rooftop Survey Book Karein</button>
+            <button class="chip-option" onclick="handleSelect('Request 2-Min Callback', 'book')">📞 2-Minute Mein Call Back Karein</button>
+          </div>
+        `);
+      } else if (field === 'book') {
+        await showTyping(800);
+        addBotMessage(`
+          Shandaar! Kripya apna <b>Naam aur Pura Address / City</b> bata dijiye taaki hamara engineer survey slot book kar sake:
+        `);
+        userInput.placeholder = "e.g. Rahul Sharma, Vaishali Nagar, Jaipur";
+        userInput.focus();
+        currentStep = 99;
+      }
+    }
+
+    async function sendCustomMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+      userInput.value = '';
+      addUserMessage(text);
+
+      if (currentStep === 99) {
+        await showTyping(1000);
+        addBotMessage(`
+          ✅ <b>Rooftop Survey Slot Successfully Reserved!</b><br><br>
+          Dhanyawad <b>${text.split(',')[0] || 'Sir'}</b>! Aapka PM Surya Ghar Subsidy registration initiated hai.<br><br>
+          Hamare senior solar engineer agle 15-30 minute mein aapse phone par connect karenge. Aapka din shubh ho! ☀️🇮🇳
+          <div class="quick-chips-container" style="margin-top:12px;">
+            <button class="chip-option" onclick="restartDemo()">🔄 Test Another Scenario</button>
+          </div>
+        `);
+        currentStep = 0;
+        userInput.placeholder = "Type a message...";
+      } else {
+        await showTyping(800);
+        addBotMessage(`
+          Dhanyawad aapke message ke liye! Hamara solar advisor jaldi hi connect karega. Ya upar diye gaye options me se select karein.
+        `);
+      }
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter') sendCustomMessage();
+    }
+
+    function restartDemo() {
+      userData = { propertyType: '', billRange: '', roofType: '', name: '', phone: '' };
+      userInput.placeholder = "Type a message...";
+      startConversation();
+    }
+
+    window.addEventListener('DOMContentLoaded', startConversation);
+  </script>
+</body>
+</html>
